@@ -11,12 +11,12 @@ typedef struct pion{
 	int coord_x;
 	int coord_y;
 	int type; //CTORP CUIRASSE ou PIEGE
-	int vivant;//true=vivant false=mort
+	int vivant;//true=vivant false=mort remplacer par points de vie
 	int invisible; //numéro de tour
 	int anti_blindage;
 	int player;
     int blindage;//1 si blindé
-}pion;
+} pion;
 
 int is_pionSurCase(pion *pions_attaquant, pion *pions_défenseur, int x, int y);
 
@@ -26,8 +26,6 @@ int main(){
 
     int cartes_attaquant[2]; //numéro de la carte ou 0 si il l’as déjà utilisé
     int cartes_défenseur[2]; //numéro de la carte ou 0 si il l’as déjà utilisé
-
-    
 }
 
 int is_pionSurCase(pion *pions_attaquant, pion *pions_défenseur,int x, int y){
