@@ -26,7 +26,7 @@ typedef struct joueur{
 
 
 int is_pionSurCase(joueur attaquant, joueur defenseur, int x, int y);
-
+void remplirTab(int tab[],pion Spion, joueur Sjoueur);
 int main(){
     
 }
@@ -44,6 +44,19 @@ int is_pionSurCase(joueur attaquant, joueur defenseur, int x, int y){
     }
     return 0;
 }
-void remplirTab(int tab[],){
+void remplirTab(pion tab[][], joueur joueurAff, joueur joueur2){
+    int i;
+    for(i=0,i<nb,i++){
+        if(*joueurAFF.pion[i].pv>0){
+            tab[*joueurAFF.pions[i].coord_x][*joueurAFF.pions[i].coord_y]=*joueuraff.pion[i];
+        }
+    }
+     for(i=0,i<nb,i++){
+        if(*joueur2.pion[i].pv>0){
+            tab[*joueur2.pions[i].coord_x][*joueur2.pions[i].coord_y]=*joueur2.pion[i];
+        }
+    }
     
+    
+
 }
