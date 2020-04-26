@@ -8,6 +8,12 @@
 #define CUIRASSE 2
 #define PIEGE 3
 
+//Touches
+#define haut 65
+#define bas 66
+#define droite 67
+#define gauche 68
+#define enter 13
 
 typedef struct pion{
 	int coord_x;
@@ -29,6 +35,34 @@ int is_pionSurCase(joueur attaquant, joueur defenseur, int x, int y);
 void remplirTab(int tab[],pion Spion, joueur Sjoueur);
 int main(){
     
+}
+
+void deplacer_pions(joueur joueurSel, joueur joueur2, int pion_sel){
+    int fin_mouvement=1;
+    while(fin_mouvement){//Attendre que le joueur appuie sur la touche entrée
+        pion plateau[25][25];
+        int x,y;
+        remplirTab(plateau, joueurSel, joueur2);
+        switch(getch()) {
+            case enter:
+                joueurSel.pions[pion_sel].coord_x=x;//Mauvaise synthaxe
+                joueurSel.pions[pion_sel].coord_y=y;
+                fin_mouvement=1;
+                break;
+            case bas:
+                
+                break;
+            case haut:
+                
+                break;
+            case gauche:
+                
+                break;
+            case droite:
+
+                break;
+        }
+    }
 }
 
 int is_pionSurCase(joueur attaquant, joueur defenseur, int x, int y){
