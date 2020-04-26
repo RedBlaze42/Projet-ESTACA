@@ -20,6 +20,7 @@ typedef struct pion{
 
 int is_pionSurCase(pion *pions_attaquant, pion *pions_défenseur, int x, int y);
 
+
 int main(){
     pion pions_attaquant[20]; //2CTORPB 18CTORP + 2CTORP OU 1TORP
     pion pions_défenseur[15]; //1CUIRASSE 2CTORPB 10CTORP + 2 PIEGES
@@ -40,4 +41,7 @@ int is_pionSurCase(pion *pions_attaquant, pion *pions_défenseur,int x, int y){
         }
     }
     return 0;
+}
+void remplirTab(int tab[],){
+    
 }
