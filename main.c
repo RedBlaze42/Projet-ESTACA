@@ -32,7 +32,8 @@ typedef struct joueur{
 
 
 int is_pionSurCase(joueur attaquant, joueur defenseur, int x, int y);
-void remplirTab(int tab[],pion Spion, joueur Sjoueur);
+void remplirTab(pion tab[][], joueur joueurAff, joueur joueur2){
+
 int main(){
     
 }
@@ -42,6 +43,7 @@ void deplacer_pions(joueur joueurSel, joueur joueur2, int pion_sel){
     while(fin_mouvement){//Attendre que le joueur appuie sur la touche entrée
         pion plateau[25][25];
         int x,y;
+        //Afficher plateau surbrillance
         remplirTab(plateau, joueurSel, joueur2);
         switch(getch()) {
             case enter:
@@ -78,6 +80,7 @@ int is_pionSurCase(joueur attaquant, joueur defenseur, int x, int y){
     }
     return 0;
 }
+
 void remplirTab(pion tab[][], joueur joueurAff, joueur joueur2){
     int i;
     for(i=0,i<nb,i++){
