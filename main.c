@@ -1,5 +1,6 @@
 #include<stdlib.h>
 #include<stdio.h>
+#include<windows.h>
 
 #define DIM_PLATEAU 25
 #define max_pions 20
@@ -34,7 +35,8 @@ typedef struct joueur{
 
 
 int is_pionSurCase(joueur attaquant, joueur defenseur, int x, int y);
-void remplirTab(pion tab[][], joueur joueurAff, joueur joueur2){
+void remplirTab(pion tab[][], joueur joueurAff, joueur joueur2);
+void afficherTab(pion tab[][], joueur joueurAff,joueur joueur2);
 
 int main(){
     
@@ -96,11 +98,11 @@ int is_pionSurCase(joueur joueurAff, joueur joueur2, int x, int y){
     return 0;
 }
 
-void remplirTab(pion tab[][], joueur joueurAff, joueur joueur2){
+void remplirTab(pion tab[][], joueur joueur1, joueur joueur2){
     int i;
     for(i=0,i<nb,i++){
-        if(*joueurAFF.pion[i].pv>0){
-            tab[*joueurAFF.pions[i].coord_x][*joueurAFF.pions[i].coord_y]=*joueuraff.pion[i];
+        if(*joueur1.pion[i].pv>0){
+            tab[*joueur1.pions[i].coord_x][*joueur1.pions[i].coord_y]=*joueur1.pion[i];
         }
     }
      for(i=0,i<nb,i++){
@@ -108,7 +110,33 @@ void remplirTab(pion tab[][], joueur joueurAff, joueur joueur2){
             tab[*joueur2.pions[i].coord_x][*joueur2.pions[i].coord_y]=*joueur2.pion[i];
         }
     }
-    
-    
+}
+void affichercase(pion PiOn[][], joueur joueurAFF){//pour afficher une case 
+    if(*joueurAFF.pion[i].player==joueur.nb){
+       switch(*joueurAFF.pion[i].type){// on vérifie l'indentité du joueur pour l'affichage du pion
+            case 1 : printf("1");
+                break;
+            case 2 : printf("2");
+                break;
+            case 3 : printf("3");
+                break;
+       }else{
+           if(*joueurAFF.pion[i].player!=joueurAFF){// on affiche le pion pour le joueur dont ce n'est pas le tour
+               if(*joueurAFF.pion[i].type!=3){
+                   printf(" ");
+               }else{
+                    switch(*joueurAFF.pion[i].type==1){
+                        case 1 : printf("1");
+                            break;
+                        case 2 : printf("2");
+                            break;
+                    }
+               }
+           }
+       }
+    }
+}
+void afficherTab(pion tab[][], joueur joueurAff,joueur joueur2){
+remplirTab(pion tab[][], joueuAff, joueur2);
 
 }
