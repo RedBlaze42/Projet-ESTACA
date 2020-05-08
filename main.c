@@ -1,6 +1,7 @@
 #include<stdlib.h>
 #include<stdio.h>
 
+#define DIM_PLATEAU 25
 #define max_pions 20
 
 //Types de pions
@@ -20,12 +21,13 @@ typedef struct pion{
 	int coord_y;
 	int type; //CTORP CUIRASSE ou PIEGE
 	int pv=1;//2=blindé 1=vivant 0=mort
-	int invisible; //numéro de tour
+	int invisible; //0=visible pour tout le monde >0=nombre de tours invisibles -1=tout le temps invisible (piège)
 	int anti_blindage;
 	int player;
 } pion;
 
 typedef struct joueur{
+    int num;
 	pion pions[20];
 	int cartes[2];
 } joueur;
@@ -39,42 +41,55 @@ int main(){
 }
 
 void deplacer_pions(joueur joueurSel, joueur joueur2, int pion_sel){
-    int fin_mouvement=1;
-    while(fin_mouvement){//Attendre que le joueur appuie sur la touche entrée
-        pion plateau[25][25];
+    int en_mouvement=1;
+    while(en_mouvement){//Attendre que le joueur appuie sur la touche entrée
+        pion plateau[DIM_PLATEAU][DIM_PLATEAU];
         int x,y;
         //Afficher plateau surbrillance
         remplirTab(plateau, joueurSel, joueur2);
+        int direcion_prise;
         switch(getch()) {
             case enter:
                 joueurSel.pions[pion_sel].coord_x=x;//Mauvaise synthaxe
                 joueurSel.pions[pion_sel].coord_y=y;
-                fin_mouvement=1;
+                en_mouvement=0;
                 break;
             case bas:
-                
+                if(y+1<DIM_PLATEAU && is_pionSurCase(joueurSel,joueur2,x,y-1)==0 && (direction_prise==0 || direction_prise==bas)){
+                    y+=1;
+                    if(direction_prise==0) direction_prise=bas;
+                }
                 break;
             case haut:
-                
+                if(y-1>0 && is_pionSurCase(joueurSel,joueur2,x,y-1)==0 && (direction_prise==0 || direction_prise==haut)){
+                    y-=1;
+                    if(direction_prise==0) direction_prise=haut;
+                }
                 break;
             case gauche:
-                
+                if(x-1>0 && is_pionSurCase(joueurSel,joueur2,x-1,y)==0 && (direction_prise==0 || direction_prise==gauche)){
+                    x-=1;
+                    if(direction_prise==0) direction_prise=gauche;
+                }
                 break;
             case droite:
-
+                if(x+1<DIM_PLATEAU && is_pionSurCase(joueurSel,joueur2,x+1,y)==0 && (direction_prise==0 || direction_prise==droite)){
+                    x+=1;
+                    if(direction_prise==0) direction_prise=droite;
+                }
                 break;
         }
     }
 }
 
-int is_pionSurCase(joueur attaquant, joueur defenseur, int x, int y){
+int is_pionSurCase(joueur joueurAff, joueur joueur2, int x, int y){
     for(int i=0;i<20;i++){
-        if(attaquant.pions[i].coord_x==x && attaquant.pions[i].coord_y==y){
+        if(joueurAff.pions[i].coord_x==x && joueurAff.pions[i].coord_y==y && joueurAff.pions[i].vie>0){
             return 1;
         }
     }
     for(int i=0;i<15;i++){
-        if(defenseur.pions[i].coord_x==x && defenseur.pions[i].coord_y==y){
+        if(joueur2.pions[i].coord_x==x && joueur2.pions[i].coord_y==y && joueur2.pions[i].vie>0 && joueurAff.pions[i].invisible==0){
             return 1;
         }
     }
