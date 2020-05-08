@@ -136,7 +136,13 @@ void affichercase(pion PiOn[][], joueur joueurAFF){//pour afficher une case
        }
     }
 }
-void afficherTab(pion tab[][], joueur joueurAff,joueur joueur2){
-remplirTab(pion tab[][], joueuAff, joueur2);
-
+void afficherplateau(pion tab[][], joueur joueurAff,joueur joueur2){
+    remplirTab(pion tab[][], joueuAff, joueur2);
+    int i, j;
+    for(j=0,j<25,j++){
+        for(i=0,i<25,i++){
+            affichercase(tab[i][j], joueurAff);
+        }
+        printf("\n");
+    }
 }
