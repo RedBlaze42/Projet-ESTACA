@@ -37,6 +37,8 @@ typedef struct joueur{
 int is_pionSurCase(joueur attaquant, joueur defenseur, int x, int y);
 void remplirTab(pion tab[][], joueur joueurAff, joueur joueur2);
 void afficherTab(pion tab[][], joueur joueurAff,joueur joueur2);
+void affichercase(pion PiOn[][], joueur joueurAFF);
+void color (int couleurDuTexte, int couleurDuFond);
 
 int main(){
     
@@ -115,20 +117,45 @@ void affichercase(pion PiOn[][], joueur joueurAFF){//pour afficher une case
     if(*joueurAFF.pion[i].player==joueur.nb){
        switch(*joueurAFF.pion[i].type){// on vérifie l'indentité du joueur pour l'affichage du pion
             case 1 : printf("1");
+                if(*joueuAff.num==1){
+                    color(1,15);
+                }else{
+                    color(4,15);
+                }
                 break;
             case 2 : printf("2");
+                  if(*joueuAff.num==1){
+                    color(1,15);
+                }else{
+                    color(4,15);
+                }
                 break;
             case 3 : printf("3");
+                  if(*joueuAff.num==1){
+                    color(1,15);
+                }else{
+                    color(4,15);
+                }
                 break;
        }else{
            if(*joueurAFF.pion[i].player!=joueurAFF){// on affiche le pion pour le joueur dont ce n'est pas le tour
                if(*joueurAFF.pion[i].type!=3){
                    printf(" ");
+                   color(15,15);
                }else{
                     switch(*joueurAFF.pion[i].type==1){
                         case 1 : printf("1");
+                             if(*joueuAff.num==1){
+                                color(4,15);
+                            }else{
+                                color(1,15);
+                }
                             break;
                         case 2 : printf("2");
+                            if(*joueuAff.num==1){
+                                color(4,15);
+                            }else{
+                                color(1,15);
                             break;
                     }
                }
@@ -136,7 +163,7 @@ void affichercase(pion PiOn[][], joueur joueurAFF){//pour afficher une case
        }
     }
 }
-void afficherplateau(pion tab[][], joueur joueurAff,joueur joueur2){
+void afficherplateau(pion tab[][], joueur joueurAff,joueur joueur2){//on affiche le plateau
     remplirTab(pion tab[][], joueuAff, joueur2);
     int i, j;
     for(j=0,j<25,j++){
@@ -145,4 +172,8 @@ void afficherplateau(pion tab[][], joueur joueurAff,joueur joueur2){
         }
         printf("\n");
     }
+}
+void color (int couleurDuTexte, int couleurDuFond){// permet de gérer les couleurs
+     HANDLE H = GetStdHandle(STD_OUTPUT_HANDLE);
+     SetConsoleTextAttribute(H, couleurDuFond*16+couleurDuTexte);
 }
