@@ -41,7 +41,7 @@ typedef struct joueur{
 int is_pionSurCase(joueur attaquant, joueur defenseur, int x, int y);
 void remplirTab(pion tab[][], joueur joueurAff, joueur joueur2);
 void afficherTab(pion tab[][], joueur joueurAff,joueur joueur2);
-void affichercase(pion PiOn[][], joueur joueurAFF);
+void afficher_pion(pion PiOn[][], joueur joueurAFF);
 void color (int couleurDuTexte, int couleurDuFond);
 
 int main(){
@@ -177,15 +177,18 @@ void afficher_pion(pion pionAff){//pour afficher une case
 
 
 void afficherplateau(pion tab[][], joueur joueurAff,joueur joueur2){//on affiche le plateau
-    remplirTab(pion tab[][], joueuAff, joueur2);
+     remplirTab(pion tab[][], joueuAff, joueur2);
     int i, j;
     for(j=0,j<25,j++){
         for(i=0,i<25,i++){
-            affichercase(tab[i][j], joueurAff);
+            if(*joueurAFF.pion[i].invisible=0){
+                afficher_pion(*joueurAff.pion[i]);
+            }
         }
-        printf("\n");
     }
+    printf("\n");
 }
+
 
 void color (int couleurDuTexte, int couleurDuFond){// permet de gérer les couleurs
     HANDLE H = GetStdHandle(STD_OUTPUT_HANDLE);
