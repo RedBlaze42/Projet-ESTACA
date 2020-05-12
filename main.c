@@ -101,9 +101,10 @@ void selectionner_case(joueur joueurSel, joueur joueur2, int *sel_x, int *sel_y,
         switch(getch()) {
             case enter:
                 if(libre!=1 || is_pionSurCase(joueurSel,joueur2,x,y)!=1){}
-                *sel_x=x;
-                *sel_y=y;
-                en_mouvement=0;
+                    *sel_x=x;
+                    *sel_y=y;
+                    en_mouvement=0;
+                }
                 break;
             case bas:
                 y+=1;
