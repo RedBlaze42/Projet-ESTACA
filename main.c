@@ -168,7 +168,7 @@ void affichercase(pion PiOn[][], joueur joueurAFF){//pour afficher une case
                     color(4,15);
                 }
                 break;
-       }else{
+        }else{
            if(*joueurAFF.pion[i].player!=joueurAFF){// on affiche le pion pour le joueur dont ce n'est pas le tour
                if(*joueurAFF.pion[i].type!=3){
                    printf(" ");
@@ -176,24 +176,26 @@ void affichercase(pion PiOn[][], joueur joueurAFF){//pour afficher une case
                }else{
                     switch(*joueurAFF.pion[i].type==1){
                         case 1 : printf("1");
-                             if(*joueuAff.num==1){
+                            if(*joueuAff.num==1){
                                 color(4,15);
                             }else{
                                 color(1,15);
-                }
+                            }
                             break;
                         case 2 : printf("2");
                             if(*joueuAff.num==1){
                                 color(4,15);
                             }else{
                                 color(1,15);
+                            }
                             break;
                     }
-               }
-           }
-       }
+                }
+            }
+        }
     }
 }
+
 
 void afficherplateau(pion tab[][], joueur joueurAff,joueur joueur2){//on affiche le plateau
     remplirTab(pion tab[][], joueuAff, joueur2);
@@ -207,6 +209,6 @@ void afficherplateau(pion tab[][], joueur joueurAff,joueur joueur2){//on affiche
 }
 
 void color (int couleurDuTexte, int couleurDuFond){// permet de gérer les couleurs
-     HANDLE H = GetStdHandle(STD_OUTPUT_HANDLE);
-     SetConsoleTextAttribute(H, couleurDuFond*16+couleurDuTexte);
+    HANDLE H = GetStdHandle(STD_OUTPUT_HANDLE);
+    SetConsoleTextAttribute(H, couleurDuFond*16+couleurDuTexte);
 }
