@@ -145,8 +145,8 @@ void remplirTab(pion tab[][], joueur joueur1, joueur joueur2){
     }
 }
 void affichercase(pion PiOn[][], joueur joueurAFF){//pour afficher une case 
-    if(*joueurAFF.pion[i].player==joueur.nb){
-       switch(*joueurAFF.pion[i].type){// on vérifie l'indentité du joueur pour l'affichage du pion
+    if(*joueurAFF.pion[i].player==joueur.nb){// on vérifie l'indentité du joueur pour l'affichage du pion
+        switch(*joueurAFF.pion[i].type){
             case 1 : printf("1");
                 if(*joueuAff.num==1){
                     color(1,15);
@@ -168,12 +168,14 @@ void affichercase(pion PiOn[][], joueur joueurAFF){//pour afficher une case
                     color(4,15);
                 }
                 break;
-        }else{
-           if(*joueurAFF.pion[i].player!=joueurAFF){// on affiche le pion pour le joueur dont ce n'est pas le tour
-               if(*joueurAFF.pion[i].type!=3){
-                   printf(" ");
-                   color(15,15);
-               }else{
+        }
+    }else{// on affiche le pion pour le joueur dont ce n'est pas le tour
+        if(*joueurAFF.pion[i].player!=joueurAFF){
+            if(*joueurAFF.pion[i].type!=3){
+                printf(" ");
+                color(15,15);
+            }else{
+                if(*joueurAFF.pion[i].invisible==0){
                     switch(*joueurAFF.pion[i].type==1){
                         case 1 : printf("1");
                             if(*joueuAff.num==1){
@@ -195,6 +197,7 @@ void affichercase(pion PiOn[][], joueur joueurAFF){//pour afficher une case
         }
     }
 }
+
 
 
 void afficherplateau(pion tab[][], joueur joueurAff,joueur joueur2){//on affiche le plateau
