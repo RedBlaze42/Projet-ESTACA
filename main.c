@@ -86,6 +86,37 @@ void deplacer_pions(joueur joueurSel, joueur joueur2, int pion_sel){
     }
 }
 
+void selectionner_case(joueur joueurSel, joueur joueur2, int *sel_x, int *sel_y, int libre){
+    int en_mouvement=1;
+    while(en_mouvement){//Attendre que le joueur appuie sur la touche entrée
+        pion plateau[DIM_PLATEAU][DIM_PLATEAU];
+        int x,y;
+        //Afficher plateau surbrillance
+        remplirTab(plateau, joueurSel, joueur2);
+        int direcion_prise;
+        switch(getch()) {
+            case enter:
+                if(libre!=1 || is_pionSurCase(joueurSel,joueur2,x,y)!=1){}
+                *sel_x=x;
+                *sel_y=y;
+                en_mouvement=0;
+                break;
+            case bas:
+                y+=1;
+                break;
+            case haut:
+                y-=1;
+                break;
+            case gauche:
+                x-=1;
+                break;
+            case droite:
+                x+=1;
+                break;
+        }
+    }
+}
+
 int is_pionSurCase(joueur joueurAff, joueur joueur2, int x, int y){
     for(int i=0;i<20;i++){
         if(joueurAff.pions[i].coord_x==x && joueurAff.pions[i].coord_y==y && joueurAff.pions[i].vie>0){
@@ -163,6 +194,7 @@ void affichercase(pion PiOn[][], joueur joueurAFF){//pour afficher une case
        }
     }
 }
+
 void afficherplateau(pion tab[][], joueur joueurAff,joueur joueur2){//on affiche le plateau
     remplirTab(pion tab[][], joueuAff, joueur2);
     int i, j;
@@ -173,6 +205,7 @@ void afficherplateau(pion tab[][], joueur joueurAff,joueur joueur2){//on affiche
         printf("\n");
     }
 }
+
 void color (int couleurDuTexte, int couleurDuFond){// permet de gérer les couleurs
      HANDLE H = GetStdHandle(STD_OUTPUT_HANDLE);
      SetConsoleTextAttribute(H, couleurDuFond*16+couleurDuTexte);
