@@ -24,7 +24,7 @@
 typedef struct pion{
 	int coord_x;
 	int coord_y;
-	int type; //CTORP CUIRASSE ou PIEGE
+	int type=0; //CTORP CUIRASSE ou PIEGE
 	int pv=1;//2=blindé 1=vivant 0=mort
 	int invisible; //0=visible pour tout le monde >0=nombre de tours invisibles -1=tout le temps invisible (piège)
 	int anti_blindage;
@@ -151,27 +151,33 @@ void remplirTab(pion tab[][], joueur joueur1, joueur joueur2){
 }
 void afficher_pion(pion pionAff){//pour afficher une case
     switch(pionAff.type){
-        case 1 : printf("1");
+        case 1 : 
+            printf("1");
             if(pionAff.player==1){
                 color(JOUEUR1,15);
             }else{
                 color(JOUEUR2,15);
             }
             break;
-        case 2 : printf("2");
+        case 2 :
+            printf("2");
             if(pionAff.player==1){
                 color(JOUEUR1,15);
             }else{
                 color(JOUEUR2,15);
             }
             break;
-        case 3 : printf("3");
+        case 3 :
+            printf("3");
             if(pionAff.player==1){
                 color(JOUEUR1,15);
             }else{
                 color(JOUEUR2,15);
             }
             break;
+        default:
+            color(0,15);
+            print(" ");
     }
 }
 
