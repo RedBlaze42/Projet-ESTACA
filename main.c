@@ -144,7 +144,7 @@ void remplirTab(pion tab[][], joueur joueur1, joueur joueur2){
         }
     }
 }
-void affichercase(pion PiOn[][], joueur joueurAFF){//pour afficher une case 
+void afficher_pion(pion pionAff, joueur joueurAFF){//pour afficher une case 
     if(*joueurAFF.pion[i].player==joueur.nb){// on vérifie l'indentité du joueur pour l'affichage du pion
         switch(*joueurAFF.pion[i].type){
             case 1 : printf("1");
