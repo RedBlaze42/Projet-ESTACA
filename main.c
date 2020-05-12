@@ -5,6 +5,10 @@
 #define DIM_PLATEAU 25
 #define max_pions 20
 
+//Couleurs
+#define JOUEUR1 1
+#define JOUEUR2 4
+
 //Types de pions
 #define CTORP 1
 #define CUIRASSE 2
@@ -144,57 +148,29 @@ void remplirTab(pion tab[][], joueur joueur1, joueur joueur2){
         }
     }
 }
-void afficher_pion(pion pionAff, joueur joueurAFF){//pour afficher une case 
-    if(*joueurAFF.pion[i].player==joueur.nb){// on vérifie l'indentité du joueur pour l'affichage du pion
-        switch(*joueurAFF.pion[i].type){
-            case 1 : printf("1");
-                if(*joueuAff.num==1){
-                    color(1,15);
-                }else{
-                    color(4,15);
-                }
-                break;
-            case 2 : printf("2");
-                  if(*joueuAff.num==1){
-                    color(1,15);
-                }else{
-                    color(4,15);
-                }
-                break;
-            case 3 : printf("3");
-                  if(*joueuAff.num==1){
-                    color(1,15);
-                }else{
-                    color(4,15);
-                }
-                break;
-        }
-    }else{// on affiche le pion pour le joueur dont ce n'est pas le tour
-        if(*joueurAFF.pion[i].player!=joueurAFF){
-            if(*joueurAFF.pion[i].type!=3){
-                printf(" ");
-                color(15,15);
+void afficher_pion(pion pionAff){//pour afficher une case
+    switch(pionAff.type){
+        case 1 : printf("1");
+            if(pionAff.player==1){
+                color(JOUEUR1,15);
             }else{
-                if(*joueurAFF.pion[i].invisible==0){
-                    switch(*joueurAFF.pion[i].type==1){
-                        case 1 : printf("1");
-                            if(*joueuAff.num==1){
-                                color(4,15);
-                            }else{
-                                color(1,15);
-                            }
-                            break;
-                        case 2 : printf("2");
-                            if(*joueuAff.num==1){
-                                color(4,15);
-                            }else{
-                                color(1,15);
-                            }
-                            break;
-                    }
-                }
+                color(JOUEUR2,15);
             }
-        }
+            break;
+        case 2 : printf("2");
+            if(pionAff.player==1){
+                color(JOUEUR1,15);
+            }else{
+                color(JOUEUR2,15);
+            }
+            break;
+        case 3 : printf("3");
+            if(pionAff.player==1){
+                color(JOUEUR1,15);
+            }else{
+                color(JOUEUR2,15);
+            }
+            break;
     }
 }
 
