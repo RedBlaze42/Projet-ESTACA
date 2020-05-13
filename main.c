@@ -192,6 +192,7 @@ void afficherplateau(pion tab[][], joueur joueurAff,joueur joueur2){//on affiche
                 afficher_pion(*joueurAff.pion[i]);
             }
         }
+        printf("\n");
     }
     printf("\n");
 }
