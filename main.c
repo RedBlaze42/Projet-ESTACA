@@ -21,6 +21,11 @@
 #define gauche 68
 #define enter 13
 
+//Zones
+#define PLATEAU 0
+#define DEFENSE 1
+#define ATTAQUE 2
+
 typedef struct pion{
 	int coord_x;
 	int coord_y;
@@ -90,7 +95,7 @@ void deplacer_pions(joueur joueurSel, joueur joueur2, int pion_sel){
     }
 }
 
-void selectionner_case(joueur joueurSel, joueur joueur2, int *sel_x, int *sel_y, int libre){
+void selectionner_case(joueur joueurSel, joueur joueur2, int *sel_x, int *sel_y, int libre, int zone){
     int en_mouvement=1;
     while(en_mouvement){//Attendre que le joueur appuie sur la touche entrée
         pion plateau[DIM_PLATEAU][DIM_PLATEAU];
@@ -107,16 +112,16 @@ void selectionner_case(joueur joueurSel, joueur joueur2, int *sel_x, int *sel_y,
                 }
                 break;
             case bas:
-                y+=1;
+                if(is_in_zone(zone,x,y+1)==1) y+=1;
                 break;
             case haut:
-                y-=1;
+                if(is_in_zone(zone,x,y-1)==1) y-=1;
                 break;
             case gauche:
-                x-=1;
+                if(is_in_zone(zone,x-1,y)==1) x-=1;
                 break;
             case droite:
-                x+=1;
+                if(is_in_zone(zone,x+1,y)==1) x+=1;
                 break;
         }
     }
@@ -181,7 +186,23 @@ void afficher_pion(pion pionAff){//pour afficher une case
     }
 }
 
-
+int is_in_zone(int zone, int x, int y){
+    if(zone==PLATEAU){
+        return 1;
+    }else if(zone==DEFENSE){
+        if(x>2 && x<8 && y>2 && y<8){
+            return 1;
+        }else{
+            return 0;
+        }
+    }else if(zone==ATTAQUE){
+        if( (x>2 && x<8 && y>2 && y<8)==0 ){//vérifier
+            return 1;
+        }else{
+            return 0;
+        }
+    }
+}
 
 void afficherplateau(pion tab[][], joueur joueurAff,joueur joueur2){//on affiche le plateau
      remplirTab(pion tab[][], joueuAff, joueur2);
