@@ -29,8 +29,8 @@
 typedef struct pion{
 	int coord_x;
 	int coord_y;
-	int type=0; //CTORP CUIRASSE ou PIEGE
-	int pv=1;//2=blindé 1=vivant 0=mort
+	int type; //CTORP CUIRASSE ou PIEGE
+	int pv;//2=blindé 1=vivant 0=mort
 	int invisible; //0=visible pour tout le monde >0=nombre de tours invisibles -1=tout le temps invisible (piège)
 	int anti_blindage;
 	int player;
