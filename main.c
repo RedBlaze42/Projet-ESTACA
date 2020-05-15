@@ -107,37 +107,7 @@ int pion_peut_attaquer(joueur joueurSel, joueur joueur2, pion pionSel){
     }
 }
 
-void selectionner_attaque(joueur joueurSel, joueur joueur2, int *sel_x, int *sel_y, int libre, int zone){
-    int en_mouvement=1;
-    while(en_mouvement){//Attendre que le joueur appuie sur la touche entrée
-        pion plateau[DIM_PLATEAU][DIM_PLATEAU];
-        int x,y;
-        //Afficher plateau surbrillance
-        remplirTab(plateau, joueurSel, joueur2);
-        int direcion_prise;
-        switch(getch()) {
-            case enter:
-                if(libre!=1 || is_pionSurCase(joueurSel,joueur2,x,y)!=1){
-                    *sel_x=x;
-                    *sel_y=y;
-                    en_mouvement=0;
-                }
-                break;
-            case bas:
-                if(is_in_zone(zone,x,y+1)==1) y+=1;
-                break;
-            case haut:
-                if(is_in_zone(zone,x,y-1)==1) y-=1;
-                break;
-            case gauche:
-                if(is_in_zone(zone,x-1,y)==1) x-=1;
-                break;
-            case droite:
-                if(is_in_zone(zone,x+1,y)==1) x+=1;
-                break;
-        }
-    }
-}
+
 
 int is_pionSurCase(joueur joueurAff, joueur joueur2, int x, int y){
     for(int i=0;i<20;i++){
