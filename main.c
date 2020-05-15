@@ -106,6 +106,8 @@ int pion_peut_attaquer(joueur joueurSel, joueur joueur2, pion pionSel){
         return 0;
     }
 }
+
+void selectionner_attaque(joueur joueurSel, joueur joueur2, int *sel_x, int *sel_y, int libre, int zone){
     int en_mouvement=1;
     while(en_mouvement){//Attendre que le joueur appuie sur la touche entrée
         pion plateau[DIM_PLATEAU][DIM_PLATEAU];
