@@ -91,7 +91,21 @@ void deplacer_pions(joueur joueurSel, joueur joueur2, int pion_sel){
     }
 }
 
-void selectionner_case(joueur joueurSel, joueur joueur2, int *sel_x, int *sel_y, int libre, int zone){
+int pion_peut_attaquer(joueur joueurSel, joueur joueur2, pion pionSel){
+    pion plateau[DIM_PLATEAU][DIM_PLATEAU];
+    remplirTab(plateau, joueurSel, joueur2);
+    if(y-1>=0 && x-1>=0 && (*plateau[y-1][x-1]).player!=pionSel.player && plateau[y-1][x-1].player!=0){//Haut Gauche
+        return 1;
+    }else if(y+1<DIM_PLATEAU && x-1>=0 && plateau[y+1][x-1].player!=pionSel.player && platesau[y+1][x-1].player!=0){//Bas Gauche
+        return 1;
+    }else if(y-1>=0 && x+1<DIM_PLATEAU && plateau[y-1][x+1].player!=pionSel.player && plateau[y-1][x+1].player!=0){//Haut Droite
+        return 1;
+    }else if(y+1<DIM_PLATEAU && x+1<DIM_PLATEAU && plateau[y+1][x+1].player!=pionSel.player && plateau[y+1][x+1].player!=0){//Bas Droite
+        return 1;
+    }else{
+        return 0;
+    }
+}
     int en_mouvement=1;
     while(en_mouvement){//Attendre que le joueur appuie sur la touche entrée
         pion plateau[DIM_PLATEAU][DIM_PLATEAU];
