@@ -150,17 +150,16 @@ int is_pionSurCase(joueur joueurAff, joueur joueur2, int x, int y){
     }
     return 0;
 }
-
-void remplirTab(pion tab[][], joueur joueur1, joueur joueur2){
+void remplirTab(pion tab[][], joueur *joueur1, joueur *joueur2){
     int i;
     for(i=0,i<nb,i++){
-        if(*joueur1.pion[i].pv>0){
-            tab[*joueur1.pions[i].coord_x][*joueur1.pions[i].coord_y]=*joueur1.pion[i];
+        if(joueur1.pion[i].pv>0){
+            tab[(*joueur1.pions[i]).coord_x][(joueur1.pions[i]).coord_y]=&(joueur1.pion[i]);
         }
     }
      for(i=0,i<nb,i++){
-        if(*joueur2.pion[i].pv>0){
-            tab[*joueur2.pions[i].coord_x][*joueur2.pions[i].coord_y]=*joueur2.pion[i];
+        if(joueur2.pion[i].pv>0){
+            tab[joueur2.pions[i].coord_x][joueur2.pions[i].coord_y]=&(joueur2.pion[i]);
         }
     }
 }
