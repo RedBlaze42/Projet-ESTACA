@@ -46,21 +46,20 @@ typedef struct joueur{
 void color (int couleurDuTexte, int couleurDuFond);
 
 int main(){
-    
+    pion plateau[DIM_PLATEAU][DIM_PLATEAU];
 }
 
-void deplacer_pions(joueur joueurSel, joueur joueur2, int pion_sel){
+void deplacer_pions(joueur *joueurSel, joueur *joueur2, int pion_sel){
     int en_mouvement=1;
     while(en_mouvement){//Attendre que le joueur appuie sur la touche entrée
-        pion plateau[DIM_PLATEAU][DIM_PLATEAU];
         int x,y;
         //Afficher plateau surbrillance
         remplirTab(plateau, joueurSel, joueur2);
         int direcion_prise;
         switch(getch()) {
             case enter:
-                joueurSel.pions[pion_sel].coord_x=x;//Mauvaise synthaxe
-                joueurSel.pions[pion_sel].coord_y=y;
+                (*joueurSel.pions[pion_sel]).coord_x=x;//Mauvaise synthaxe
+                (*joueurSel.pions[pion_sel]).coord_y=y;
                 en_mouvement=0;
                 break;
             case bas:
@@ -91,8 +90,7 @@ void deplacer_pions(joueur joueurSel, joueur joueur2, int pion_sel){
     }
 }
 
-int pion_peut_attaquer(joueur joueurSel, joueur joueur2, pion pionSel){
-    pion plateau[DIM_PLATEAU][DIM_PLATEAU];
+int pion_peut_attaquer(joueur *joueurSel, joueur *joueur2, pion pionSel){
     remplirTab(plateau, joueurSel, joueur2);
     if(y-1>=0 && x-1>=0 && (*plateau[y-1][x-1]).player!=pionSel.player && plateau[y-1][x-1].player!=0){//Haut Gauche
         return 1;
@@ -107,8 +105,6 @@ int pion_peut_attaquer(joueur joueurSel, joueur joueur2, pion pionSel){
     }
 }
 
-
-
 int is_pionSurCase(joueur joueurAff, joueur joueur2, int x, int y){
     for(int i=0;i<20;i++){
         if(joueurAff.pions[i].coord_x==x && joueurAff.pions[i].coord_y==y && joueurAff.pions[i].vie>0){
@@ -122,24 +118,26 @@ int is_pionSurCase(joueur joueurAff, joueur joueur2, int x, int y){
     }
     return 0;
 }
+
 void remplirTab(pion tab[][], joueur *joueur1, joueur *joueur2){
     int i;
     for(i=0,i<nb,i++){
         if(joueur1.pion[i].pv>0){
-            tab[(*joueur1.pions[i]).coord_x][(joueur1.pions[i]).coord_y]=&(joueur1.pion[i]);
+            tab[(*joueur1.pions[i]).coord_x][(*joueur1.pions[i]).coord_y]=&(joueur1.pion[i]);
         }
     }
      for(i=0,i<nb,i++){
         if(joueur2.pion[i].pv>0){
-            tab[joueur2.pions[i].coord_x][joueur2.pions[i].coord_y]=&(joueur2.pion[i]);
+            tab[(*joueur2.pions[i]).coord_x][(*joueur2.pions[i]).coord_y]=&(joueur2.pion[i]);
         }
     }
 }
-void afficher_pion(pion pionAff){//pour afficher une case
-    switch(pionAff.type){
+
+void afficher_pion(pion *pionAff){//pour afficher une case
+    switch((*pionAff).type){
         case 1 : 
             printf("1");
-            if(pionAff.player==1){
+            if((*pionAff).player==1){
                 color(JOUEUR1,15);
             }else{
                 color(JOUEUR2,15);
@@ -147,7 +145,7 @@ void afficher_pion(pion pionAff){//pour afficher une case
             break;
         case 2 :
             printf("2");
-            if(pionAff.player==1){
+            if((*pionAff).player==1){
                 color(JOUEUR1,15);
             }else{
                 color(JOUEUR2,15);
@@ -155,7 +153,7 @@ void afficher_pion(pion pionAff){//pour afficher une case
             break;
         case 3 :
             printf("3");
-            if(pionAff.player==1){
+            if((*pionAff).player==1){
                 color(JOUEUR1,15);
             }else{
                 color(JOUEUR2,15);
@@ -185,9 +183,9 @@ int is_in_zone(int zone, int x, int y){
     }
 }
 
-void afficherplateau_sel(joueur &joueurAff,joueur &joueur2, int x, int y){//on affiche le plateau avec une case en surbrillance
+void afficherplateau_sel(joueur *joueurAff,joueur *joueur2, int x, int y){//on affiche le plateau avec une case en surbrillance
     pion plateau[DIM_PLATEAU][DIM_PLATEAU];
-    remplirTab(plateau, &joueuAff, &joueur2);
+    remplirTab(plateau, joueuAff, joueur2);
     int i, j;
     for(j=0,j<25,j++){
         for(i=0,i<25,i++){
@@ -195,8 +193,8 @@ void afficherplateau_sel(joueur &joueurAff,joueur &joueur2, int x, int y){//on a
                 color(15,15);
                 print(" ");
             }else{
-                if(*joueurAFF.pion[i].invisible=0){
-                    afficher_pion(*joueurAff.pion[i]);
+                if((*joueurAFF.pion[i]).invisible=0){
+                    afficher_pion(&(*joueurAff.pion[i]));
                 }
             }
         }
@@ -205,14 +203,14 @@ void afficherplateau_sel(joueur &joueurAff,joueur &joueur2, int x, int y){//on a
     printf("\n");
 }
 
-void afficherplateau(joueur joueurAff,joueur joueur2){//on affiche le plateau
+void afficherplateau(joueur *joueurAff,joueur *joueur2){//on affiche le plateau
     pion plateau[DIM_PLATEAU][DIM_PLATEAU];
-    remplirTab(plateau, &joueuAff, &joueur2);
+    remplirTab(plateau, joueurAff, joueur2);
     int i, j;
     for(j=0,j<25,j++){
         for(i=0,i<25,i++){
-            if(*joueurAFF.pion[i].invisible=0){
-                afficher_pion(*joueurAff.pion[i]);
+            if((*plateau[i][j]).invisible==0){
+                afficher_pion(&(plateau[i][j]));
             }
         }
         printf("\n");
