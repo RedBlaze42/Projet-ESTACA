@@ -184,7 +184,6 @@ int is_in_zone(int zone, int x, int y){
 }
 
 void afficherplateau_sel(joueur *joueurAff,joueur *joueur2, int x, int y){//on affiche le plateau avec une case en surbrillance
-    pion plateau[DIM_PLATEAU][DIM_PLATEAU];
     remplirTab(plateau, joueuAff, joueur2);
     int i, j;
     for(j=0,j<25,j++){
@@ -204,7 +203,6 @@ void afficherplateau_sel(joueur *joueurAff,joueur *joueur2, int x, int y){//on a
 }
 
 void afficherplateau(joueur *joueurAff,joueur *joueur2){//on affiche le plateau
-    pion plateau[DIM_PLATEAU][DIM_PLATEAU];
     remplirTab(plateau, joueurAff, joueur2);
     int i, j;
     for(j=0,j<25,j++){
