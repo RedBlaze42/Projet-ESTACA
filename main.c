@@ -43,10 +43,6 @@ typedef struct joueur{
 } joueur;
 
 
-int is_pionSurCase(joueur attaquant, joueur defenseur, int x, int y);
-void remplirTab(pion tab[][], joueur joueurAff, joueur joueur2);
-void afficherTab(pion tab[][], joueur joueurAff,joueur joueur2);
-void afficher_pion(pion PiOn[][], joueur joueurAFF);
 void color (int couleurDuTexte, int couleurDuFond);
 
 int main(){
