@@ -66,7 +66,7 @@ void deplacer_pions(joueur *joueurSel, joueur *joueur2, int id_pion_sel){
         int direction_prise;
         switch(getch()) {
             case enter:
-                joueurSel->pions[id_pion_sel].coord_x=x;//Mauvaise synthaxe
+                joueurSel->pions[id_pion_sel].coord_x=x;
                 joueurSel->pions[id_pion_sel].coord_y=y;
                 en_mouvement=0;
                 break;
@@ -204,7 +204,8 @@ void selectionner_case(joueur joueurSel, joueur joueur2, int *sel_x, int *sel_y,
     int en_mouvement=1;
     while(en_mouvement){//Attendre que le joueur appuie sur la touche entree
         pion plateau[DIM_PLATEAU][DIM_PLATEAU];
-        int x,y;
+        int x=0;
+        int y=0;
         //Afficher plateau surbrillance
         remplirTab(plateau, joueurSel, joueur2); 
         int direcion_prise;
@@ -394,7 +395,7 @@ void placerpions(joueur *joueurR, joueur *joueurB, pion tab[][]){
     (*joueurR->pions[1].coord_x)=6;
     (*joueurR->pions[1].coord_y)=6;
     do{
-        afficherplateau( *joueurR, *joueurB);
+        afficherplateau( joueurR, joueurB);
         selectionner_case(*joueurR, *joueurB, (*joueurR->pions[1].coord_x),(*joueurR->pions[1].coord_y), 0, DEFENSE);
         deplacer_pions(*joueurR,*joueurB, int id_pion_sel);
     }while((*joueurR->pions[1].coord_x)<4 || (*joueurR->pions[1].coord_x)>7 || (*joueurR->pions[1].coord_y)<4 || (*joueurR->pions[1].coord_y)>7);
