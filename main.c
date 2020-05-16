@@ -391,13 +391,13 @@ void color (int couleurDuTexte, int couleurDuFond){// permet de gerer les couleu
 }
 void placerpions(joueur *joueurR, joueur *joueurB, pion tab[][]){
     printf("Au joueur rouge de placer ses pions/n");
-    (*joueurR->pions[1].type)=2;
+    (*joueurR->pions[1].type)=2;//Corriger tout les (*joueurR->pions[1]) par des joueurR->pions[1]
     (*joueurR->pions[1].coord_x)=6;
     (*joueurR->pions[1].coord_y)=6;
     do{
-        afficherplateau( joueurR, joueurB);
+        afficherplateau( joueurR, joueurB);//Pas besoin d'afficher le plateau car la fonction séléctionner case l'affiche déjà
         selectionner_case(*joueurR, *joueurB, (*joueurR->pions[1].coord_x),(*joueurR->pions[1].coord_y), 0, DEFENSE);
-        deplacer_pions(*joueurR,*joueurB, int id_pion_sel);
+        deplacer_pions(*joueurR,*joueurB, int id_pion_sel);//Pas utiliser cette fonction mais plutôt modifier direct les coordonnées des pions
     }while((*joueurR->pions[1].coord_x)<4 || (*joueurR->pions[1].coord_x)>7 || (*joueurR->pions[1].coord_y)<4 || (*joueurR->pions[1].coord_y)>7);
     int i;
     for(i=1,i<3,i++){
@@ -405,7 +405,7 @@ void placerpions(joueur *joueurR, joueur *joueurB, pion tab[][]){
         (*joueurR->pions[i].pv)=2;
         int x , y, f;
         do{
-            for(y=3,y<8,y++){
+            for(y=3,y<8,y++){//Pas besoin de ça
                 for(x=3,y<8,y++){
                     if(is_pionSurCase(*joueurR,*joueurB, x, y)==0){
                         (*joueurR->pions[i].coord_x)=x;
