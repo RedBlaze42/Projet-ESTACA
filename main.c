@@ -399,7 +399,7 @@ void placerpions(joueur *joueurR, joueur *joueurB, pion tab[][]){
         deplacer_pions(*joueurR,*joueurB, int id_pion_sel);
     }while((*joueurR->pion[1].coord_x)<4 || (*joueurR->pion[1].coord_x)>7 || (*joueurR->pion[1].coord_y)<4 || (*joueurR->pion[1].coord_y)>7);
     int i;
-    for(i=0,i<2,i++){
+    for(i=1,i<3,i++){
         (*joueurR->pion[i].type)=1;
         (*joueurR->pion[i].pv)=2;
         int x , y, f;
@@ -419,10 +419,88 @@ void placerpions(joueur *joueurR, joueur *joueurB, pion tab[][]){
         
         do{
             afficherplateau( *joueurR, *joueurB);
-            selectionner_case(*joueurR, *joueurB, (*joueurR->pion[i].coord_x),(*joueurR->pion[i].coord_y), int libre, int zone);
+            selectionner_case(*joueurR, *joueurB, (*joueurR->pion[i].coord_x),(*joueurR->pion[i].coord_y), 0, DEFENSE);
             deplacer_pions(*joueurR,*joueurB, int id_pion_sel);
         }while((*joueurR->pion[i].coord_x)<4 || (*joueurR->pion[i].coord_x)>7 || (*joueurR->pion[i].coord_y)<4 || (*joueurR->pion[i].coord_y)>7);
     }
+
+    for(i=3,i<13,i++){
+        (*joueurR->pion[i].type)=1;
+        (*joueurR->pion[i].pv)=1;
+        int x , y, f;
+        do{
+            for(y=3,y<8,y++){
+                for(x=3,y<8,y++){
+                    if(is_pionSurCase(*joueurR,*joueurB, x, y)==0){
+                        (*joueurR->pion[i].coord_x)=x;
+                        (*joueurR->pion[i].coord_y)=y;
+                        f=0;
+                    }else{
+                        f=1;
+                    }
+                }
+            }
+        }while(f!=0)
+        
+        do{
+            afficherplateau( *joueurR, *joueurB);
+            selectionner_case(*joueurR, *joueurB, (*joueurR->pion[i].coord_x),(*joueurR->pion[i].coord_y), 0, DEFENSE);
+            deplacer_pions(*joueurR,*joueurB, int id_pion_sel);
+        }while((*joueurR->pion[i].coord_x)<4 || (*joueurR->pion[i].coord_x)>7 || (*joueurR->pion[i].coord_y)<4 || (*joueurR->pion[i].coord_y)>7);
+    }
+
+    printf("Au tour du joueur bleu de placer ses pions/n");
+    int i;
+    for(i=0,i<2,i++){
+        (*joueurB->pion[i].type)=1;
+        (*joueurB->pion[i].pv)=2;
+        int x , y, f;
+        do{
+            for(y=,y<8,y++){
+                for(x=3,y<8,y++){
+                    if(is_pionSurCase(*joueurR,*joueurB, x, y)==0){
+                        (*joueurB->pion[i].coord_x)=x;
+                        (*joueurB->pion[i].coord_y)=y;
+                        f=0;
+                    }else{
+                        f=1;
+                    }
+                }
+            }
+        }while(f!=0)
+        
+        do{
+            afficherplateau( *joueurR, *joueurB);
+            selectionner_case(*joueurR, *joueurB, (*joueurB->pion[i].coord_x),(*joueurB->pion[i].coord_y), 0, DEFENSE);
+            deplacer_pions(*joueurR,*joueurB, int id_pion_sel);
+        }while((*joueurB->pion[i].coord_x)<4 || (*joueurB->pion[i].coord_x)>7 || (*joueurB->pion[i].coord_y)<4 || (*joueurB->pion[i].coord_y)>7);
+    }
+
+    for(i=3,i<13,i++){
+        (*joueurB->pion[i].type)=1;
+        (*joueurB->pion[i].pv)=1;
+        int x , y, f;
+        do{
+            for(y=3,y<8,y++){
+                for(x=3,y<8,y++){
+                    if(is_pionSurCase(*joueurR,*joueurB, x, y)==0){
+                        (*joueurB->pion[i].coord_x)=x;
+                        (*joueurB->pion[i].coord_y)=y;
+                        f=0;
+                    }else{
+                        f=1;
+                    }
+                }
+            }
+        }while(f!=0)
+        
+        do{
+            afficherplateau( *joueurR, *joueurB);
+            selectionner_case(*joueurR, *joueurB, (*joueurB->pion[i].coord_x),(*joueurB->pion[i].coord_y), 0, DEFENSE);
+            deplacer_pions(*joueurR,*joueurB, int id_pion_sel);
+        }while((*joueurB->pion[i].coord_x)<4 || (*joueurB->pion[i].coord_x)>7 || (*joueurB->pion[i].coord_y)<4 || (*joueurB->pion[i].coord_y)>7);
+    }
+
 
 
 }
