@@ -36,8 +36,8 @@ typedef struct pion{
 	int coord_x;
 	int coord_y;
 	int type; //CTORP CUIRASSE ou PIEGE
-	int pv;//2=blindé 1=vivant 0=mort
-	int invisible; //0=visible pour tout le monde >0=nombre de tours invisibles -1=tout le temps invisible (piège)
+	int pv;//2=blinde 1=vivant 0=mort
+	int invisible; //0=visible pour tout le monde >0=nombre de tours invisibles -1=tout le temps invisible (piege)
 	int anti_blindage;
 	int player;
 } pion;
@@ -58,7 +58,7 @@ int main(){
 
 void deplacer_pions(joueur *joueurSel, joueur *joueur2, int id_pion_sel){
     int en_mouvement=1;
-    while(en_mouvement){//Attendre que le joueur appuie sur la touche entrée
+    while(en_mouvement){//Attendre que le joueur appuie sur la touche entree
         int x=0;
         int y=0;
         pion *plateau[DIM_PLATEAU][DIM_PLATEAU];
@@ -116,7 +116,7 @@ int pion_peut_attaquer(joueur *joueurSel, joueur *joueur2, pion *pionSel){//Reto
     }
 }
 
-/*Pour vérifier si un joueur peut attaquer
+/*Pour verifier si un joueur peut attaquer
 int peut_attaquer=0;
 for(int i=0;i<joueurSel->nb_pions;i++){
     if(pion_peut_attaquer(joueurSel, joueur2, joueurSel->pions[i])==1){
@@ -128,7 +128,7 @@ if(peut_attaquer==0){
 }   
 */
 
-void selectionner_attaque(joueur *joueurSel, joueur *joueur2){//Permet au joueur de sélectionner le pion qui attaque et la case à attaquer
+void selectionner_attaque(joueur *joueurSel, joueur *joueur2){//Permet au joueur de selectionner le pion qui attaque et la case a attaquer
     pion *plateau[DIM_PLATEAU][DIM_PLATEAU];
     remplirTab(plateau, joueurSel, joueur2);
     
@@ -140,7 +140,7 @@ void selectionner_attaque(joueur *joueurSel, joueur *joueur2){//Permet au joueur
             if(i>=joueurSel->nb_pions) i=0;
         }
         afficherplateau_sel(joueurSel, joueur2, joueurSel->pions[i].coord_x, joueurSel->pions[i].coord_y);
-        if(getch()==enter){//Pion sélectionné
+        if(getch()==enter){//Pion selectionne
             int direction_attaque=0;//Pour cycler les diagonales
             pion *pionSel=&(joueurSel->pions[i]);
             int y = pionSel->coord_y;
@@ -160,7 +160,7 @@ void selectionner_attaque(joueur *joueurSel, joueur *joueur2){//Permet au joueur
                     }else if(direction_attaque==bas_droit && (y+1<DIM_PLATEAU && x+1<DIM_PLATEAU && plateau[y+1][x+1]->player!=pionSel->player && plateau[y+1][x+1]->player!=0)==0){//Bas Droite
                         direction_attaque++;
                     }else{
-                        direction_valide=1;//Pas eu besoin d'incrémenter la direction donc elle est valide
+                        direction_valide=1;//Pas eu besoin d'incrementer la direction donc elle est valide
                     }
                     if(direction_attaque>=4) direction_attaque=0;
                 }
@@ -184,13 +184,13 @@ void selectionner_attaque(joueur *joueurSel, joueur *joueur2){//Permet au joueur
                 }
 
                 afficherplateau_sel(joueurSel, joueur2,x_attaque,y_attaque);
-                if(getch()==enter){//Pion à attaquer sélectionné
+                if(getch()==enter){//Pion a attaquer selectionne
                     //TODO ATTAQUE
                     pion *victime=plateau[y_attaque][x_attaque];
                     victime->pv--;
                     pionSel->coord_x=x_attaque;
                     pionSel->coord_y=y_attaque;
-                    //TODO Rajouter le check pour les pièges en dessous du bateau coulé (sous programme ?)
+                    //TODO Rajouter le check pour les pieges en dessous du bateau coule (sous programme ?)
                 }else{
                     direction_attaque++;
                 }
@@ -202,11 +202,11 @@ void selectionner_attaque(joueur *joueurSel, joueur *joueur2){//Permet au joueur
 
 void selectionner_case(joueur joueurSel, joueur joueur2, int *sel_x, int *sel_y, int libre, int zone){
     int en_mouvement=1;
-    while(en_mouvement){//Attendre que le joueur appuie sur la touche entrée
+    while(en_mouvement){//Attendre que le joueur appuie sur la touche entree
         pion plateau[DIM_PLATEAU][DIM_PLATEAU];
         int x,y;
         //Afficher plateau surbrillance
-        remplirTab(plateau, joueurSel, joueur2);
+        remplirTab(plateau, joueurSel, joueur2); 
         int direcion_prise;
         switch(getch()) {
             case enter:
@@ -309,7 +309,7 @@ int is_in_zone(int zone, int x, int y){
             return 0;
         }
     }else if(zone==ATTAQUE){
-        if( (x>2 && x<8 && y>2 && y<8)==0 ){//vérifier
+        if( (x>2 && x<8 && y>2 && y<8)==0 ){//verifier
             return 1;
         }else{
             return 0;
@@ -357,47 +357,75 @@ void afficherplateau(joueur *joueurAff,joueur *joueur2){//on affiche le plateau
 
 void lectureRegles(){
     int c;
-    printf("Bienvenu sur seawars./nle but du jeu est de manger tous les pions de l'adversaire/n/nAu début de la partie, le premier joueur dispose le cuirassé dans la case centrale marquée d'un rond,/npuis il place ses douze contre-torpilleurs à sa convenance, à l'intérieur du carré central de vingt-cinq cases./nLorsque le premier joueur a fini de placer ses pions, c'est au tour du deuxième joueur/nde disposer ses vingt contretorpilleurs comme il en a envie, mais à l'extérieur du carré central./nUne fois terminé le placement de tous les pions, chaque joueur pioche deux cartes spéciales de la couleur correspondante./nLe rouge a le pouvoir de décider à qui revient de jouer le premier coup, et la partie peut alors commencer./n "); 
+    printf("Bienvenu sur seawars./nle but du jeu est de manger tous les pions de l'adversaire/n/nAu debut de la partie, le premier joueur dispose le cuirasse dans la case centrale marquee d'un rond,/npuis il place ses douze contre-torpilleurs a sa convenance, a l'interieur du carre central de vingt-cinq cases./nLorsque le premier joueur a fini de placer ses pions, c'est au tour du deuxieme joueur/nde disposer ses vingt contretorpilleurs comme il en a envie, mais a l'exterieur du carre central./nUne fois termine le placement de tous les pions, chaque joueur pioche deux cartes speciales de la couleur correspondante./nLe rouge a le pouvoir de decider a qui revient de jouer le premier coup, et la partie peut alors commencer./n "); 
     do{
-        printf("Pour voir les déplacement/attaques des pions tapez 1/nPour voir la nature des pionstapez 2/nPour voir les capacitées des cartes spéciales bleues tapez 3/nPour voir les capacitées des cartes spéciales rouges tapez 4/nPour passer directement au début de la partie tapez 5/n");
+        printf("Pour voir les deplacement/attaques des pions tapez 1/nPour voir la nature des pionstapez 2/nPour voir les capacitees des cartes speciales bleues tapez 3/nPour voir les capacitees des cartes speciales rouges tapez 4/nPour passer directement au debut de la partie tapez 5/n");
         c = getchar();
-        }while(c<1 || c>5);
-    if(c != '\n' && c != EOF)
-      {
+    }while(c<1 || c>5);
+    if(c != '\n' && c != EOF){
          int d;
          while((d = getchar()) != '\n' && d != EOF);
-      }
- 
+    }
     switch(c){
         case '1':
-            printf("Déplacments:/nToutes les pièces se déplacent en ligne orthogonale et peuvent parcourir des rangées entières de cases vides/nen s'arrêtant où bon leur semble,mais elles ne peuvent pas sauter par-dessus une case occupée./n Elles ne peuvent pas éliminer un pion (de leur camp ou du camp adverse) qui bloque leur avancée,/n mais elles doivent s'arrêter sur une case attenante /n/nAttaques:/nLes pièces s’attaquent mutuellement entre cases voisines directe,/Nen se déplaçant en diagonale dans n'importe quelle direction./nLorsqu'un un navire détruit un autre navire, il enlève du damier le pion éliminé et prend sa place./nAttaquer un pion menacé n'est pas une obligation.");
+            printf("Deplacments:/nToutes les pieces se deplacent en ligne orthogonale et peuvent parcourir des rangees entieres de cases vides/nen s'arrêtant où bon leur semble,mais elles ne peuvent pas sauter par-dessus une case occupee./n Elles ne peuvent pas eliminer un pion (de leur camp ou du camp adverse) qui bloque leur avancee,/n mais elles doivent s'arrêter sur une case attenante /n/nAttaques:/nLes pieces s’attaquent mutuellement entre cases voisines directe,/Nen se deplaçant en diagonale dans n'importe quelle direction./nLorsqu'un un navire detruit un autre navire, il enleve du damier le pion elimine et prend sa place./nAttaquer un pion menace n'est pas une obligation.");
         break;
         case '2':
-            printf("Il existe 4 types de pions:/n- Les cuirassés/n- Les contretorpilleurs blindés(pions moyens, doivent être attaqué deux fois pour être détruits,/nattaqués une fois, ils perdent leurs blindages et deviennent des contre-torpilleurs normaux.)/n- Les contre torpilleurs/n- Les cartes pièges(voir cartes piège rouges et bleues)/n/n/nLe joueur rouge:/n- Un cuirassé(le grand pion),/n- Deux contretorpilleurs blindés/n- Dix contre-torpilleurs(pions normaux)./n/nSon adversaire, le joueur bleu:/n- Deux contretorpilleurs blindés/n- Dix-huit contre-torpilleurs/n");
+            printf("Il existe 4 types de pions:/n- Les cuirasses/n- Les contretorpilleurs blindes(pions moyens, doivent être attaque deux fois pour être detruits,/nattaques une fois, ils perdent leurs blindages et deviennent des contre-torpilleurs normaux.)/n- Les contre torpilleurs/n- Les cartes pieges(voir cartes piege rouges et bleues)/n/n/nLe joueur rouge:/n- Un cuirasse(le grand pion),/n- Deux contretorpilleurs blindes/n- Dix contre-torpilleurs(pions normaux)./n/nSon adversaire, le joueur bleu:/n- Deux contretorpilleurs blindes/n- Dix-huit contre-torpilleurs/n");
         break;
         case '3':
-            printf("1. Carte déplacement libre: Cette carte peut être activée juste avant un déplacement/net permettra à un pion de se déplacer en diagonale durant un tour./n/n2. Carte mort subite : Cette carte peut être utilisée au début ou à la fin d’un tout,/nelle permet d’attaquer n’importe quel navire ennemi (excepté le cuirassé)./n/n3. Carte renfort : Cette carte peut être utilisée au début ou à la fin d’un tout,/nelle permet de rappeler deux contre-torpilleurs détruits ou un blindé sur le plateau./nLes navires rappelés doivent être déposer forcément sur la périphérie du plateau. /n/n4. Carte Anti-blindage : Cette carte peut être activée au début d’un tour, elle permet de rendre,/ndurant toute la partie, un contre-torpilleur capable de détruire un blindé en un seul coup./n/n5. Carte déplacement multiple : Cette carte peut être activée au début d’un tour,/nelle permet d’effectuer trois déplacements au lieu de deux./n");
+            printf("1. Carte deplacement libre: Cette carte peut être activee juste avant un deplacement/net permettra a un pion de se deplacer en diagonale durant un tour./n/n2. Carte mort subite : Cette carte peut être utilisee au debut ou a la fin d’un tout,/nelle permet d’attaquer n’importe quel navire ennemi (excepte le cuirasse)./n/n3. Carte renfort : Cette carte peut être utilisee au debut ou a la fin d’un tout,/nelle permet de rappeler deux contre-torpilleurs detruits ou un blinde sur le plateau./nLes navires rappeles doivent être deposer forcement sur la peripherie du plateau. /n/n4. Carte Anti-blindage : Cette carte peut être activee au debut d’un tour, elle permet de rendre,/ndurant toute la partie, un contre-torpilleur capable de detruire un blinde en un seul coup./n/n5. Carte deplacement multiple : Cette carte peut être activee au debut d’un tour,/nelle permet d’effectuer trois deplacements au lieu de deux./n");
         break;
         case '4':
-            printf("1. Carte piège : Cette carte peut être activée au début ou à la fin d’un tour et/nelle permet de placer deux pièges sur la carte. Ces piges sont invisibles pour l’adversaire./nSi lors d’un déplacement un pion adverse passe par un piège,/nle pion sera détruit et le piège désactivé. Si c’est un blindé qui passe par le piège, il perdra son blindage./n/n2. Carte bouclier : Cette carte peut être activée au début ou à la fin d’un tour et/nelle permet de rajouter un blindage supplémentaire à n’importe quel navire./n/n3. Carte contre-attaque : Cette carte peut être activée lors qu’on un pion rouge est attaqué./nLe pion attaqué ne subit pas de dégâts et c’est l’attaquant qui subit les dégâts à sa place./n/n4. Carte permutation : Cette carte peut être activée au début ou à la fin d’un tour et/nelle permet à deux pions (rouges ou bleus) d’échanger leurs positons sur le plateau./n/n 5. Carte déplacement furtif : Cette carte peut être activée juste avant un déplacement./nLe pion déplacé devient invisible pour l’adversaire durant le tour suivant./nSi lors d’un déplacement d’un pion bleu, il croise sur son chemin le navire invisible,/ncelui-ci sera découvert et le pion bleu devra, bien sûr, s’arrêter./n");
+            printf("1. Carte piege : Cette carte peut être activee au debut ou a la fin d’un tour et/nelle permet de placer deux pieges sur la carte. Ces piges sont invisibles pour l’adversaire./nSi lors d’un deplacement un pion adverse passe par un piege,/nle pion sera detruit et le piege desactive. Si c’est un blinde qui passe par le piege, il perdra son blindage./n/n2. Carte bouclier : Cette carte peut être activee au debut ou a la fin d’un tour et/nelle permet de rajouter un blindage supplementaire a n’importe quel navire./n/n3. Carte contre-attaque : Cette carte peut être activee lors qu’on un pion rouge est attaque./nLe pion attaque ne subit pas de degâts et c’est l’attaquant qui subit les degâts a sa place./n/n4. Carte permutation : Cette carte peut être activee au debut ou a la fin d’un tour et/nelle permet a deux pions (rouges ou bleus) d’echanger leurs positons sur le plateau./n/n 5. Carte deplacement furtif : Cette carte peut être activee juste avant un deplacement./nLe pion deplace devient invisible pour l’adversaire durant le tour suivant./nSi lors d’un deplacement d’un pion bleu, il croise sur son chemin le navire invisible,/ncelui-ci sera decouvert et le pion bleu devra, bien sûr, s’arrêter./n");
             break;
         case '5':
-        printf("C'est parti/n");
+            printf("Ok let's go/n");
     }
 }
 
-void color (int couleurDuTexte, int couleurDuFond){// permet de gérer les couleurs
+void color (int couleurDuTexte, int couleurDuFond){// permet de gerer les couleurs
     HANDLE H = GetStdHandle(STD_OUTPUT_HANDLE);
     SetConsoleTextAttribute(H, couleurDuFond*16+couleurDuTexte);
 }
 void placerpions(joueur *joueurR, joueur *joueurB, pion tab[][]){
     printf("Au joueur rouge de placer ses pions/n");
-    (*joueurR->pion[1].type)=1;
-    (*joueurR->pion[1].coord_x)=1;
-    (*joueurR->pion[1].coord_y)=1;
-    afficherplateau( *joueurR, *joueurB);
-    afficherplateau_sel(*joueurR,*joueurB,(*joueurR->pion[1].coord_x) , (*joueurR->pion[1].coord_y));
-    deplacer_pions(*joueurR,*joueurB, int id_pion_sel);
+    (*joueurR->pion[1].type)=2;
+    (*joueurR->pion[1].coord_x)=6;
+    (*joueurR->pion[1].coord_y)=6;
+    do{
+        afficherplateau( *joueurR, *joueurB);
+        selectionner_case(*joueurR, *joueurB, (*joueurR->pion[1].coord_x),(*joueurR->pion[1].coord_y), 0, DEFENSE);
+        deplacer_pions(*joueurR,*joueurB, int id_pion_sel);
+    }while((*joueurR->pion[1].coord_x)<4 || (*joueurR->pion[1].coord_x)>7 || (*joueurR->pion[1].coord_y)<4 || (*joueurR->pion[1].coord_y)>7);
+    int i;
+    for(i=0,i<2,i++){
+        (*joueurR->pion[i].type)=1;
+        (*joueurR->pion[i].pv)=2;
+        int x , y, f;
+        do{
+            for(y=3,y<8,y++){
+                for(x=3,y<8,y++){
+                    if(is_pionSurCase(*joueurR,*joueurB, x, y)==0){
+                        (*joueurR->pion[i].coord_x)=x;
+                        (*joueurR->pion[i].coord_y)=y;
+                        f=0;
+                    }else{
+                        f=1;
+                    }
+                }
+
+
+
+            }
+        }while(f!=0)
+        
+        do{
+            afficherplateau( *joueurR, *joueurB);
+            selectionner_case(*joueurR, *joueurB, (*joueurR->pion[i].coord_x),(*joueurR->pion[i].coord_y), int libre, int zone);
+            deplacer_pions(*joueurR,*joueurB, int id_pion_sel);
+        }while((*joueurR->pion[i].coord_x)<4 || (*joueurR->pion[i].coord_x)>7 || (*joueurR->pion[i].coord_y)<4 || (*joueurR->pion[i].coord_y)>7);
+    }
 
 
 }
