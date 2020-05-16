@@ -414,9 +414,6 @@ void placerpions(joueur *joueurR, joueur *joueurB, pion tab[][]){
                         f=1;
                     }
                 }
-
-
-
             }
         }while(f!=0)
         
