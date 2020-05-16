@@ -49,7 +49,7 @@ typedef struct joueur{
 	int cartes[2];
 } joueur;
 
-void placerpions(joueur joueurR, joueur joueurB, pion tab[][]);
+void placerpions(joueur joueurR, joueur joueurB);
 void color (int couleurDuTexte, int couleurDuFond);
 
 int main(){
@@ -388,7 +388,7 @@ void color (int couleurDuTexte, int couleurDuFond){// permet de gerer les couleu
     HANDLE H = GetStdHandle(STD_OUTPUT_HANDLE);
     SetConsoleTextAttribute(H, couleurDuFond*16+couleurDuTexte);
 }
-void placerpions(joueur *joueurR, joueur *joueurB, pion tab[][]){
+void placerpions(joueur *joueurR, joueur *joueurB,){
     printf("Au joueur rouge de placer ses pions/n");
     (*joueurR->pions[1].type)=2;
     (*joueurR->pions[1].coord_x)=6;
