@@ -49,7 +49,6 @@ typedef struct joueur{
 	int cartes[2];
 } joueur;
 
-void placerpions(joueur joueurR, joueur joueurB);
 void color (int couleurDuTexte, int couleurDuFond);
 
 int main(){
