@@ -98,7 +98,7 @@ void deplacer_pions(joueur *joueurSel, joueur *joueur2, int id_pion_sel){
     }
 }
 
-int pion_peut_attaquer(joueur *joueurSel, joueur *joueur2, pion *pionSel){
+int pion_peut_attaquer(joueur *joueurSel, joueur *joueur2, pion *pionSel){//Retourne 
     pion *plateau[DIM_PLATEAU][DIM_PLATEAU];
     remplirTab(plateau, joueurSel, joueur2);
     int y = pionSel->coord_y;
@@ -113,6 +113,90 @@ int pion_peut_attaquer(joueur *joueurSel, joueur *joueur2, pion *pionSel){
         return 1;
     }else{
         return 0;
+    }
+}
+
+/*Pour vérifier si un joueur peut attaquer
+int peut_attaquer=0;
+for(int i=0;i<joueurSel->nb_pions;i++){
+    if(pion_peut_attaquer(joueurSel, joueur2, joueurSel->pions[i])==1){
+        peut_attaquer=1;
+    }
+}
+if(peut_attaquer==0){
+    printf("Aucun de vos pions ne peut attaquer\n");
+}   
+*/
+
+void selectionner_attaque(joueur *joueurSel, joueur *joueur2){//Permet au joueur de sélectionner le pion qui attaque et la case à attaquer
+    pion *plateau[DIM_PLATEAU][DIM_PLATEAU];
+    remplirTab(plateau, joueurSel, joueur2);
+    
+    int i=0;
+    int fin_boucle=0;
+    while(fin_boucle!=0){
+        while(pion_peut_attaquer(joueurSel, joueur2, &(joueurSel->pions[i]))!=1){//Cherche le prochain pion en position d'attaquer
+            i++;
+            if(i>=joueurSel->nb_pions) i=0;
+        }
+        afficherplateau_sel(joueurSel, joueur2, joueurSel->pions[i].coord_x, joueurSel->pions[i].coord_y);
+        if(getch()==enter){//Pion sélectionné
+            int direction_attaque=0;//Pour cycler les diagonales
+            pion *pionSel=&(joueurSel->pions[i]);
+            int y = pionSel->coord_y;
+            int x = pionSel->coord_x;
+            int y_attaque=y-1;
+            int x_attaque=x-1;
+            int direction_valide;
+            while(fin_boucle!=0){
+                direction_valide=0;
+                while(direction_valide==0){
+                    if(direction_attaque==haut_gauche && (y-1>=0 && x-1>=0 && plateau[y-1][x-1]->player!=pionSel->player && plateau[y-1][x-1]->player!=0)==0 ){//Haut Gauche
+                        direction_attaque++;
+                    }else if(direction_attaque==haut_droit && (y-1>=0 && x+1<DIM_PLATEAU && plateau[y-1][x+1]->player!=pionSel->player && plateau[y-1][x+1]->player!=0)==0){//Haut Droite
+                        direction_attaque++;
+                    }else if(direction_attaque==bas_gauche && (y+1<DIM_PLATEAU && x-1>=0 && plateau[y+1][x-1]->player!=pionSel->player && plateau[y+1][x-1]->player!=0)==0){//Bas Gauche
+                        direction_attaque++;
+                    }else if(direction_attaque==bas_droit && (y+1<DIM_PLATEAU && x+1<DIM_PLATEAU && plateau[y+1][x+1]->player!=pionSel->player && plateau[y+1][x+1]->player!=0)==0){//Bas Droite
+                        direction_attaque++;
+                    }else{
+                        direction_valide=1;//Pas eu besoin d'incrémenter la direction donc elle est valide
+                    }
+                    if(direction_attaque>=4) direction_attaque=0;
+                }
+                switch(direction_attaque){
+                    case haut_droit:
+                        y_attaque=y-1;
+                        x_attaque=x-1;
+                        break;
+                    case haut_gauche:
+                        y_attaque=y-1;
+                        x_attaque=x+1;
+                        break;
+                    case bas_droit:
+                        y_attaque=y+1;
+                        x_attaque=x-1;
+                        break;
+                    case bas_gauche:
+                        y_attaque=y+1;
+                        x_attaque=x+1;
+                        break;
+                }
+
+                afficherplateau_sel(joueurSel, joueur2,x_attaque,y_attaque);
+                if(getch()==enter){//Pion à attaquer sélectionné
+                    //TODO ATTAQUE
+                    pion *victime=plateau[y_attaque][x_attaque];
+                    victime->pv--;
+                    pionSel->coord_x=x_attaque;
+                    pionSel->coord_y=y_attaque;
+                    //TODO Rajouter le check pour les pièges en dessous du bateau coulé (sous programme ?)
+                }else{
+                    direction_attaque++;
+                }
+            }
+            
+        }
     }
 }
 
