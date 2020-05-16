@@ -43,13 +43,13 @@ typedef struct pion{
 } pion;
 
 typedef struct joueur{
-    int num;
+    int num;//joueurrouge=1 joueurbleu=2
 	pion pions[20];
     int nb_pions;
 	int cartes[2];
 } joueur;
 
-
+void placerpions(joueur joueurR, joueur joueurB, pion tab[][]);
 void color (int couleurDuTexte, int couleurDuFond);
 
 int main(){
@@ -325,21 +325,9 @@ void afficherplateau(joueur *joueurAff,joueur *joueur2){//on affiche le plateau
 
 void lectureRegles(){
     int c;
-    printf("Bienvenu sur seawars./n
-    le but du jeu est de manger tous les pions de l'adversaire/n 
-    
-    Au début de la partie, le premier joueur dispose le cuirassé dans la case centrale marquée d'un rond,/n
-    puis il place ses douze contre-torpilleurs à sa convenance, à l'intérieur du carré central de vingt-cinq cases./n
-    Lorsque le premier joueur a fini de placer ses pions, c'est au tour du deuxième joueur/n
-    de disposer ses vingt contretorpilleurs comme il en a envie, mais à l'extérieur du carré central./n
-    Une fois terminé le placement de tous les pions, chaque joueur pioche deux cartes spéciales de la couleur correspondante./n
-    Le rouge a le pouvoir de décider à qui revient de jouer le premier coup, et la partie peut alors commencer./n "); 
+    printf("Bienvenu sur seawars./nle but du jeu est de manger tous les pions de l'adversaire/n/nAu début de la partie, le premier joueur dispose le cuirassé dans la case centrale marquée d'un rond,/npuis il place ses douze contre-torpilleurs à sa convenance, à l'intérieur du carré central de vingt-cinq cases./nLorsque le premier joueur a fini de placer ses pions, c'est au tour du deuxième joueur/nde disposer ses vingt contretorpilleurs comme il en a envie, mais à l'extérieur du carré central./nUne fois terminé le placement de tous les pions, chaque joueur pioche deux cartes spéciales de la couleur correspondante./nLe rouge a le pouvoir de décider à qui revient de jouer le premier coup, et la partie peut alors commencer./n "); 
     do{
-        printf("Pour voir les déplacement/attaques des pions tapez 1/n
-        Pour voir la nature des pionstapez 2/n
-        Pour voir les capacitées des cartes spéciales bleues tapez 3/n
-        Pour voir les capacitées des cartes spéciales rouges tapez 4/n
-        Pour passer directement au début de la partie tapez 5/n");
+        printf("Pour voir les déplacement/attaques des pions tapez 1/nPour voir la nature des pionstapez 2/nPour voir les capacitées des cartes spéciales bleues tapez 3/nPour voir les capacitées des cartes spéciales rouges tapez 4/nPour passer directement au début de la partie tapez 5/n");
         c = getchar();
         }while(c<1 || c>5);
     if(c != '\n' && c != EOF)
@@ -350,81 +338,34 @@ void lectureRegles(){
  
     switch(c){
         case '1':
-            printf("Déplacments:
-            Toutes les pièces se déplacent en ligne orthogonale et peuvent parcourir des rangées entières de cases vides/n
-            en s'arrêtant où bon leur semble,mais elles ne peuvent pas sauter par-dessus une case occupée./n 
-            Elles ne peuvent pas éliminer un pion (de leur camp ou du camp adverse) qui bloque leur avancée,/n 
-            mais elles doivent s'arrêter sur une case attenante /n
-
-            Attaques:
-            Les pièces s’attaquent mutuellement entre cases voisines directe,/N
-            en se déplaçant en diagonale dans n'importe quelle direction./n
-            Lorsqu'un un navire détruit un autre navire, il enlève du damier le pion éliminé et prend sa place./n
-            Attaquer un pion menacé n'est pas une obligation.");
+            printf("Déplacments:/nToutes les pièces se déplacent en ligne orthogonale et peuvent parcourir des rangées entières de cases vides/nen s'arrêtant où bon leur semble,mais elles ne peuvent pas sauter par-dessus une case occupée./n Elles ne peuvent pas éliminer un pion (de leur camp ou du camp adverse) qui bloque leur avancée,/n mais elles doivent s'arrêter sur une case attenante /n/nAttaques:/nLes pièces s’attaquent mutuellement entre cases voisines directe,/Nen se déplaçant en diagonale dans n'importe quelle direction./nLorsqu'un un navire détruit un autre navire, il enlève du damier le pion éliminé et prend sa place./nAttaquer un pion menacé n'est pas une obligation.");
         break;
         case '2':
-            printf("Il existe 4 types de pions:
-            - Les cuirassés()/n
-            - Les contretorpilleurs blindés(pions moyens, doivent être attaqué deux fois pour être détruits,/n
-                attaqués une fois, ils perdent leurs blindages et deviennent des contre-torpilleurs normaux.)/n
-            - Les contre torpilleurs()/n
-            - Les cartes pièges(voir cartes piège rouges et bleues)/n
-            
-                
-                Le joueur rouge:/n
-            - Un cuirassé(le grand pion),/n
-            - Deux contretorpilleurs blindés(pions moyens, doivent être attaqué deux fois pour être détruits,/n
-                attaqués une fois, ils perdent leurs blindages et deviennent des contre-torpilleurs normaux.)/n
-            - Dix contre-torpilleurs(pions normaux)./n
-
-            Son adversaire, le joueur bleu:/n
-            - Deux contretorpilleurs blindés/n
-            - Dix-huit contre-torpilleurs/n");
+            printf("Il existe 4 types de pions:/n- Les cuirassés/n- Les contretorpilleurs blindés(pions moyens, doivent être attaqué deux fois pour être détruits,/nattaqués une fois, ils perdent leurs blindages et deviennent des contre-torpilleurs normaux.)/n- Les contre torpilleurs/n- Les cartes pièges(voir cartes piège rouges et bleues)/n/n/nLe joueur rouge:/n- Un cuirassé(le grand pion),/n- Deux contretorpilleurs blindés/n- Dix contre-torpilleurs(pions normaux)./n/nSon adversaire, le joueur bleu:/n- Deux contretorpilleurs blindés/n- Dix-huit contre-torpilleurs/n");
         break;
         case '3':
-            printf("1. Carte déplacement libre: Cette carte peut être activée juste avant un déplacement/n
-            et permettra à un pion de se déplacer en diagonale durant un tour./n
- 
-            2. Carte mort subite : Cette carte peut être utilisée au début ou à la fin d’un tout,/n
-            elle permet d’attaquer n’importe quel navire ennemi (excepté le cuirassé)./n 
-            
-            3. Carte renfort : Cette carte peut être utilisée au début ou à la fin d’un tout,/n
-            elle permet de rappeler deux contre-torpilleurs détruits ou un blindé sur le plateau./n
-            Les navires rappelés doivent être déposer forcément sur la périphérie du plateau. /n 
-            
-            4. Carte Anti-blindage : Cette carte peut être activée au début d’un tour, elle permet de rendre,/n
-            durant toute la partie, un contre-torpilleur capable de détruire un blindé en un seul coup./n  
-            
-            5. Carte déplacement multiple : Cette carte peut être activée au début d’un tour,/n
-            elle permet d’effectuer trois déplacements au lieu de deux./n");
+            printf("1. Carte déplacement libre: Cette carte peut être activée juste avant un déplacement/net permettra à un pion de se déplacer en diagonale durant un tour./n/n2. Carte mort subite : Cette carte peut être utilisée au début ou à la fin d’un tout,/nelle permet d’attaquer n’importe quel navire ennemi (excepté le cuirassé)./n/n3. Carte renfort : Cette carte peut être utilisée au début ou à la fin d’un tout,/nelle permet de rappeler deux contre-torpilleurs détruits ou un blindé sur le plateau./nLes navires rappelés doivent être déposer forcément sur la périphérie du plateau. /n/n4. Carte Anti-blindage : Cette carte peut être activée au début d’un tour, elle permet de rendre,/ndurant toute la partie, un contre-torpilleur capable de détruire un blindé en un seul coup./n/n5. Carte déplacement multiple : Cette carte peut être activée au début d’un tour,/nelle permet d’effectuer trois déplacements au lieu de deux./n");
         break;
         case '4':
-            printf("1. Carte piège : Cette carte peut être activée au début ou à la fin d’un tour et/n
-            elle permet de placer deux pièges sur la carte. Ces piges sont invisibles pour l’adversaire./n
-            Si lors d’un déplacement un pion adverse passe par un piège,/n
-            le pion sera détruit et le piège désactivé. Si c’est un blindé qui passe par le piège, il perdra son blindage./n 
-    
-            2. Carte bouclier : Cette carte peut être activée au début ou à la fin d’un tour et/n
-            elle permet de rajouter un blindage supplémentaire à n’importe quel navire./n 
-            
-            3. Carte contre-attaque : Cette carte peut être activée lors qu’on un pion rouge est attaqué./n
-            Le pion attaqué ne subit pas de dégâts et c’est l’attaquant qui subit les dégâts à sa place./n  
-            
-            4. Carte permutation : Cette carte peut être activée au début ou à la fin d’un tour et/n
-            elle permet à deux pions (rouges ou bleus) d’échanger leurs positons sur le plateau./n  
-            
-            
-            5. Carte déplacement furtif : Cette carte peut être activée juste avant un déplacement./n
-            Le pion déplacé devient invisible pour l’adversaire durant le tour suivant./n
-            Si lors d’un déplacement d’un pion bleu, il croise sur son chemin le navire invisible,/n
-            celui-ci sera découvert et le pion bleu devra, bien sûr, s’arrêter./n");
+            printf("1. Carte piège : Cette carte peut être activée au début ou à la fin d’un tour et/nelle permet de placer deux pièges sur la carte. Ces piges sont invisibles pour l’adversaire./nSi lors d’un déplacement un pion adverse passe par un piège,/nle pion sera détruit et le piège désactivé. Si c’est un blindé qui passe par le piège, il perdra son blindage./n/n2. Carte bouclier : Cette carte peut être activée au début ou à la fin d’un tour et/nelle permet de rajouter un blindage supplémentaire à n’importe quel navire./n/n3. Carte contre-attaque : Cette carte peut être activée lors qu’on un pion rouge est attaqué./nLe pion attaqué ne subit pas de dégâts et c’est l’attaquant qui subit les dégâts à sa place./n/n4. Carte permutation : Cette carte peut être activée au début ou à la fin d’un tour et/nelle permet à deux pions (rouges ou bleus) d’échanger leurs positons sur le plateau./n/n 5. Carte déplacement furtif : Cette carte peut être activée juste avant un déplacement./nLe pion déplacé devient invisible pour l’adversaire durant le tour suivant./nSi lors d’un déplacement d’un pion bleu, il croise sur son chemin le navire invisible,/ncelui-ci sera découvert et le pion bleu devra, bien sûr, s’arrêter./n");
             break;
         case '5':
-        printf("C'est parti");
+        printf("C'est parti/n");
     }
 }
 
 void color (int couleurDuTexte, int couleurDuFond){// permet de gérer les couleurs
     HANDLE H = GetStdHandle(STD_OUTPUT_HANDLE);
     SetConsoleTextAttribute(H, couleurDuFond*16+couleurDuTexte);
+}
+void placerpions(joueur *joueurR, joueur *joueurB, pion tab[][]){
+    printf("Au joueur rouge de placer ses pions/n");
+    (*joueurR->pion[1].type)=1;
+    (*joueurR->pion[1].coord_x)=1;
+    (*joueurR->pion[1].coord_y)=1;
+    afficherplateau( *joueurR, *joueurB);
+    afficherplateau_sel(*joueurR,*joueurB,(*joueurR->pion[1].coord_x) , (*joueurR->pion[1].coord_y));
+    deplacer_pions(*joueurR,*joueurB, int id_pion_sel);
+
+
 }
