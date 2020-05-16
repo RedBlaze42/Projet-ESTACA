@@ -45,6 +45,7 @@ typedef struct pion{
 typedef struct joueur{
     int num;
 	pion pions[20];
+    int nb_pions;
 	int cartes[2];
 } joueur;
 
@@ -58,7 +59,8 @@ int main(){
 void deplacer_pions(joueur *joueurSel, joueur *joueur2, int id_pion_sel){
     int en_mouvement=1;
     while(en_mouvement){//Attendre que le joueur appuie sur la touche entrée
-        int x,y;
+        int x=0;
+        int y=0;
         pion *plateau[DIM_PLATEAU][DIM_PLATEAU];
         remplirTab(plateau, joueurSel, joueur2);//Afficher plateau surbrillance
         int direction_prise;
@@ -129,13 +131,20 @@ int is_pionSurCase(joueur *joueurAff, joueur *joueur2, int x, int y){
 }
 
 void remplirTab(pion *tab[DIM_PLATEAU][DIM_PLATEAU], joueur *joueur1, joueur *joueur2){
-    int i;
-    for(i=0;i<DIM_PLATEAU;i++){
+    for(int j=0; j<DIM_PLATEAU; j++){
+        for(int i=0; i<DIM_PLATEAU; i++){
+            tab[i][j]=NULL;
+        }
+    }
+    
+    for(int i=0;i<joueur1->nb_pions;i++){
         if(joueur1->pions[i].pv>0){
+            if(tab[joueur1->pions[i].coord_x][joueur1->pions[i].coord_y]!=NULL)
             tab[(joueur1->pions[i]).coord_x][(joueur1->pions[i]).coord_y]=&(joueur1->pions[i]);
         }
     };
-     for(i=0;i<DIM_PLATEAU;i++){
+
+     for(int i=0;i<joueur2->nb_pions;i++){
         if(joueur2->pions[i].pv>0){
             tab[(joueur2->pions[i]).coord_x][(joueur2->pions[i]).coord_y]=&(joueur2->pions[i]);
         }
@@ -143,7 +152,7 @@ void remplirTab(pion *tab[DIM_PLATEAU][DIM_PLATEAU], joueur *joueur1, joueur *jo
 }
 
 void afficher_pion(pion* pionAff){//pour afficher une case
-    switch((*pionAff).type){
+    switch((*pionAff).type){//TODO Remplacer par les define
         case 1 : 
             printf("1");
             if((*pionAff).player==1){
@@ -195,9 +204,9 @@ int is_in_zone(int zone, int x, int y){
 void afficherplateau_sel(joueur *joueurAff,joueur *joueur2, int x, int y){//on affiche le plateau avec une case en surbrillance
     pion *plateau[DIM_PLATEAU][DIM_PLATEAU];
     remplirTab(plateau, joueurAff, joueur2);
-    int i, j;
-    for(j=0;j<25;j++){
-        for(i=0;i<25;i++){
+    
+    for(int j=0;j<DIM_PLATEAU;j++){
+        for(int i=0;i<DIM_PLATEAU;i++){
             if(i==x && j==y){
                 color(15,15);
                 printf(" ");
@@ -215,10 +224,13 @@ void afficherplateau_sel(joueur *joueurAff,joueur *joueur2, int x, int y){//on a
 void afficherplateau(joueur *joueurAff,joueur *joueur2){//on affiche le plateau
     pion *plateau[DIM_PLATEAU][DIM_PLATEAU];
     remplirTab(plateau, joueurAff, joueur2);
-    int i, j;
-    for(j=0;j<25;j++){
-        for(i=0;i<25;i++){
-            if((*plateau[i][j]).invisible==0){
+    
+    for(int j=0;j<DIM_PLATEAU;j++){
+        for(int i=0;i<DIM_PLATEAU;i++){
+            if(plateau[i][j]==NULL){
+                color(15,15);
+                printf(" ");
+            }else if((*plateau[i][j]).invisible==0){
                 afficher_pion(plateau[i][j]);
             }
         }
