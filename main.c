@@ -21,6 +21,12 @@
 #define gauche 68
 #define enter 13
 
+//Diagonales
+#define haut_gauche 1
+#define haut_droit 2
+#define bas_gauche 3
+#define bas_droit 4
+
 //Zones
 #define PLATEAU 0
 #define DEFENSE 1
