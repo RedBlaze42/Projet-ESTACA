@@ -313,7 +313,7 @@ void remplirTab(pion *tab[DIM_PLATEAU][DIM_PLATEAU], joueur *joueur1, joueur *jo
 }
 
 void afficher_pion(pion* pionAff){//pour afficher une case
-    switch((*pionAff).type){//TODO Remplacer par les define
+    switch((*pionAff).type){//EMILES Remplacer par les define
         case 1 : 
             printf("1");
             if((*pionAff).player==1){
