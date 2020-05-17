@@ -94,6 +94,101 @@ int main(){
     //placerpions();
 }
 
+void tour(joueur *joueur1,joueur *joueur2){
+    system("cls");
+    if(joueur1->num==DEFENSE){
+        printf("C'est au tour du joueur rouge\n\n");
+    }else{
+        printf("C'est au tour du joueur bleu\n\n");
+    }
+    int fin_menu=0;
+    if(joueur1->num==DEFENSE){//Menu défenseur
+        if(joueur1->cartes[0]!=0 || joueur1->cartes[1]!=0){
+            printf("Voulez vous utiliser une carte ? o/n");
+            char c=0;
+            while(c!="o" || c!="n") scanf("%c",&c);
+            if(c=='o'){
+                //TODO Sous programme utiliser carte
+            }
+        }
+        printf("Veuillez sélectionner une action:\n1. Déplacer votre cuirrassé\n2. Déplacer 2 contre-torpilleurs");
+        int d=0;
+        while(d!=1 || d!=2) scanf("%d",&d);
+
+        if(d==2){
+            int deplacements_restants=2;
+            while(deplacements_restants>0){
+                if(reste_pions_joueur(joueur1,CTORP)==0 || (reste_pions_joueur(joueur1,CTORP)==1 && deplacements_restants==1) ){//Soit le joueur n'as plus de CTORP soit il en a qu'un seul qu'il a déjà déplacé
+                    printf("Vous n'avez plus de contre-torpilleurs");
+                }
+                //TODO Selectionner pion
+            }
+        }else{
+            deplacer_pions(joueur1,joueur2,0);//Le cuirrassé est toujours au début du tableau
+        }
+        if(joueur_peut_attaquer(joueur1,joueur2)==1){
+            printf("Voulez vous attaquer ? o/n");
+            char c=0;
+            while(c!="o" || c!="n") scanf("%c",&c);
+            if(c=="o") selectionner_attaque(joueur1,joueur2);
+        }
+        printf("Fin du tour defenseur");
+        system("pause");
+
+    }else{
+        if(joueur2->cartes[0]!=0 || joueur2->cartes[1]!=0){
+            printf("Voulez vous utiliser une carte ? o/n");
+            char c=0;
+            while(c!="o" || c!="n") scanf("%c",&c);
+            if(c=='o'){
+                //TODO Sous programme utiliser carte
+            }
+        }
+        int choix_effectue=0;
+        if(joueur_peut_attaquer(joueur2,joueur1)==1){
+            printf("Veuillez sélectionner une action:\n1. Attaquer un ennemi\n2. Déplacer 2 contre-torpilleurs");
+            int d=0;
+            while(d!=1 || d!=2) scanf("%d",&d);
+        }else{//Le joueur ne peut pas attaque donc il doit déplacer 2 pions
+            int d=2;
+        }
+
+        if(d==1){
+            selectionner_attaque(joueur2,joueur1);
+        }else if(d==2){
+            int deplacements_restants=2;
+            while(deplacements_restants>0){
+                if(reste_pions_joueur(joueur2,CTORP)==0 || (reste_pions_joueur(joueur2,CTORP)==1 && deplacements_restants==1) ){//Soit le joueur n'as plus de CTORP soit il en a qu'un seul qu'il a déjà déplacé
+                    printf("Vous n'avez plus de contre-torpilleurs");
+                }
+                //TODO Selectionner pion
+            }
+        }else{
+            deplacer_pions(joueur1,joueur2,0);//Le cuirrassé est toujours au début du tableau
+        }
+        if(joueur_peut_attaquer(joueur1,joueur2)==1){
+            printf("Voulez vous attaquer ? o/n");
+            char c=0;
+            while(c!="o" || c!="n") scanf("%c",&c);
+            if(c=="o") selectionner_attaque(joueur1,joueur2);
+        }
+        printf("Fin du tour defenseur");
+        system("pause"); 
+    }
+
+    system("cls");
+    
+}
+
+
+int reste_pions_joueur(joueur *joueurSel,int type){//Si type=-1, on vérifie juste si il reste des pions au joueur
+    for(int i;i<joueurSel->nb_pions;i++){
+        if( (joueurSel->pions[i].type==type || type==-1) && joueurSel->pions[i].pv>0){
+            return 1;
+        }
+    }
+}
+
 void deplacer_pions(joueur *joueurSel, joueur *joueur2, int id_pion_sel){
     int en_mouvement=1;
     while(en_mouvement){//Attendre que le joueur appuie sur la touche entree
