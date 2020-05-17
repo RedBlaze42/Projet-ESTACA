@@ -72,6 +72,7 @@ int main(){
     joueur joueurR;//Defenseur
     joueurR.num=1;
     joueurR.nb_pions=15;
+    int gagnant;
 
     /*for(int i=0; i<20;i++){
         (joueurR.pions[i]).coord_x=12;
@@ -93,14 +94,23 @@ int main(){
     lectureRegles();
     afficherplateau(&joueurB, &joueurR);
     placerpions( joueurR, joueurB);
-    while(){
-
-
+    while(vR!=0 && vB!=0){
+        tour(joueurR,joueurB);
+        int vR=reste_pions_joueur(joueurR, -1);
+        int vB=reste_pions_joueur(joueurB, -1);
+        if{
+           is_in_zone(int ATTAQUE, joueurR->pions[1].coord_x, joueurR->pions[1].coord_y)==1
+           vR=0;
+        }
+        if{
+            vR=0;
+            gagnant=0;
+        }
     }
-    if(gagant==0{)
-        printf("Bravo pour cette belle victoire,j'ai toujour su que le rouge etait la couleur des vaiqueurs.")
+    if(gagnant==0{)
+        printf("Bravo pour cette belle victoire,j'ai toujours su que le rouge etait la couleur des vaiqueurs.")
     }else{
-        printf("Bravo pour cette belle victoire,j'ai toujour su que le bleu etait la couleur des vaiqueurs.")
+        printf("Bravo pour cette belle victoire,j'ai toujours su que le bleu etait la couleur des vaiqueurs.")
     }
 }
 
