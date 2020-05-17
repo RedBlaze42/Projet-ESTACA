@@ -230,6 +230,14 @@ void deplacer_pions(joueur *joueurSel, joueur *joueur2, int id_pion_sel){
         }
     }
 }
+int joueur_peut_attaquer(joueur *joueurSel, joueur *joueur2){
+    for(int i=0;i<joueurSel->nb_pions;i++){
+        if(pion_peut_attaquer(joueurSel, joueur2, joueurSel->pions[i])==1){
+            return 1;
+        }
+    }
+    return 0;
+}
 
 int pion_peut_attaquer(joueur *joueurSel, joueur *joueur2, pion *pionSel){//Retourne 
     pion *plateau[DIM_PLATEAU][DIM_PLATEAU];
