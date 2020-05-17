@@ -43,7 +43,7 @@ typedef struct pion{
 } pion;
 
 typedef struct joueur{
-    int num;//joueurrouge=1 joueurbleu=2
+    int num;//Joueur Rouge (Défenseur) = 1 Joueur Bleu (Attaquant) =2
 	pion pions[20];
     int nb_pions;
 	int cartes[2];
@@ -52,7 +52,14 @@ typedef struct joueur{
 void color (int couleurDuTexte, int couleurDuFond);
 
 int main(){
-    pion *plateau[DIM_PLATEAU][DIM_PLATEAU];
+    joueur JoueurB;
+    JoueurB.num=2;
+    JoueurB.nb_pions=20;
+    joueur JoueurR;
+    JoueurR.num=1;
+    JoueurR.nb_pions=15;
+
+    lectureRegles();
 }
 
 void deplacer_pions(joueur *joueurSel, joueur *joueur2, int id_pion_sel){
