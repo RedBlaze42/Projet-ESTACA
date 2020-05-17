@@ -63,6 +63,7 @@ void afficherplateau_sel(joueur *joueurAff,joueur *joueur2, int x, int y);
 void afficherplateau(joueur *joueurAff,joueur *joueur2);
 void lectureRegles();
 */
+void rougeCA(pion *pionattaque, pion *poinattaquant);
 
 int main(){
     joueur joueurB;
@@ -399,8 +400,8 @@ void afficherplateau(joueur *joueurAff,joueur *joueur2){//on affiche le plateau
     for(int j=0;j<DIM_PLATEAU;j++){
         for(int i=0;i<DIM_PLATEAU;i++){
             if(plateau[i][j]==NULL){
-                color(15,15);
-                printf(" ");
+                color(0,15);
+                printf("-");
                 color(15,0);
             }else if((*plateau[i][j]).invisible==0){
                 afficher_pion(plateau[i][j]);
@@ -599,4 +600,19 @@ void placerpions(joueur *joueurR, joueur *joueurB){
     for(i=0,i<19,i++){
         selectionner_case(joueurR,joueurB , &(joueurR->pions[i].coord_x), &(joueurR->pions[i].coord_y), DEFENSE, 1);
     }
+}
+
+void rougeCA(pion *pionattaque, pion *poinattaquant){
+    pionattaque->pv=pionattaque->pv+1;
+    pionattaquant->pv=pionattaquant->pv-1;
+}
+void rougepermut(pion *pion1, pion *pion2){
+    int x1=pion1->coord_x;
+    int y1=pion1->coord_y;
+    int x2=pion2->coord_x;
+    int y2=pion2->coord_y;
+    pion1->coord_x=x2;
+    pion1->coord_y=y2;
+    pion2->coord_x=x1;
+    pion2->coord_y=y1;
 }
