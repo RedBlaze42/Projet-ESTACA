@@ -553,3 +553,42 @@ void placerpions(joueur *joueurR, joueur *joueurB){
 
 
 }*/
+
+void placerpions(joueur *joueurR, joueur *joueurB){
+    printf("Au joueur rouge de placer ses pions\n");
+    joueurR->pions[1].type=2;
+    joueurR->pions[1].coord_x=0;
+    joueurR->pions[1].coord_y=0;
+    int i;
+    for(i=1,i<3,i++){
+        joueurR->pions[i].type=1;
+        joueurR->pions[i].pv=2;
+        joueurR->pions[i].coord_x=0;
+        joueurR->pions[i].coord_y=0;
+    }
+    for(i=3,i<13,i++){
+        joueurR->pions[i].type=1;
+        joueurR->pions[i].pv=1;
+        joueurR->pions[i].coord_x=0;
+        joueurR->pions[i].coord_y=0;
+    }
+    for(i=0,i<13,i++){
+        selectionner_case(joueurR,joueurB , &(joueurR->pions[i].coord_x), &(joueurR->pions[i].coord_y), DEFENSE, 1);
+    }
+    printf("Au joueur bleu de placer ses pions\n");
+    for(i=0,i<2,i++){
+        joueurR->pions[i].type=1;
+        joueurR->pions[i].pv=2;
+        joueurR->pions[i].coord_x=0;
+        joueurR->pions[i].coord_y=0;
+    }
+    for(i=2,i<19,i++){
+        joueurR->pions[i].type=1;
+        joueurR->pions[i].pv=1;
+        joueurR->pions[i].coord_x=0;
+        joueurR->pions[i].coord_y=0;
+    }
+    for(i=0,i<19,i++){
+        selectionner_case(joueurR,joueurB , &(joueurR->pions[i].coord_x), &(joueurR->pions[i].coord_y), DEFENSE, 1);
+    }
+}
