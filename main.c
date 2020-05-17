@@ -372,7 +372,7 @@ void lectureRegles(){
          int d;
          while((d = getchar()) != '\n' && d != EOF);
     }
-    switch(c){
+    switch(c){//EMILES Faire une while, il faut pouvoir afficher plusieurs fois les règles
         case '1':
             printf("Deplacments:/nToutes les pieces se deplacent en ligne orthogonale et peuvent parcourir des rangees entieres de cases vides/nen s'arrêtant où bon leur semble,mais elles ne peuvent pas sauter par-dessus une case occupee./n Elles ne peuvent pas eliminer un pion (de leur camp ou du camp adverse) qui bloque leur avancee,/n mais elles doivent s'arrêter sur une case attenante /n/nAttaques:/nLes pieces s’attaquent mutuellement entre cases voisines directe,/Nen se deplaçant en diagonale dans n'importe quelle direction./nLorsqu'un un navire detruit un autre navire, il enleve du damier le pion elimine et prend sa place./nAttaquer un pion menace n'est pas une obligation.");
         break;
@@ -396,13 +396,13 @@ void color (int couleurDuTexte, int couleurDuFond){// permet de gerer les couleu
 }
 void placerpions(joueur *joueurR, joueur *joueurB){
     printf("Au joueur rouge de placer ses pions/n");
-    (*joueurR->pions[1].type)=2;//Corriger tout les (*joueurR->pions[1]) par des joueurR->pions[1]
+    (*joueurR->pions[1].type)=2;//EMILES Corriger tout les (*joueurR->pions[1]) par des joueurR->pions[1]
     (*joueurR->pions[1].coord_x)=6;
     (*joueurR->pions[1].coord_y)=6;
     do{
-        afficherplateau( joueurR, joueurB);//Pas besoin d'afficher le plateau car la fonction séléctionner case l'affiche déjà
+        afficherplateau( joueurR, joueurB);//EMILES Pas besoin d'afficher le plateau car la fonction séléctionner case l'affiche déjà
         selectionner_case(*joueurR, *joueurB, (*joueurR->pions[1].coord_x),(*joueurR->pions[1].coord_y), 0, DEFENSE);
-        deplacer_pions(*joueurR,*joueurB, int id_pion_sel);//Pas utiliser cette fonction mais plutôt modifier direct les coordonnées des pions
+        deplacer_pions(*joueurR,*joueurB, int id_pion_sel);//EMILES Pas utiliser cette fonction mais plutôt modifier direct les coordonnées des pions
     }while((*joueurR->pions[1].coord_x)<4 || (*joueurR->pions[1].coord_x)>7 || (*joueurR->pions[1].coord_y)<4 || (*joueurR->pions[1].coord_y)>7);
     int i;
     for(i=1,i<3,i++){
@@ -410,7 +410,7 @@ void placerpions(joueur *joueurR, joueur *joueurB){
         (*joueurR->pions[i].pv)=2;
         int x , y, f;
         do{
-            for(y=3,y<8,y++){//Pas besoin de ça
+            for(y=3,y<8,y++){//EMILES Pas besoin de ça
                 for(x=3,y<8,y++){
                     if(is_pionSurCase(*joueurR,*joueurB, x, y)==0){
                         (*joueurR->pions[i].coord_x)=x;
