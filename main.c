@@ -59,6 +59,23 @@ int main(){
     joueurR.num=1;
     joueurR.nb_pions=15;
 
+    /*for(int i=0; i<20;i++){
+        (joueurR.pions[i]).coord_x=12;
+        (joueurR.pions[i]).coord_y=12;
+        (joueurR.pions[i]).type=CUIRASSE;
+        (joueurR.pions[i]).pv=2;
+        (joueurR.pions[i]).player=1;
+        (joueurR.pions[i]).invisible=0;
+        (joueurR.pions[i]).anti_blindage=0;
+        (joueurB.pions[i]).coord_x=12;
+        (joueurB.pions[i]).coord_y=12;
+        (joueurB.pions[i]).type=CUIRASSE;
+        (joueurB.pions[i]).pv=2;
+        (joueurB.pions[i]).player=1;
+        (joueurB.pions[i]).invisible=0;
+        (joueurB.pions[i]).anti_blindage=0;
+    }*/
+
     //lectureRegles();
     afficherplateau(&joueurB, &joueurR);
     //placerpions();
