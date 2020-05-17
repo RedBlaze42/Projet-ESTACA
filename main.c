@@ -368,7 +368,7 @@ void lectureRegles(){
         printf("Pour voir les deplacement/attaques des pions tapez 1/nPour voir la nature des pionstapez 2/nPour voir les capacitees des cartes speciales bleues tapez 3/nPour voir les capacitees des cartes speciales rouges tapez 4/nPour passer directement au debut de la partie tapez 5/n");
         c = getchar();
     }while(c<1 || c>5);
-    if(c != '\n' && c != EOF){
+    if(c != '\n' && c != EOF){//EMILES ça marche pas ça utilise plutôt gets ou un truc du cours
          int d;
          while((d = getchar()) != '\n' && d != EOF);
     }
