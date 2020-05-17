@@ -52,14 +52,16 @@ typedef struct joueur{
 void color (int couleurDuTexte, int couleurDuFond);
 
 int main(){
-    joueur JoueurB;
-    JoueurB.num=2;
-    JoueurB.nb_pions=20;
-    joueur JoueurR;
-    JoueurR.num=1;
-    JoueurR.nb_pions=15;
+    joueur joueurB;
+    joueurB.num=2;
+    joueurB.nb_pions=20;
+    joueur joueurR;
+    joueurR.num=1;
+    joueurR.nb_pions=15;
 
-    lectureRegles();
+    //lectureRegles();
+    afficherplateau(&joueurB, &joueurR);
+    //placerpions();
 }
 
 void deplacer_pions(joueur *joueurSel, joueur *joueur2, int id_pion_sel){
