@@ -293,14 +293,21 @@ void remplirTab(pion *tab[DIM_PLATEAU][DIM_PLATEAU], joueur *joueur1, joueur *jo
     
     for(int i=0;i<joueur1->nb_pions;i++){
         if(joueur1->pions[i].pv>0){
-            if(tab[joueur1->pions[i].coord_x][joueur1->pions[i].coord_y]!=NULL)
-            tab[(joueur1->pions[i]).coord_x][(joueur1->pions[i]).coord_y]=&(joueur1->pions[i]);
+            if(tab[joueur1->pions[i].coord_x][joueur1->pions[i].coord_y]!=NULL){//TODO Plus joli en utilisant un pointeur vers tab[...][...]
+                if((tab[joueur1->pions[i].coord_x][joueur1->pions[i].coord_y])->type=PIEGE){
+                    tab[(joueur1->pions[i]).coord_x][(joueur1->pions[i]).coord_y]=&(joueur1->pions[i]);
+                }
+            }
         }
-    };
+    }
 
      for(int i=0;i<joueur2->nb_pions;i++){
         if(joueur2->pions[i].pv>0){
-            tab[(joueur2->pions[i]).coord_x][(joueur2->pions[i]).coord_y]=&(joueur2->pions[i]);
+            if(tab[joueur2->pions[i].coord_x][joueur2->pions[i].coord_y]!=NULL){
+                if(tab[joueur2->pions[i].coord_x][joueur2->pions[i].coord_y]->type=PIEGE){
+                    tab[(joueur2->pions[i]).coord_x][(joueur2->pions[i]).coord_y]=&(joueur2->pions[i]);
+                }
+            }
         }
     }
 }
