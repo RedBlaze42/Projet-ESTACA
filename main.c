@@ -335,6 +335,7 @@ void afficher_pion(pion* pionAff){//pour afficher une case
             color(0,15);
             printf(" ");
     }
+    color(15,0);
 }
 
 int is_in_zone(int zone, int x, int y){
@@ -384,6 +385,7 @@ void afficherplateau(joueur *joueurAff,joueur *joueur2){//on affiche le plateau
             if(plateau[i][j]==NULL){
                 color(15,15);
                 printf(" ");
+                color(15,0);
             }else if((*plateau[i][j]).invisible==0){
                 afficher_pion(plateau[i][j]);
             }
