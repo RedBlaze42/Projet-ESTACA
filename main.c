@@ -199,18 +199,17 @@ void selectionner_attaque(joueur *joueurSel, joueur *joueur2){//Permet au joueur
     }
 }
 
-void selectionner_case(joueur joueurSel, joueur joueur2, int *sel_x, int *sel_y, int libre, int zone){
+void selectionner_case(joueur *joueurSel, joueur *joueur2, int *sel_x, int *sel_y, int zone, int vide){
     int en_mouvement=1;
     while(en_mouvement){//Attendre que le joueur appuie sur la touche entree
         pion plateau[DIM_PLATEAU][DIM_PLATEAU];
         int x=0;
         int y=0;
-        //Afficher plateau surbrillance
-        remplirTab(plateau, joueurSel, joueur2); 
+        afficherplateau_sel(joueurSel, joueur2,x,y);
         int direcion_prise;
         switch(getch()) {
             case enter:
-                if(libre!=1 || is_pionSurCase(joueurSel,joueur2,x,y)!=1){
+                if( (is_in_zone(zone,x,y)==1) && (vide==1 && is_pionSurCase(joueurSel,joueur2,x,y)==0) ){
                     *sel_x=x;
                     *sel_y=y;
                     en_mouvement=0;
