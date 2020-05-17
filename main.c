@@ -29,8 +29,8 @@
 
 //Zones
 #define PLATEAU 0
-#define DEFENSE 1
-#define ATTAQUE 2
+#define DEFENSE 1//Défini aussi numéro du joueur defenseur
+#define ATTAQUE 2//Défini aussi numéro du joueur attaquant
 
 typedef struct pion{
 	int coord_x;
@@ -65,10 +65,10 @@ void lectureRegles();
 */
 
 int main(){
-    joueur joueurB;
+    joueur joueurB;//Attaquant
     joueurB.num=2;
     joueurB.nb_pions=20;
-    joueur joueurR;
+    joueur joueurR;//Defenseur
     joueurR.num=1;
     joueurR.nb_pions=15;
 
@@ -459,7 +459,7 @@ int is_in_zone(int zone, int x, int y){
 }
 
 void afficherplateau_sel(joueur *joueurAff,joueur *joueur2, int x, int y){//on affiche le plateau avec une case en surbrillance
-    pion *plateau[DIM_PLATEAU][DIM_PLATEAU];
+    pion *plateau[DIM_PLATEAU][DIM_PLATEAU];//TODO Changer l'apparence en fonction des pv du joueur
     remplirTab(plateau, joueurAff, joueur2);
     
     for(int j=0;j<DIM_PLATEAU;j++){
