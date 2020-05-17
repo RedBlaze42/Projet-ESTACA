@@ -50,6 +50,19 @@ typedef struct joueur{
 } joueur;
 
 void color (int couleurDuTexte, int couleurDuFond);
+/*
+void deplacer_pions(joueur *joueurSel, joueur *joueur2, int id_pion_sel);
+int pion_peut_attaquer(joueur *joueurSel, joueur *joueur2, pion *pionSel);
+void selectionner_attaque(joueur *joueurSel, joueur *joueur2);
+void selectionner_case(joueur *joueurSel, joueur *joueur2, int *sel_x, int *sel_y, int zone, int vide);
+int is_pionSurCase(joueur *joueurAff, joueur *joueur2, int x, int y);
+void remplirTab(pion *tab[DIM_PLATEAU][DIM_PLATEAU], joueur *joueur1, joueur *joueur2);
+void afficher_pion(pion* pionAff);
+int is_in_zone(int zone, int x, int y);
+void afficherplateau_sel(joueur *joueurAff,joueur *joueur2, int x, int y);
+void afficherplateau(joueur *joueurAff,joueur *joueur2);
+void lectureRegles();
+*/
 
 int main(){
     joueur joueurB;
