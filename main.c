@@ -376,7 +376,6 @@ void selectionner_case(joueur *joueurSel, joueur *joueur2, int *sel_x, int *sel_
     int y=*sel_y;
     while(en_mouvement){//Attendre que le joueur appuie sur la touche entree
         pion plateau[DIM_PLATEAU][DIM_PLATEAU];
-        system("cls");
         afficherplateau_sel(joueurSel, joueur2,x,y);
         int direcion_prise;
         switch(get_fleche()) {
@@ -400,6 +399,7 @@ void selectionner_case(joueur *joueurSel, joueur *joueur2, int *sel_x, int *sel_
                 if(is_in_zone(zone,x+1,y)==1) x=x+1;
                 break;
         }
+        system("cls");
     }
 }
 
@@ -630,7 +630,7 @@ void placerpions(joueur *joueurR, joueur *joueurB){
         joueurB->pions[i].anti_blindage=0;
         joueurR->pions[i].player=DEFENSE;
     }
-    for(int i=0;i<2;i++){//EMILES Mettre des print pour comprendre quel pion on est en train de poser
+    for(int i=0;i<2;i++){
         joueurB->pions[i].type=CTORP;
         joueurB->pions[i].pv=2;
         joueurB->pions[i].coord_x=0;
@@ -650,24 +650,26 @@ void placerpions(joueur *joueurR, joueur *joueurB){
     }
     
     printf("Au joueur rouge de placer ses pions\n");
-    for(int i=0;i<joueurR->nb_pions;i++){
+    for(int i=1;i<joueurR->nb_pions;i++){
         if(joueurR->pions[i].pv==2){
-            printf("cous déplacez votre contre torpilleur blindé numéro %d", i);
+            printf("cous déplacez votre contre torpilleur blindé numéro %d\n", i);
 
         }else{
-            printf("cous déplacez votre contre torpilleur blindé %d", i-2);
+            printf("cous déplacez votre contre torpilleur numéro %d\n", i-2);
         }
+        sleep(1);
         selectionner_case(joueurR,joueurB , &(joueurR->pions[i].coord_x), &(joueurR->pions[i].coord_y), DEFENSE, 1);
     }
-    
+
     printf("Au joueur bleu de placer ses pions\n");
-    for(i=0;i<joueurR->nb_pions;i++){
-        if(joueurR->pions[i].pv==2){
-            printf("cous déplacez votre contre torpilleur blindé numéro %d", i+1);
+    for(int i=0;i<joueurB->nb_pions;i++){
+        if(joueurB->pions[i].pv==2){
+            printf("cous déplacez votre contre torpilleur blindé numéro %d\n", i+1);
         }else{
-            printf("cous déplacez votre contre torpilleur blindé %d", i-1);
+            printf("cous déplacez votre contre torpilleur numéro %d\n", i-1);
         }
-        selectionner_case(joueurR,joueurB , &(joueurR->pions[i].coord_x), &(joueurR->pions[i].coord_y), DEFENSE, 1);
+        sleep(1);
+        selectionner_case(joueurB,joueurR , &(joueurB->pions[i].coord_x), &(joueurB->pions[i].coord_y), DEFENSE, 1);
     }
     
     for(int i=1; i<=5;i++){
