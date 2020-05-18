@@ -93,28 +93,23 @@ int main(){
 
     lectureRegles();
     afficherplateau(&joueurB, &joueurR);
-    placerpions( joueurR, joueurB);
-    while(vR!=0 && vB!=0){
-        tour(joueurR,joueurB);
-        int vR=reste_pions_joueur(joueurR, -1);
-        int vB=reste_pions_joueur(joueurB, -1);
-        if{
-           is_in_zone(int ATTAQUE, joueurR->pions[1].coord_x, joueurR->pions[1].coord_y)==1
-           vR=0;
+    placerpions( &joueurR, &joueurB);
+    int vR,vB;//Victoire Bleue ou Rouge
+    while(vR==0 && vB==0){
+        tour(&joueurR,&joueurB);
+        int vR=reste_pions_joueur(&joueurR, -1);
+        int vB=reste_pions_joueur(&joueurB, -1);
+        if(is_in_zone(ATTAQUE, &(joueurR.pions[1].coord_x), &(joueurR.pions[1].coord_y))==1){
+           vR=1;
         }
-        if{
-            joueurR->pions[1].pv==0;
-            vB=0;
-        }
-        if{
-            vR=0;
-            gagnant=0;
+        if(joueurR.pions[1].pv==0){
+           vB=1;
         }
     }
-    if(gagnant==0{)
-        printf("Bravo pour cette belle victoire,j'ai toujours su que le rouge etait la couleur des vaiqueurs.")
+    if(vR==1){
+        printf("Bravo pour cette belle victoire,j'ai toujours su que le rouge etait la couleur des vaiqueurs.");
     }else{
-        printf("Bravo pour cette belle victoire,j'ai toujours su que le bleu etait la couleur des vaiqueurs.")
+        printf("Bravo pour cette belle victoire,j'ai toujours su que le bleu etait la couleur des vaiqueurs.");
     }
 }
 
@@ -169,12 +164,13 @@ void tour(joueur *joueur1,joueur *joueur2){
             }
         }
         int choix_effectue=0;
+        int d;
         if(joueur_peut_attaquer(joueur2,joueur1)==1){
             printf("Veuillez sélectionner une action:\n1. Attaquer un ennemi\n2. Déplacer 2 contre-torpilleurs");
-            int d=0;
+            d=0;
             while(d!=1 || d!=2) scanf("%d",&d);
         }else{//Le joueur ne peut pas attaque donc il doit déplacer 2 pions
-            int d=2;
+            d=2;
         }
 
         if(d==1){
@@ -256,7 +252,7 @@ void deplacer_pions(joueur *joueurSel, joueur *joueur2, int id_pion_sel){
 }
 int joueur_peut_attaquer(joueur *joueurSel, joueur *joueur2){
     for(int i=0;i<joueurSel->nb_pions;i++){
-        if(pion_peut_attaquer(joueurSel, joueur2, joueurSel->pions[i])==1){
+        if(pion_peut_attaquer(joueurSel, joueur2, &(joueurSel->pions[i]))==1){
             return 1;
         }
     }
@@ -537,7 +533,7 @@ void lectureRegles(){
         do{
             printf("Pour voir les deplacement/attaques des pions tapez 1\nPour voir la nature des pionstapez 2\nPour voir les capacitees des cartes speciales bleues tapez 3\nPour voir les capacitees des cartes speciales rouges tapez 4\nPour passer directement au debut de la partie tapez 5\n");
             input("%d",&c);
-        }while(c<1 || c>5)
+        }while(c<1 || c>5);
         switch(c){//EMILES Faire une while, il faut pouvoir afficher plusieurs fois les règles
             case '1':
                 printf("Deplacments:\nToutes les pieces se deplacent en ligne orthogonale et peuvent parcourir des rangees entieres de cases vides\nen s'arrêtant où bon leur semble,mais elles ne peuvent pas sauter par-dessus une case occupee.\n Elles ne peuvent pas eliminer un pion (de leur camp ou du camp adverse) qui bloque leur avancee,\n mais elles doivent s'arrêter sur une case attenante \n\nAttaques:\nLes pieces s’attaquent mutuellement entre cases voisines directe,\nen se deplaçant en diagonale dans n'importe quelle direction.\nLorsqu'un un navire detruit un autre navire, il enleve du damier le pion elimine et prend sa place.\nAttaquer un pion menace n'est pas une obligation.");
@@ -686,40 +682,40 @@ void placerpions(joueur *joueurR, joueur *joueurB){
     joueurR->pions[1].coord_x=0;
     joueurR->pions[1].coord_y=0;
     int i;
-    for(i=1,i<3,i++){
+    for(i=1;i<3;i++){
         joueurR->pions[i].type=1;
         joueurR->pions[i].pv=2;
         joueurR->pions[i].coord_x=0;
         joueurR->pions[i].coord_y=0;
     }
-    for(i=3,i<13,i++){
+    for(i=3;i<13;i++){
         joueurR->pions[i].type=1;
         joueurR->pions[i].pv=1;
         joueurR->pions[i].coord_x=0;
         joueurR->pions[i].coord_y=0;
     }
-    for(i=0,i<13,i++){
+    for(i=0;i<13;i++){
         selectionner_case(joueurR,joueurB , &(joueurR->pions[i].coord_x), &(joueurR->pions[i].coord_y), DEFENSE, 1);
     }
     printf("Au joueur bleu de placer ses pions\n");
-    for(i=0,i<2,i++){
+    for(i=0;i<2;i++){
         joueurR->pions[i].type=1;
         joueurR->pions[i].pv=2;
         joueurR->pions[i].coord_x=0;
         joueurR->pions[i].coord_y=0;
     }
-    for(i=2,i<19,i++){
+    for(i=2;i<19;i++){
         joueurR->pions[i].type=1;
         joueurR->pions[i].pv=1;
         joueurR->pions[i].coord_x=0;
         joueurR->pions[i].coord_y=0;
     }
-    for(i=0,i<19,i++){
+    for(i=0;i<19;i++){
         selectionner_case(joueurR,joueurB , &(joueurR->pions[i].coord_x), &(joueurR->pions[i].coord_y), DEFENSE, 1);
     }
 }
 
-void rougeCA(pion *pionattaque, pion *poinattaquant){
+void rougeCA(pion *pionattaque, pion *pionattaquant){
     pionattaque->pv=pionattaque->pv+1;
     pionattaquant->pv=pionattaquant->pv-1;
 }
