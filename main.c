@@ -3,12 +3,12 @@
 #include<windows.h>
 #include <conio.h>
 
-#define DIM_PLATEAU 25
+#define DIM_PLATEAU 11
 #define max_pions 19
 
 //Couleurs
-#define JOUEUR1 1
-#define JOUEUR2 4
+#define COULEUR_JOUEURDEF 12
+#define COULEUR_JOUEURATT 9
 
 //Types de pions
 #define CTORP 1
@@ -99,6 +99,7 @@ int main(){
 
     lectureRegles();
     placerpions( &joueurR, &joueurB);
+    printf("%d",selectionner_pion(&joueurR, &joueurB));
     int vR,vB;//Victoire Bleue ou Rouge
     while(vR==0 && vB==0){
         tour(&joueurR,&joueurB);
@@ -364,11 +365,11 @@ void selectionner_attaque(joueur *joueurSel, joueur *joueur2){//Permet au joueur
 
 void selectionner_case(joueur *joueurSel, joueur *joueur2, int *sel_x, int *sel_y, int zone, int vide){
     int en_mouvement=1;
-    int x=12;
-    int y=12;
+    int x=*sel_x;
+    int y=*sel_y;
     while(en_mouvement){//Attendre que le joueur appuie sur la touche entree
         pion plateau[DIM_PLATEAU][DIM_PLATEAU];
-        zone=PLATEAU;
+        system("cls");
         afficherplateau_sel(joueurSel, joueur2,x,y);
         int direcion_prise;
         switch(get_fleche()) {
@@ -389,9 +390,7 @@ void selectionner_case(joueur *joueurSel, joueur *joueur2, int *sel_x, int *sel_
                 if(is_in_zone(zone,x-1,y)==1) x-=1;
                 break;
             case droite:
-                printf("droite x%d y%d %d\n",x,y,is_in_zone(zone,x+1,y));
                 if(is_in_zone(zone,x+1,y)==1) x=x+1;
-                printf("droite2 x%d y%d %d\n",x,y,is_in_zone(zone,x+1,y));
                 break;
         }
     }
@@ -452,28 +451,28 @@ void remplirTab(pion *tab[DIM_PLATEAU][DIM_PLATEAU], joueur *joueur1, joueur *jo
 }
 
 void afficher_pion(pion* pionAff){//pour afficher une case
-    switch((*pionAff).type){
+    switch(pionAff->type){
         case CTORP : 
-            if((*pionAff).player==1){
-                color(JOUEUR1,15);
+            if((*pionAff).player==ATTAQUE){
+                color(15,COULEUR_JOUEURATT);
             }else{
-                color(JOUEUR2,15);
+                color(15,COULEUR_JOUEURDEF);
             }
             printf("1");
             break;
         case CUIRASSE :
-            if((*pionAff).player==1){
-                color(JOUEUR1,15);
+            if((*pionAff).player==ATTAQUE){
+                color(15,COULEUR_JOUEURATT);
             }else{
-                color(JOUEUR2,15);
+                color(15,COULEUR_JOUEURDEF);
             }
             printf("2");
             break;
         case PIEGE :
-            if((*pionAff).player==1){
-                color(JOUEUR1,15);
+            if((*pionAff).player==ATTAQUE){
+                color(15,COULEUR_JOUEURATT);
             }else{
-                color(JOUEUR2,15);
+                color(15,COULEUR_JOUEURDEF);
             }
             printf("3");
             break;
@@ -488,17 +487,9 @@ int is_in_zone(int zone, int x, int y){
     if(zone==PLATEAU){
         return x>=0 && y>=0 && x<DIM_PLATEAU && y<DIM_PLATEAU;
     }else if(zone==DEFENSE){
-        if(x>2 && x<8 && y>2 && y<8){
-            return 1;
-        }else{
-            return 0;
-        }
+        return x>2 && x<8 && y>2 && y<8 && x>=0 && y>=0 && x<DIM_PLATEAU && y<DIM_PLATEAU;
     }else if(zone==ATTAQUE){
-        if( (x>2 && x<8 && y>2 && y<8)==0 ){//verifier
-            return 1;
-        }else{
-            return 0;
-        }
+        return (x>2 && x<8 && y>2 && y<8)==0 && x>=0 && y>=0 && x<DIM_PLATEAU && y<DIM_PLATEAU;
     }
 }
 
@@ -506,13 +497,10 @@ void afficherplateau_sel(joueur *joueurAff,joueur *joueur2, int sel_x, int sel_y
     pion *plateau[DIM_PLATEAU][DIM_PLATEAU];//TODO Changer l'apparence en fonction des pv du joueur
     
     remplirTab(plateau, joueurAff, joueur2);
-    system("cls");
-    printf("Yeh ");
-    printf("%p\n",plateau[11][11]);
     for(int y=0;y<DIM_PLATEAU;y++){
         for(int x=0;x<DIM_PLATEAU;x++){
             if(x==sel_x && y==sel_y){
-                color(0,4);
+                color(0,10);
                 printf(" ");
                 color(15,0);
             }else{
@@ -531,17 +519,17 @@ void afficherplateau_sel(joueur *joueurAff,joueur *joueur2, int sel_x, int sel_y
 }
 
 void afficherplateau(joueur *joueurAff,joueur *joueur2){//on affiche le plateau
-    pion *plateau[DIM_PLATEAU][DIM_PLATEAU];//TODO Remettre en forme comme pour afficherplateau_sel
-    remplirTab(plateau, joueurAff, joueur2);
+    pion *plateau[DIM_PLATEAU][DIM_PLATEAU];//TODO Changer l'apparence en fonction des pv du joueur
     
-    for(int j=0;j<DIM_PLATEAU;j++){
-        for(int i=0;i<DIM_PLATEAU;i++){
-            if(plateau[i][j]==NULL){
+    remplirTab(plateau, joueurAff, joueur2);
+    for(int y=0;y<DIM_PLATEAU;y++){
+        for(int x=0;x<DIM_PLATEAU;x++){
+            if(plateau[x][y]!=NULL && (*(plateau[x][y])).invisible==0){
+                afficher_pion(plateau[x][y]);
+            }else{
                 color(0,15);
                 printf("-");
                 color(15,0);
-            }else if((*plateau[i][j]).invisible==0){
-                afficher_pion(plateau[i][j]);
             }
         }
         printf("\n");
@@ -584,42 +572,82 @@ void color (int couleurDuTexte, int couleurDuFond){// permet de gerer les couleu
 }
 
 void placerpions(joueur *joueurR, joueur *joueurB){
-    printf("Au joueur rouge de placer ses pions\n");
-    joueurR->pions[0].type=2;
-    joueurR->pions[0].coord_x=0;
-    joueurR->pions[0].coord_y=0;
+    joueurR->pions[0].type=CUIRASSE;
+    joueurR->pions[0].coord_x=5;
+    joueurR->pions[0].coord_y=5;
+    joueurR->pions[0].invisible=-1;
+    joueurR->pions[0].player=DEFENSE;
     
     for(int i=1;i<3;i++){
-        joueurR->pions[i].type=1;
+        joueurR->pions[i].type=CTORP;
         joueurR->pions[i].pv=2;
-        joueurR->pions[i].coord_x=0;
-        joueurR->pions[i].coord_y=0;
+        joueurR->pions[i].coord_x=5;
+        joueurR->pions[i].coord_y=5;
+        joueurR->pions[i].invisible=-1;
+        joueurR->pions[i].player=DEFENSE;
     }
     for(int i=3;i<13;i++){
-        joueurR->pions[i].type=1;
+        joueurR->pions[i].type=CTORP;
         joueurR->pions[i].pv=1;
-        joueurR->pions[i].coord_x=0;
-        joueurR->pions[i].coord_y=0;
+        joueurR->pions[i].coord_x=5;
+        joueurR->pions[i].coord_y=5;
+        joueurR->pions[i].invisible=-1;
+        joueurR->pions[i].player=DEFENSE;
     }
     for(int i=0;i<2;i++){//EMILES Mettre des print pour comprendre quel pion on est en train de poser
-        joueurB->pions[i].type=1;
+        joueurB->pions[i].type=CTORP;
         joueurB->pions[i].pv=2;
         joueurB->pions[i].coord_x=0;
         joueurB->pions[i].coord_y=0;
+        joueurB->pions[i].invisible=-1;
+        joueurB->pions[i].player=ATTAQUE;
     }
     for(int i=2;i<19;i++){
-        joueurB->pions[i].type=1;
+        joueurB->pions[i].type=CTORP;
         joueurB->pions[i].pv=1;
         joueurB->pions[i].coord_x=0;
         joueurB->pions[i].coord_y=0;
+        joueurB->pions[i].invisible=-1;
+        joueurB->pions[i].player=ATTAQUE;
     }
-    
-    for(int i=0;i<13;i++){
+    /*
+    printf("Au joueur rouge de placer ses pions\n");
+    for(int i=0;i<joueurR->nb_pions;i++){
         selectionner_case(joueurR,joueurB , &(joueurR->pions[i].coord_x), &(joueurR->pions[i].coord_y), DEFENSE, 1);
+        joueurR->pions[i].invisible=0;
     }
     printf("Au joueur bleu de placer ses pions\n");
-    for(int i=0;i<19;i++){
-        selectionner_case(joueurB,joueurR , &(joueurR->pions[i].coord_x), &(joueurR->pions[i].coord_y), ATTAQUE, 1);
+    for(int i=0;i<joueurB->nb_pions;i++){
+        selectionner_case(joueurB,joueurR , &(joueurB->pions[i].coord_x), &(joueurB->pions[i].coord_y), ATTAQUE, 1);
+        joueurB->pions[i].invisible=0;
+    }*/
+    
+    for(int i=0; i<=5;i++){
+        joueurR->pions[i].coord_x=i+2;
+        joueurR->pions[i].coord_y=3;
+        joueurR->pions[i].invisible=0;
+    }
+    for(int i=0; i<=5;i++){
+        joueurR->pions[i+5].coord_x=i+2;
+        joueurR->pions[i+5].coord_y=5;
+        joueurR->pions[i+5].invisible=0;
+    }
+    
+    for(int i=0; i<3;i++){
+        joueurR->pions[i+10].coord_x=i+2;
+        joueurR->pions[i+10].coord_y=4;
+        joueurR->pions[i+10].invisible=0;
+    }
+    
+    for(int i=0; i<=10;i++){
+        joueurB->pions[i].coord_x=i;
+        joueurB->pions[i].coord_y=0;
+        joueurB->pions[i].invisible=0;
+    }
+    for(int i=0; i<9;i++){
+        joueurB->pions[i+10].coord_x=i;
+        joueurB->pions[i+10].coord_y=1;
+        joueurB->pions[i+10].invisible=0;
     }
 }
 
