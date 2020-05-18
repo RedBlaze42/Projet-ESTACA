@@ -111,11 +111,18 @@ int main(){
     joueurB.cartes[1]=(rand() % (5+1));
 
     placerpions( &joueurR, &joueurB);
-    printf("joueur Rouge tapez 1 si vouq souhaitez commencer sinon tapez 2");
-    scanf("%d",d);
-    int vR,vB;//Victoire Bleue ou Rouge
+    printf("joueur Rouge tapez r si vouq souhaitez commencer sinon tapez b");
+    char commence;
+    while(commence!='b' && commence!='r') scanf("%c",&commence);
+    
+    int vR=0;//Victoire Bleue ou Rouge
+    int vB=0;
     while(vR==0 && vB==0){
-        tour(&joueurR,&joueurB);
+        if(commence=='b'){
+            tour(&joueurB,&joueurR);
+        }else{
+            tour(&joueurR,&joueurB);
+        }
         int vR=reste_pions_joueur(&joueurR, -1);//-1 pour n'importe quel type de pion
         int vB=reste_pions_joueur(&joueurB, -1);
         if(vR==0 && vB==0){
@@ -140,12 +147,12 @@ void utiliser_carte(joueur *joueurSel, joueur *joueur2){
 
 void tour(joueur *joueur1,joueur *joueur2){
     system("cls");
-    if(joueur1->num==DEFENSE){
-        printf("C'est au tour du joueur rouge\n\n");
-    }else{
-        printf("C'est au tour du joueur bleu\n\n");
-    }
     for(int i=0;i<2;i++){
+        if(joueur1->num==DEFENSE){
+            printf("C'est au tour du joueur rouge\n\n");
+        }else{
+            printf("C'est au tour du joueur bleu\n\n");
+        }
         if(joueur1->num==DEFENSE){//Menu defenseur
             if(joueur1->cartes[0]!=0 || joueur1->cartes[1]!=0){
                 printf("Voulez vous utiliser une carte ? o/n");
@@ -189,7 +196,6 @@ void tour(joueur *joueur1,joueur *joueur2){
             system("cls");
 
         }else{
-            printf("Fin du tour defenseur\n");
             system("pause");
             if(joueur1->cartes[0]!=0 || joueur1->cartes[1]!=0){
                 printf("Voulez vous utiliser une carte ? o/n\n");
@@ -257,7 +263,7 @@ void deplacer_pions(joueur *joueurSel, joueur *joueur2, int id_pion_sel){
     while(en_mouvement){//Attendre que le joueur appuie sur la touche entree
         pion *plateau[DIM_PLATEAU][DIM_PLATEAU];
         remplirTab(plateau, joueurSel, joueur2);//Afficher plateau surbrillance
-        //system("cls");
+        system("cls");
         afficherplateau_sel(joueurSel, joueur2,x,y);
         switch(get_fleche()) {
             case enter:
@@ -457,7 +463,7 @@ void selectionner_case(joueur *joueurSel, joueur *joueur2, int *sel_x, int *sel_
     }
 }
 
-int selectionner_pion(joueur *joueurSel, joueur *joueur2){
+int selectionner_pion(joueur *joueurSel, joueur *joueur2){//TODO Empêcher déplacement 
     int en_selection=1;
     int id_pion=0;
     while(en_selection==1){
@@ -656,33 +662,46 @@ void placerpions(joueur *joueurR, joueur *joueurB){
     joueurR->pions[0].coord_x=5;
     joueurR->pions[0].coord_y=5;
     joueurR->pions[0].pv=1;
+    joueurR->pions[0].invisible=0;
+    joueurR->pions[0].anti_blindage=0;
     for(int i=1;i<13;i++){
         joueurR->pions[i].type=1;
         joueurR->pions[i].coord_x=5;
         joueurR->pions[i].coord_y=6;
         joueurR->pions[i].pv=0;
+        joueurR->pions[i].invisible=0;
+        joueurR->pions[i].anti_blindage=0;
+        joueurR->pions[i].player=DEFENSE;
     }
     for(int i=0;i<19;i++){// on initialise les pions rouges et on initialise leurs pv a 0 pour faciliter le placement
         joueurB->pions[i].type=1;
         joueurB->pions[i].pv=0;
         joueurB->pions[i].coord_x=0;
         joueurB->pions[i].coord_y=0;
-    }/*
+        joueurB->pions[i].anti_blindage=0;
+        joueurB->pions[i].invisible=0;
+        joueurB->pions[i].player=ATTAQUE;
+    }
+
+
     for(int i=1; i<=5;i++){
         joueurR->pions[i].coord_x=i+3;
         joueurR->pions[i].coord_y=3;
         joueurR->pions[i].invisible=0;
+        joueurR->pions[i].pv=2;
     }
     for(int i=0; i<=5;i++){
         joueurR->pions[i+5].coord_x=i+3;
         joueurR->pions[i+5].coord_y=6;
         joueurR->pions[i+5].invisible=0;
+        joueurR->pions[i+5].pv=1;
     }
 
     for(int i=0; i<3;i++){
         joueurR->pions[i+10].coord_x=i+3;
         joueurR->pions[i+10].coord_y=4;
         joueurR->pions[i+10].invisible=0;
+        joueurR->pions[i+10].pv=1;
     }
 
     for(int i=0; i<=10;i++){
@@ -690,14 +709,18 @@ void placerpions(joueur *joueurR, joueur *joueurB){
         joueurB->pions[i].coord_y=0;
         joueurB->pions[i].invisible=0;
         joueurB->pions[i].anti_blindage=0;
+        joueurB->pions[i].pv=2;
     }
     for(int i=1; i<9;i++){
         joueurB->pions[i+10].coord_x=i-1;
         joueurB->pions[i+10].coord_y=2;
         joueurB->pions[i+10].invisible=0;
-        joueurB->pions[i].anti_blindage=0;
-    }*/
+        joueurB->pions[i+10].anti_blindage=0;
+        joueurB->pions[i+10].pv=1;
+    }
 
+
+    /*
     printf("Au joueur rouge de placer ses pions\n");
     for(int i=1;i<joueurR->nb_pions;i++){// le joueur rouge place ses pions chacun leur tour et les pv s'initialisent en même temps
         if(i<3){
@@ -706,7 +729,6 @@ void placerpions(joueur *joueurR, joueur *joueurB){
             printf("Vous déplacez votre contre torpilleur numero %d\n", i-2);
         }
         selectionner_case(joueurR, joueurB, &(joueurR->pions[i].coord_x), &(joueurR->pions[i].coord_y), DEFENSE, 1);//On a pas le droit de bouger le cuirasse au debut
-        
         if(i<3){
             joueurR->pions[i].pv=2;
         }else{
@@ -719,17 +741,18 @@ void placerpions(joueur *joueurR, joueur *joueurB){
     printf("Au joueur bleu de placer ses pions\n");
     for(int i=0;i<joueurB->nb_pions;i++){// le joueur rouge place ses pions chacun leur tour et les pv s'initialisent en même temps
         if(i<2){
-            joueurB->pions[i].pv=2;
-        }else{
-            joueurB->pions[i].pv=1;
-        }
-        selectionner_case(joueurR,joueurB , &(joueurB->pions[i].coord_x), &(joueurB->pions[i].coord_y), ATTAQUE, 1);
-        if(joueurB->pions[i].pv==2){
             printf("Vous deplacez votre contre torpilleur blinde numero %d\n", i+1);
         }else{
             printf("Vous deplacez votre contre torpilleur blinde %d\n", i-1);
         }
-    }
+        selectionner_case(joueurR,joueurB , &(joueurB->pions[i].coord_x), &(joueurB->pions[i].coord_y), ATTAQUE, 1);
+        if(i<2){
+            joueurB->pions[i].pv=2;
+        }else{
+            joueurB->pions[i].pv=1;
+        }
+    }*/
+    afficherplateau(joueurR,joueurB);
 }
 
 void rouge_CA(pion *pionattaque, pion *pionattaquant){//carte spéciale rouge contre attaque
