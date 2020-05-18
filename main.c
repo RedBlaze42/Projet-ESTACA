@@ -115,6 +115,8 @@ int main(){
     printf("joueur Rouge tapez r si vouq souhaitez commencer sinon tapez b");
     char commence;
     while(commence!='b' && commence!='r') scanf("%c",&commence);
+    int x=0;
+    int y=0;
     
     int vR=0;//Victoire Bleue ou Rouge
     int vB=0;
@@ -128,10 +130,10 @@ int main(){
         int vB=reste_pions_joueur(&joueurB, -1);
         if(vR==0 && vB==0){
             if(is_in_zone(ATTAQUE, joueurR.pions[1].coord_x, joueurR.pions[1].coord_y)==1){
-            vR=0;
+                vR=1;
             }
             if(joueurR.pions[1].pv==0){
-            vB=0;
+                vB=1;
             }
         }
     }
@@ -241,8 +243,8 @@ void tour(joueur *joueur1,joueur *joueur2){
         joueur *temporaire=joueur2;//Interverti les 2 joueurs pour la deuxième partie du tour
         joueur2=joueur1;
         joueur1=temporaire;
+        system("cls");
     }
-    system("cls");
 
 }
 
@@ -405,16 +407,19 @@ void selectionner_attaque(joueur *joueurSel, joueur *joueur2){//Permet au joueur
                 }
                 afficherplateau_sel(joueurSel, joueur2, x_attaque, y_attaque);
                 if(get_fleche()==enter){//Pion a attaquer selectionne
-                    //TODO ATTAQUE
                     pion *victime=plateau[x_attaque][y_attaque];
                     printf("Victime avant pv%d",victime->pv);
                     victime->pv--;
-                    if(victime->pv==0 && pionSel->anti_blindage==0){
+                    remplirTab(plateau, joueurSel, joueur2);//actualise le plateau 
+                    if(victime->pv==0 && pionSel->anti_blindage==0 && plateau[x][y]->type=PIEGE){
                         pionSel->coord_x=x_attaque;
                         pionSel->coord_y=y_attaque;
+                    }else if(plateau[x][y]->type=PIEGE){
+                        pionSel->pv--;
                     }
+                    
                     fin_boucle=1;
-                    //TODO Rajouter le check pour les pieges en dessous du bateau coule (sous programme ?)
+                    
                     system("cls");
                     printf("Touche !\n");
                     afficherplateau(joueurSel, joueur2);
@@ -464,7 +469,7 @@ void selectionner_case(joueur *joueurSel, joueur *joueur2, int *sel_x, int *sel_
     }
 }
 
-int selectionner_pion(joueur *joueurSel, joueur *joueur2){//TODO Empêcher déplacement 
+int selectionner_pion(joueur *joueurSel, joueur *joueur2){//TODO Empêcher déplacement cuirasse et autoriser selection pion adverse
     int en_selection=1;
     int id_pion=0;
     while(en_selection==1){
