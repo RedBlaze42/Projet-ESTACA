@@ -82,18 +82,27 @@ int main(){
     int gagnant;
 
     lectureRegles();
+
+    srand(time(0));//Distributiond des cartes
+    joueurR.cartes[0]=(rand() % (5+1));
+    joueurR.cartes[1]=(rand() % (5+1));
+    joueurB.cartes[0]=(rand() % (5+1));
+    joueurB.cartes[1]=(rand() % (5+1));
+
     placerpions( &joueurR, &joueurB);
     int vR=0;//Victoire Bleue ou Rouge
     int vB=0;
     while(vR==0 && vB==0){
         tour(&joueurR,&joueurB);
-        int vR=reste_pions_joueur(&joueurR, -1);
+        int vR=reste_pions_joueur(&joueurR, -1);//-1 pour n'importe quel type de pion
         int vB=reste_pions_joueur(&joueurB, -1);
-        if(is_in_zone(ATTAQUE, joueurR.pions[1].coord_x, joueurR.pions[1].coord_y)==1){
-           vR=0;
-        }
-        if(joueurR.pions[1].pv==0){
-           vB=0;
+        if(vR==0 && vB==0){
+            if(is_in_zone(ATTAQUE, joueurR.pions[1].coord_x, joueurR.pions[1].coord_y)==1){
+            vR=0;
+            }
+            if(joueurR.pions[1].pv==0){
+            vB=0;
+            }
         }
     }
     if(vR==1){
@@ -102,6 +111,10 @@ int main(){
         printf("Bravo pour cette belle victoire,j'ai toujours su que le bleu etait la couleur des vaiqueurs.");
     }
 }
+/*
+void utiliser_carte(joueur *joueurSel, joueur *joueur2){
+    
+}*/
 
 void tour(joueur *joueur1,joueur *joueur2){
     system("cls");
@@ -110,84 +123,96 @@ void tour(joueur *joueur1,joueur *joueur2){
     }else{
         printf("C'est au tour du joueur bleu\n\n");
     }
-    int fin_menu=0;//TODO for avec inversion joueur1<>joueur2
-    if(joueur1->num==DEFENSE){//Menu defenseur
-        if(joueur1->cartes[0]!=0 || joueur1->cartes[1]!=0){
-            printf("Voulez vous utiliser une carte ? o/n");
-            char c=0;
-            while(c!='o' || c!='n') scanf("%c",&c);
-            if(c=='o'){
-                //TODO Sous programme utiliser carte
-            }
-        }
-        printf("Veuillez selectionner une action:\n1. Deplacer votre cuirrasse\n2. Deplacer 2 contre-torpilleurs\n");
-        int d=0;
-        while(d!=1 && d!=2) scanf("%d",&d);
-
-        if(d==2){
-            int deplacements_restants=2;
-            while(deplacements_restants>0){
-                if(reste_pions_joueur(joueur1,CTORP)==0 || (reste_pions_joueur(joueur1,CTORP)==1 && deplacements_restants==1) ){//Soit le joueur n'as plus de CTORP soit il en a qu'un seul qu'il a dejà deplace
-                    printf("Vous n'avez plus de contre-torpilleurs\n");
+    for(int i=0;i<2;i++){
+        if(joueur1->num==DEFENSE){//Menu defenseur
+            if(joueur1->cartes[0]!=0 || joueur1->cartes[1]!=0){
+                printf("Voulez vous utiliser une carte ? o/n");
+                char c=0;
+                while(c!='o' && c!='n') scanf("%c",&c);
+                if(c=='o'){
+                    //TODO Sous programme utiliser carte
                 }
-                //TODO Selectionner pion
             }
+            printf("Veuillez selectionner une action:\n1. Deplacer votre cuirrasse\n2. Deplacer 2 contre-torpilleurs\n");
+            int d=0;
+            while(d!=1 && d!=2) scanf("%d",&d);
+
+            if(d==2){
+                int deplacements_restants=2;
+                while(deplacements_restants>0){
+                    if(reste_pions_joueur(joueur1,CTORP)==0 || (reste_pions_joueur(joueur1,CTORP)==1 && deplacements_restants==1) ){//Soit le joueur n'as plus de CTORP soit il en a qu'un seul qu'il a dejà deplace
+                        printf("Vous n'avez plus de contre-torpilleurs\n");
+                    }
+                    deplacer_pions(joueur1,joueur2,selectionner_pion(joueur1,joueur2));
+                    printf("Contre-Torpilleur deplace !\n");
+                    afficherplateau(joueur1, joueur2);
+                    deplacements_restants--;
+                    system("pause");
+                }
+            }else{
+                printf("Deplacement du cuirrasse\n");
+                deplacer_pions(joueur1,joueur2,0);//Le cuirrasse est toujours au debut du tableau
+                printf("Cuirrasse deplace !\n");
+                afficherplateau(joueur1, joueur2);
+                system("pause");
+            }
+            if(joueur_peut_attaquer(joueur1,joueur2)==1){
+                printf("Voulez vous attaquer ? o/n\n");
+                char c=0;
+                while(c!='o' && c!='n') scanf("%c",&c);
+                if(c=='o') selectionner_attaque(joueur1,joueur2);
+            }
+            printf("Fin du tour defenseur\n");
+            system("pause");
+            system("cls");
+
         }else{
-            printf("Deplacement du cuirrasse\n");
-            deplacer_pions(joueur1,joueur2,0);//Le cuirrasse est toujours au debut du tableau
-            printf("Cuirrasse deplace !\n");
-            afficherplateau(joueur1, joueur2);
+            printf("Fin du tour defenseur\n");
+            system("pause");
+            if(joueur1->cartes[0]!=0 || joueur1->cartes[1]!=0){
+                printf("Voulez vous utiliser une carte ? o/n\n");
+                char c=0;
+                while(c!='o' && c!='n') scanf("%c",&c);
+                if(c=='o'){
+                    //TODO Sous programme utiliser carte
+                }
+            }
+            int choix_effectue=0;
+            int d;
+            if(joueur_peut_attaquer(joueur1,joueur2)==1){
+                printf("Veuillez selectionner une action:\n1. Attaquer un ennemi\n2. Deplacer 2 contre-torpilleurs\n");
+                d=0;
+                while(d!=1 && d!=2) scanf("%d",&d);
+            }else{//Le joueur ne peut pas attaque donc il doit deplacer 2 pions
+                d=2;
+            }
+
+            if(d==1){
+                if(joueur_peut_attaquer(joueur1,joueur2)==1){
+                    selectionner_attaque(joueur1,joueur2);
+                }else{
+                    printf("Vous n'êtes à porte d'aucun ennemi");
+                }
+            }else if(d==2){
+                int deplacements_restants=2;
+                while(deplacements_restants>0){
+                    if(reste_pions_joueur(joueur1,CTORP)==0 || (reste_pions_joueur(joueur1,CTORP)==1 && deplacements_restants==1) ){//Soit le joueur n'as plus de CTORP soit il en a qu'un seul qu'il a dejà deplace
+                        printf("Vous n'avez plus de contre-torpilleurs\n");
+                    }
+                    deplacer_pions(joueur1,joueur2,selectionner_pion(joueur1,joueur2));
+                    printf("Contre-Torpilleur deplace !\n");
+                    afficherplateau(joueur1, joueur2);
+                    deplacements_restants--;
+                    system("pause");
+                }
+            }
+            printf("Fin du tour attaquant\n");
             system("pause");
         }
-        if(joueur_peut_attaquer(joueur1,joueur2)==1){
-            printf("Voulez vous attaquer ? o/n\n");
-            char c=0;
-            while(c!='o' && c!='n') scanf("%c",&c);
-            if(c=='o') selectionner_attaque(joueur1,joueur2);
-        }
-        printf("Fin du tour defenseur\n");
-        system("pause");
-
-    }else{
-        if(joueur1->cartes[0]!=0 || joueur1->cartes[1]!=0){
-            printf("Voulez vous utiliser une carte ? o/n\n");
-            char c=0;
-            while(c!='o' && c!='n') scanf("%c",&c);
-            if(c=='o'){
-                //TODO Sous programme utiliser carte
-            }
-        }
-        int choix_effectue=0;
-        int d;
-        if(joueur_peut_attaquer(joueur1,joueur2)==1){
-            printf("Veuillez selectionner une action:\n1. Attaquer un ennemi\n2. Deplacer 2 contre-torpilleurs\n");
-            d=0;
-            while(d!=1 && d!=2) scanf("%d",&d);
-        }else{//Le joueur ne peut pas attaque donc il doit deplacer 2 pions
-            d=2;
-        }
-
-        if(d==1){
-            selectionner_attaque(joueur1,joueur2);
-        }else if(d==2){
-            int deplacements_restants=2;
-            while(deplacements_restants>0){
-                if(reste_pions_joueur(joueur1,CTORP)==0 || (reste_pions_joueur(joueur1,CTORP)==1 && deplacements_restants==1) ){//Soit le joueur n'as plus de CTORP soit il en a qu'un seul qu'il a dejà deplace
-                    printf("Vous n'avez plus de contre-torpilleurs\n");
-                }
-                //TODO Selectionner pion
-            }
-        }
-        if(joueur_peut_attaquer(joueur1,joueur2)==1){
-            printf("Voulez vous attaquer ? o/n\n");
-            char c=0;
-            while(c!='o' && c!='n') scanf("%c",&c);
-            if(c=='o') selectionner_attaque(joueur1,joueur1);
-        }
-        printf("Fin du tour defenseur\n");
-        system("pause");
+        joueur *temporaire=joueur2;//Interverti les 2 joueurs pour la deuxième partie du tour
+        joueur2=joueur1;
+        joueur1=temporaire;
     }
-
     system("cls");
 
 }
@@ -203,13 +228,14 @@ int reste_pions_joueur(joueur *joueurSel,int type){//Si type=-1, on verifie just
 
 void deplacer_pions(joueur *joueurSel, joueur *joueur2, int id_pion_sel){
     int en_mouvement=1;
+    pion *pionSel=&(joueurSel->pions[id_pion_sel]);
     int x=joueurSel->pions[id_pion_sel].coord_x;
     int y=joueurSel->pions[id_pion_sel].coord_y;
     int direction_prise=0;
     while(en_mouvement){//Attendre que le joueur appuie sur la touche entree
         pion *plateau[DIM_PLATEAU][DIM_PLATEAU];
         remplirTab(plateau, joueurSel, joueur2);//Afficher plateau surbrillance
-        system("cls");
+        //system("cls");
         afficherplateau_sel(joueurSel, joueur2,x,y);
         switch(get_fleche()) {
             case enter:
@@ -218,31 +244,31 @@ void deplacer_pions(joueur *joueurSel, joueur *joueur2, int id_pion_sel){
                 en_mouvement=0;
                 break;
             case bas:
-                if(y+1<DIM_PLATEAU && is_pionSurCase(joueurSel,joueur2,x,y-1)==0 && (direction_prise==0 || direction_prise==bas)){//TODO Faire que revenir sur le pion principal reset direction_prise
-                    y++;//TODO Faire que 2 directions: verticale et horizontale
+                if(y+1<DIM_PLATEAU && (is_pionSurCase(joueurSel,joueur2,x,y+1)==0 || plateau[x][y+1]==pionSel) && (direction_prise==0 || direction_prise==bas || direction_prise==haut)){
+                    y++;
                     if(direction_prise==0) direction_prise=bas;
                 }
                 break;
             case haut:
-                if(y-1>=0 && is_pionSurCase(joueurSel,joueur2,x,y-1)==0 && (direction_prise==0 || direction_prise==haut)){
+                if(y-1>=0 && (is_pionSurCase(joueurSel,joueur2,x,y-1)==0 || plateau[x][y-1]==pionSel) && (direction_prise==0 || direction_prise==bas || direction_prise==haut)){
                     y--;
                     if(direction_prise==0) direction_prise=haut;
                 }
                 break;
             case gauche:
-                if(x-1>=0 && is_pionSurCase(joueurSel,joueur2,x-1,y)==0 && (direction_prise==0 || direction_prise==gauche)){
+                if(x-1>=0 && (is_pionSurCase(joueurSel,joueur2,x-1,y)==0 || plateau[x-1][y]==pionSel) && (direction_prise==0 || direction_prise==droite || direction_prise==gauche)){
                     x--;
                     if(direction_prise==0) direction_prise=gauche;
                 }
                 break;
             case droite:
-                if(x+1<DIM_PLATEAU && is_pionSurCase(joueurSel,joueur2,x+1,y)==0 && (direction_prise==0 || direction_prise==droite)){
+                if(x+1<DIM_PLATEAU && (is_pionSurCase(joueurSel,joueur2,x+1,y)==0 || plateau[x+1][y]==pionSel) && (direction_prise==0 || direction_prise==droite || direction_prise==gauche)){
                     x++;
                     if(direction_prise==0) direction_prise=droite;
                 }
                 break;
         }
-        printf("dir%d\n",direction_prise);
+        if(pionSel->coord_x==x && pionSel->coord_y==y) direction_prise=0;
     }
 }
 int joueur_peut_attaquer(joueur *joueurSel, joueur *joueur2){
@@ -363,7 +389,7 @@ void selectionner_attaque(joueur *joueurSel, joueur *joueur2){//Permet au joueur
                     system("cls");
                     printf("Touche !\n");
                     afficherplateau(joueurSel, joueur2);
-                    sleep(3);
+                    system("pause");
                 }else{
                     direction_sel++;
                     if(direction_sel>4)
