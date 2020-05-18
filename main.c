@@ -753,7 +753,6 @@ void rouge_furtif(pion *pion){//carte spéciale rouge déplacement furtif
     pion->invisible=1;
 }
 void rouge_piege(pion *pion){//carte spéciale rouge piége
-    for(int i=0;i<2;i++){
         printf("vous placez le piege numero %d", i);
 
     }
