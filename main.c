@@ -1,6 +1,7 @@
 #include<stdlib.h>
 #include<stdio.h>
 #include<windows.h>
+#include <conio.h>
 
 #define DIM_PLATEAU 25
 #define max_pions 20
@@ -15,10 +16,10 @@
 #define PIEGE 3
 
 //Touches
-#define haut 65
-#define bas 66
-#define droite 67
-#define gauche 68
+#define haut 72
+#define bas 80
+#define droite 77
+#define gauche 75
 #define enter 13
 
 //Diagonales
@@ -125,7 +126,7 @@ void tour(joueur *joueur1,joueur *joueur2){
         if(joueur1->cartes[0]!=0 || joueur1->cartes[1]!=0){
             printf("Voulez vous utiliser une carte ? o/n");
             char c=0;
-            while(c!="o" || c!="n") scanf("%c",&c);
+            while(c!='o' || c!='n') scanf("%c",&c);
             if(c=='o'){
                 //TODO Sous programme utiliser carte
             }
@@ -148,8 +149,8 @@ void tour(joueur *joueur1,joueur *joueur2){
         if(joueur_peut_attaquer(joueur1,joueur2)==1){
             printf("Voulez vous attaquer ? o/n");
             char c=0;
-            while(c!="o" || c!="n") scanf("%c",&c);
-            if(c=="o") selectionner_attaque(joueur1,joueur2);
+            while(c!='o' || c!='n') scanf("%c",&c);
+            if(c=='o') selectionner_attaque(joueur1,joueur2);
         }
         printf("Fin du tour defenseur");
         system("pause");
@@ -158,7 +159,7 @@ void tour(joueur *joueur1,joueur *joueur2){
         if(joueur2->cartes[0]!=0 || joueur2->cartes[1]!=0){
             printf("Voulez vous utiliser une carte ? o/n");
             char c=0;
-            while(c!="o" || c!="n") scanf("%c",&c);
+            while(c!='o' || c!='n') scanf("%c",&c);
             if(c=='o'){
                 //TODO Sous programme utiliser carte
             }
@@ -189,8 +190,8 @@ void tour(joueur *joueur1,joueur *joueur2){
         if(joueur_peut_attaquer(joueur1,joueur2)==1){
             printf("Voulez vous attaquer ? o/n");
             char c=0;
-            while(c!="o" || c!="n") scanf("%c",&c);
-            if(c=="o") selectionner_attaque(joueur1,joueur2);
+            while(c!='o' || c!='n') scanf("%c",&c);
+            if(c=='o') selectionner_attaque(joueur1,joueur2);
         }
         printf("Fin du tour defenseur");
         system("pause"); 
@@ -217,7 +218,7 @@ void deplacer_pions(joueur *joueurSel, joueur *joueur2, int id_pion_sel){
         pion *plateau[DIM_PLATEAU][DIM_PLATEAU];
         remplirTab(plateau, joueurSel, joueur2);//Afficher plateau surbrillance
         int direction_prise;
-        switch(getch()) {
+        switch(get_fleche()) {
             case enter:
                 joueurSel->pions[id_pion_sel].coord_x=x;
                 joueurSel->pions[id_pion_sel].coord_y=y;
@@ -277,17 +278,13 @@ int pion_peut_attaquer(joueur *joueurSel, joueur *joueur2, pion *pionSel){//Reto
     }
 }
 
-/*Pour verifier si un joueur peut attaquer
-int peut_attaquer=0;
-for(int i=0;i<joueurSel->nb_pions;i++){
-    if(pion_peut_attaquer(joueurSel, joueur2, joueurSel->pions[i])==1){
-        peut_attaquer=1;
+int get_fleche(){
+    char c = getch();
+    char init_c=c;
+    if(c==224 || c==0)
+        c=getch();
+    return c;
     }
-}
-if(peut_attaquer==0){
-    printf("Aucun de vos pions ne peut attaquer\n");
-}   
-*/
 
 void selectionner_attaque(joueur *joueurSel, joueur *joueur2){//Permet au joueur de selectionner le pion qui attaque et la case a attaquer
     pion *plateau[DIM_PLATEAU][DIM_PLATEAU];
@@ -301,7 +298,7 @@ void selectionner_attaque(joueur *joueurSel, joueur *joueur2){//Permet au joueur
             if(i>=joueurSel->nb_pions) i=0;
         }
         afficherplateau_sel(joueurSel, joueur2, joueurSel->pions[i].coord_x, joueurSel->pions[i].coord_y);
-        if(getch()==enter){//Pion selectionne
+        if(get_fleche()==enter){//Pion selectionne
             int direction_attaque=0;//Pour cycler les diagonales
             pion *pionSel=&(joueurSel->pions[i]);
             int y = pionSel->coord_y;
@@ -345,7 +342,7 @@ void selectionner_attaque(joueur *joueurSel, joueur *joueur2){//Permet au joueur
                 }
 
                 afficherplateau_sel(joueurSel, joueur2,x_attaque,y_attaque);
-                if(getch()==enter){//Pion a attaquer selectionne
+                if(get_fleche()==enter){//Pion a attaquer selectionne
                     //TODO ATTAQUE
                     pion *victime=plateau[y_attaque][x_attaque];
                     victime->pv--;
@@ -369,7 +366,7 @@ void selectionner_case(joueur *joueurSel, joueur *joueur2, int *sel_x, int *sel_
         int y=0;
         afficherplateau_sel(joueurSel, joueur2,x,y);
         int direcion_prise;
-        switch(getch()) {
+        switch(get_fleche()) {
             case enter:
                 if( (is_in_zone(zone,x,y)==1) && (vide==1 && is_pionSurCase(joueurSel,joueur2,x,y)==0) ){
                     *sel_x=x;
@@ -399,7 +396,7 @@ int selectionner_pion(joueur *joueurSel, joueur *joueur2){
     do{
         afficherplateau_sel(joueurSel, joueur2, joueurSel->pions[id_pion].coord_x, joueurSel->pions[id_pion].coord_y);
         if(id_pion>joueurSel->nb_pions) id_pion=0;
-    }while(getch()!=enter);
+    }while(get_fleche()!=enter);
     return id_pion;
 }
 
