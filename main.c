@@ -106,10 +106,10 @@ int main(){
         int vR=reste_pions_joueur(&joueurR, -1);
         int vB=reste_pions_joueur(&joueurB, -1);
         if(is_in_zone(ATTAQUE, joueurR.pions[1].coord_x, joueurR.pions[1].coord_y)==1){
-           vR=1;
+           vR=0;
         }
         if(joueurR.pions[1].pv==0){
-           vB=1;
+           vB=0;
         }
     }
     if(vR==1){
