@@ -73,7 +73,7 @@ int joueur_peut_attaquer(joueur *joueurSel, joueur *joueur2);
 //cartes rouge :
 void rouge_CA(pion *pionattaque, pion *poinattaquant);
 void rouge_bouclier(pion *pion);
-void rouge_permut(pion *pion1, pion *pion2)
+void rouge_permut(pion *pion1, pion *pion2);
 void rouge_furtif(pion *pion);
 
 int main(){
@@ -112,7 +112,7 @@ int main(){
 
     placerpions( &joueurR, &joueurB);
     printf("joueur Rouge tapez 1 si vouq souhaitez commencer sinon tapez 2");
-    scanf(%d,d);
+    scanf("%d",d);
     int vR,vB;//Victoire Bleue ou Rouge
     while(vR==0 && vB==0){
         tour(&joueurR,&joueurB);
@@ -128,14 +128,14 @@ int main(){
         }
     }
     if(vR==1){
-        printf("Bravo pour cette belle victoire,j'ai toujours su que le rouge etait la couleur des vaiqueurs.");
+        printf("Bravo pour cette belle victoire, j'ai toujours su que le rouge etait la couleur des vainqueurs.");
     }else{
-        printf("Bravo pour cette belle victoire,j'ai toujours su que le bleu etait la couleur des vaiqueurs.");
+        printf("Bravo pour cette belle victoire, j'ai toujours su que le bleu etait la couleur des vainqueurs.");
     }
 }
 /*
 void utiliser_carte(joueur *joueurSel, joueur *joueur2){
-    
+
 }*/
 
 void tour(joueur *joueur1,joueur *joueur2){
@@ -634,10 +634,10 @@ void lectureRegles(){
                 printf("Il existe 4 types de pions:\n- Les cuirasses\n- Les contretorpilleurs blindes(pions moyens, doivent être attaque deux fois pour être detruits,\nattaques une fois, ils perdent leurs blindages et deviennent des contre-torpilleurs normaux.)\n- Les contre torpilleurs\n- Les cartes pieges(voir cartes piege rouges et bleues)\n\n\nLe joueur rouge:\n- Un cuirasse(le grand pion),\n- Deux contretorpilleurs blindes\n- Dix contre-torpilleurs(pions normaux).\n\nSon adversaire, le joueur bleu:\n- Deux contretorpilleurs blindes\n- Dix-huit contre-torpilleurs\n");
             break;
             case 3:
-                printf("1. Carte deplacement libre: Cette carte peut être activee juste avant un deplacement\net permettra a un pion de se deplacer en diagonale durant un tour.\n\n2. Carte mort subite : Cette carte peut être utilisee au debut ou a la fin d’un tout,\nelle permet d’attaquer n’importe quel navire ennemi (excepte le cuirasse).\n\n3. Carte renfort : Cette carte peut être utilisee au debut ou a la fin d’un tout,\nelle permet de rappeler deux contre-torpilleurs detruits ou un blinde sur le plateau.\nLes navires rappeles doivent être deposer forcement sur la peripherie du plateau. \n\n4. Carte Anti-blindage : Cette carte peut être activee au debut d’un tour, elle permet de rendre,\ndurant toute la partie, un contre-torpilleur capable de detruire un blinde en un seul coup.\n\n5. Carte deplacement multiple : Cette carte peut être activee au debut d’un tour,\nelle permet d’effectuer trois deplacements au lieu de deux.\n");
+                printf("1. Carte deplacement libre: Cette carte peut etre activee juste avant un deplacement\net permettra a un pion de se deplacer en diagonale durant un tour.\n\n2. Carte mort subite : Cette carte peut être utilisee au debut ou a la fin d’un tout,\nelle permet d’attaquer n’importe quel navire ennemi (excepte le cuirasse).\n\n3. Carte renfort : Cette carte peut être utilisee au debut ou a la fin d’un tout,\nelle permet de rappeler deux contre-torpilleurs detruits ou un blinde sur le plateau.\nLes navires rappeles doivent être deposer forcement sur la peripherie du plateau. \n\n4. Carte Anti-blindage : Cette carte peut être activee au debut d’un tour, elle permet de rendre,\ndurant toute la partie, un contre-torpilleur capable de detruire un blinde en un seul coup.\n\n5. Carte deplacement multiple : Cette carte peut être activee au debut d’un tour,\nelle permet d’effectuer trois deplacements au lieu de deux.\n");
             break;
             case 4:
-                printf("1. Carte piege : Cette carte peut être activee au debut ou a la fin d’un tour et\nelle permet de placer deux pieges sur la carte. Ces piges sont invisibles pour l’adversaire.\nSi lors d’un deplacement un pion adverse passe par un piege,\nle pion sera detruit et le piege desactive. Si c’est un blinde qui passe par le piege, il perdra son blindage.\n\n2. Carte bouclier : Cette carte peut être activee au debut ou a la fin d’un tour et\nelle permet de rajouter un blindage supplementaire a n’importe quel navire.\n\n3. Carte contre-attaque : Cette carte peut être activee lors qu’on un pion rouge est attaque.\nLe pion attaque ne subit pas de degâts et c’est l’attaquant qui subit les degâts a sa place.\n\n4. Carte permutation : Cette carte peut être activee au debut ou a la fin d’un tour et\nelle permet a deux pions (rouges ou bleus) d’echanger leurs positons sur le plateau.\n\n 5. Carte deplacement furtif : Cette carte peut être activee juste avant un deplacement.\nLe pion deplace devient invisible pour l’adversaire durant le tour suivant.\nSi lors d’un deplacement d’un pion bleu, il croise sur son chemin le navire invisible,\ncelui-ci sera decouvert et le pion bleu devra, bien sûr, s’arrêter.\n");
+                printf("1. Carte piege : Cette carte peut etre activee au debut ou a la fin d’un tour et\nelle permet de placer deux pieges sur la carte. Ces piges sont invisibles pour l’adversaire.\nSi lors d’un deplacement un pion adverse passe par un piege,\nle pion sera detruit et le piege desactive. Si c’est un blinde qui passe par le piege, il perdra son blindage.\n\n2. Carte bouclier : Cette carte peut être activee au debut ou a la fin d’un tour et\nelle permet de rajouter un blindage supplementaire a n’importe quel navire.\n\n3. Carte contre-attaque : Cette carte peut être activee lors qu’on un pion rouge est attaque.\nLe pion attaque ne subit pas de degâts et c’est l’attaquant qui subit les degâts a sa place.\n\n4. Carte permutation : Cette carte peut être activee au debut ou a la fin d’un tour et\nelle permet a deux pions (rouges ou bleus) d’echanger leurs positons sur le plateau.\n\n 5. Carte deplacement furtif : Cette carte peut être activee juste avant un deplacement.\nLe pion deplace devient invisible pour l’adversaire durant le tour suivant.\nSi lors d’un deplacement d’un pion bleu, il croise sur son chemin le navire invisible,\ncelui-ci sera decouvert et le pion bleu devra, bien sûr, s’arrêter.\n");
                 break;
             case 5:
                 printf("Ok let's go\n");
@@ -652,59 +652,83 @@ void color (int couleurDuTexte, int couleurDuFond){// permet de gerer les couleu
 }
 
 void placerpions(joueur *joueurR, joueur *joueurB){
-    printf("Au joueur rouge de placer ses pions\n");
     joueurR->pions[0].type=2;// on initialise les pions rouges et on initialise leurs pv a 0 pour faciliter le placement
-    joueurR->pions[0].coord_x=6;
-    joueurR->pions[0].coord_y=6;
-    joueurR->pions[0].pv=0;
-    int i;
-    for(i=1;i<13;i++){
+    joueurR->pions[0].coord_x=5;
+    joueurR->pions[0].coord_y=5;
+    joueurR->pions[0].pv=1;
+    for(int i=1;i<13;i++){
         joueurR->pions[i].type=1;
-        joueurR->pions[i].coord_x=0;
-        joueurR->pions[i].coord_y=0;
+        joueurR->pions[i].coord_x=5;
+        joueurR->pions[i].coord_y=6;
         joueurR->pions[i].pv=0;
     }
-    for(i=0;i<joueurR->nb_pions;i++){// le joueur rouge place ses pions chacun leur tour et les pv s'initialisent en même temps
-        if(i==0){
-            joueurR->pions[i].pv=1;
-        }else{
-            if(0<i<3){
-                joueurR->pions[i].pv=2; 
-            }else{
-                joueurR->pions[i].pv=1;
-            }
-        }
-        selectionner_case(joueurR,joueurB , &(joueurR->pions[i].coord_x), &(joueurR->pions[i].coord_y), DEFENSE, 1);
-        if(joueurR->pions[i].type==2){
-                printf("vous deplacez votre cuirassé");
-            }else{
-                if(joueurR->pions[i].pv==2){
-                    printf("vous déplacez votre contre torpilleur blindé numéro %d", i);
-
-                }else{
-                    printf("vous déplacez votre contre torpilleur blindé %d", i-2);
-                }
-            }
-        }
-    printf("Au joueur bleu de placer ses pions\n");
-    for(i=0;i<19;i++){// on initialise les pions rouges et on initialise leurs pv a 0 pour faciliter le placement
+    for(int i=0;i<19;i++){// on initialise les pions rouges et on initialise leurs pv a 0 pour faciliter le placement
         joueurB->pions[i].type=1;
         joueurB->pions[i].pv=0;
         joueurB->pions[i].coord_x=0;
         joueurB->pions[i].coord_y=0;
+    }/*
+    for(int i=1; i<=5;i++){
+        joueurR->pions[i].coord_x=i+3;
+        joueurR->pions[i].coord_y=3;
+        joueurR->pions[i].invisible=0;
     }
-    for(i=0;i<joueurB->nb_pions;i++){// le joueur rouge place ses pions chacun leur tour et les pv s'initialisent en même temps
+    for(int i=0; i<=5;i++){
+        joueurR->pions[i+5].coord_x=i+3;
+        joueurR->pions[i+5].coord_y=6;
+        joueurR->pions[i+5].invisible=0;
+    }
+
+    for(int i=0; i<3;i++){
+        joueurR->pions[i+10].coord_x=i+3;
+        joueurR->pions[i+10].coord_y=4;
+        joueurR->pions[i+10].invisible=0;
+    }
+
+    for(int i=0; i<=10;i++){
+        joueurB->pions[i].coord_x=i;
+        joueurB->pions[i].coord_y=0;
+        joueurB->pions[i].invisible=0;
+        joueurB->pions[i].anti_blindage=0;
+    }
+    for(int i=1; i<9;i++){
+        joueurB->pions[i+10].coord_x=i-1;
+        joueurB->pions[i+10].coord_y=2;
+        joueurB->pions[i+10].invisible=0;
+        joueurB->pions[i].anti_blindage=0;
+    }*/
+
+    printf("Au joueur rouge de placer ses pions\n");
+    for(int i=1;i<joueurR->nb_pions;i++){// le joueur rouge place ses pions chacun leur tour et les pv s'initialisent en même temps
+        if(i<3){
+            printf("Vous déplacez votre contre torpilleur blinde numero %d\n", i);
+        }else{
+            printf("Vous déplacez votre contre torpilleur numero %d\n", i-2);
+        }
+        selectionner_case(joueurR, joueurB, &(joueurR->pions[i].coord_x), &(joueurR->pions[i].coord_y), DEFENSE, 1);//On a pas le droit de bouger le cuirasse au debut
+        
+        if(i<3){
+            joueurR->pions[i].pv=2;
+        }else{
+            joueurR->pions[i].pv=1;
+        }
+    }
+    printf("Vous avez placé tout vos pions\n");
+    system("pause");
+    system("cls");
+    printf("Au joueur bleu de placer ses pions\n");
+    for(int i=0;i<joueurB->nb_pions;i++){// le joueur rouge place ses pions chacun leur tour et les pv s'initialisent en même temps
         if(i<2){
-        joueurB->pions[i].pv=2; 
+            joueurB->pions[i].pv=2;
         }else{
             joueurB->pions[i].pv=1;
         }
-        selectionner_case(joueurR,joueurB , &(joueurB->pions[i].coord_x), &(joueurB->pions[i].coord_y), DEFENSE, 1);
-        if()
+        selectionner_case(joueurR,joueurB , &(joueurB->pions[i].coord_x), &(joueurB->pions[i].coord_y), ATTAQUE, 1);
         if(joueurB->pions[i].pv==2){
-            printf("vous déplacez votre contre torpilleur blindé numéro %d", i+1);
+            printf("Vous deplacez votre contre torpilleur blinde numero %d\n", i+1);
         }else{
-            printf("vous déplacez votre contre torpilleur blindé %d", i-1);
+            printf("Vous deplacez votre contre torpilleur blinde %d\n", i-1);
+        }
     }
 }
 
@@ -729,8 +753,8 @@ void rouge_furtif(pion *pion){//carte spéciale rouge déplacement furtif
     pion->invisible=1;
 }
 void rouge_piege(pion *pion){//carte spéciale rouge piége
-    for(int i=0,i<2,i++){
+    for(int i=0;i<2;i++){
         printf("vous placez le piege numero %d", i);
-        selectionner_case()
+
     }
 }
