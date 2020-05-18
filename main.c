@@ -31,8 +31,8 @@
 
 //Zones
 #define PLATEAU 0
-#define DEFENSE 1//Défini aussi numéro du joueur defenseur
-#define ATTAQUE 2//Défini aussi numéro du joueur attaquant
+#define DEFENSE 1//Defini aussi numero du joueur defenseur
+#define ATTAQUE 2//Defini aussi numero du joueur attaquant
 
 typedef struct pion{
 	int coord_x;
@@ -45,7 +45,7 @@ typedef struct pion{
 } pion;
 
 typedef struct joueur{
-    int num;//Joueur Rouge (Défenseur) = 1 Joueur Bleu (Attaquant) =2
+    int num;//Joueur Rouge (Defenseur) = 1 Joueur Bleu (Attaquant) =2
 	pion pions[20];
     int nb_pions;
 	int cartes[2];
@@ -110,7 +110,7 @@ void tour(joueur *joueur1,joueur *joueur2){
         printf("C'est au tour du joueur bleu\n\n");
     }
     int fin_menu=0;
-    if(joueur1->num==DEFENSE){//Menu défenseur
+    if(joueur1->num==DEFENSE){//Menu defenseur
         if(joueur1->cartes[0]!=0 || joueur1->cartes[1]!=0){
             printf("Voulez vous utiliser une carte ? o/n");
             char c=0;
@@ -119,20 +119,20 @@ void tour(joueur *joueur1,joueur *joueur2){
                 //TODO Sous programme utiliser carte
             }
         }
-        printf("Veuillez sélectionner une action:\n1. Déplacer votre cuirrassé\n2. Déplacer 2 contre-torpilleurs");
+        printf("Veuillez selectionner une action:\n1. Deplacer votre cuirrasse\n2. Deplacer 2 contre-torpilleurs");
         int d=0;
         while(d!=1 || d!=2) scanf("%d",&d);
 
         if(d==2){
             int deplacements_restants=2;
             while(deplacements_restants>0){
-                if(reste_pions_joueur(joueur1,CTORP)==0 || (reste_pions_joueur(joueur1,CTORP)==1 && deplacements_restants==1) ){//Soit le joueur n'as plus de CTORP soit il en a qu'un seul qu'il a déjà déplacé
+                if(reste_pions_joueur(joueur1,CTORP)==0 || (reste_pions_joueur(joueur1,CTORP)==1 && deplacements_restants==1) ){//Soit le joueur n'as plus de CTORP soit il en a qu'un seul qu'il a dejà deplace
                     printf("Vous n'avez plus de contre-torpilleurs");
                 }
                 //TODO Selectionner pion
             }
         }else{
-            deplacer_pions(joueur1,joueur2,0);//Le cuirrassé est toujours au début du tableau
+            deplacer_pions(joueur1,joueur2,0);//Le cuirrasse est toujours au debut du tableau
         }
         if(joueur_peut_attaquer(joueur1,joueur2)==1){
             printf("Voulez vous attaquer ? o/n");
@@ -155,10 +155,10 @@ void tour(joueur *joueur1,joueur *joueur2){
         int choix_effectue=0;
         int d;
         if(joueur_peut_attaquer(joueur2,joueur1)==1){
-            printf("Veuillez sélectionner une action:\n1. Attaquer un ennemi\n2. Déplacer 2 contre-torpilleurs");
+            printf("Veuillez selectionner une action:\n1. Attaquer un ennemi\n2. Deplacer 2 contre-torpilleurs");
             d=0;
             while(d!=1 || d!=2) scanf("%d",&d);
-        }else{//Le joueur ne peut pas attaque donc il doit déplacer 2 pions
+        }else{//Le joueur ne peut pas attaque donc il doit deplacer 2 pions
             d=2;
         }
 
@@ -167,13 +167,13 @@ void tour(joueur *joueur1,joueur *joueur2){
         }else if(d==2){
             int deplacements_restants=2;
             while(deplacements_restants>0){
-                if(reste_pions_joueur(joueur2,CTORP)==0 || (reste_pions_joueur(joueur2,CTORP)==1 && deplacements_restants==1) ){//Soit le joueur n'as plus de CTORP soit il en a qu'un seul qu'il a déjà déplacé
+                if(reste_pions_joueur(joueur2,CTORP)==0 || (reste_pions_joueur(joueur2,CTORP)==1 && deplacements_restants==1) ){//Soit le joueur n'as plus de CTORP soit il en a qu'un seul qu'il a dejà deplace
                     printf("Vous n'avez plus de contre-torpilleurs");
                 }
                 //TODO Selectionner pion
             }
         }else{
-            deplacer_pions(joueur1,joueur2,0);//Le cuirrassé est toujours au début du tableau
+            deplacer_pions(joueur1,joueur2,0);//Le cuirrasse est toujours au debut du tableau
         }
         if(joueur_peut_attaquer(joueur1,joueur2)==1){
             printf("Voulez vous attaquer ? o/n");
@@ -190,7 +190,7 @@ void tour(joueur *joueur1,joueur *joueur2){
 }
 
 
-int reste_pions_joueur(joueur *joueurSel,int type){//Si type=-1, on vérifie juste si il reste des pions au joueur
+int reste_pions_joueur(joueur *joueurSel,int type){//Si type=-1, on verifie juste si il reste des pions au joueur
     for(int i;i<joueurSel->nb_pions;i++){
         if( (joueurSel->pions[i].type==type || type==-1) && joueurSel->pions[i].pv>0){
             return 1;
@@ -268,7 +268,7 @@ void direction_attaque_dispo(joueur *joueurSel, joueur *joueur2, pion *pionSel, 
     }
 }
 
-int pion_peut_attaquer(joueur *joueurSel, joueur *joueur2, pion *pionSel){//Retourne 1 si pionSel a un ennemi à porté
+int pion_peut_attaquer(joueur *joueurSel, joueur *joueur2, pion *pionSel){//Retourne 1 si pionSel a un ennemi à porte
     pion *plateau[DIM_PLATEAU][DIM_PLATEAU];
     remplirTab(plateau, joueurSel, joueur2);
     int y = pionSel->coord_y;
@@ -409,7 +409,7 @@ int selectionner_pion(joueur *joueurSel, joueur *joueur2){
     while(en_selection==1){
         system("cls");
         afficherplateau_sel(joueurSel, joueur2, joueurSel->pions[id_pion].coord_x, joueurSel->pions[id_pion].coord_y);
-        usleep(200000);//Pour éviter de sauter trop de pion à chaque fois
+        usleep(200000);//Pour eviter de sauter trop de pion à chaque fois
         if(id_pion>joueurSel->nb_pions) id_pion=0;
         int fleche=get_fleche();
         if(fleche==enter){
@@ -575,13 +575,13 @@ void lectureRegles(){
     int c;
     system("CLS");
     while(c!=5){
-        printf("Bienvenu sur seawars.\nLe but du jeu est de couler tous les bateaux de l'adversaire,\n ou pour le joueur rouge de sortir le cuirassé de la zone de defense ou\n pour le joueur bleu de couler le cuirassé adverse.\n\nAu debut de la partie, le premier joueur dispose le cuirasse dans la case centrale marquee d'un rond,\npuis il place ses douze contre-torpilleurs a sa convenance, a l'interieur du carre central de vingt-cinq cases.\nLorsque le premier joueur a fini de placer ses pions, c'est au tour du deuxieme joueur\nde disposer ses vingt contretorpilleurs comme il en a envie, mais a l'exterieur du carre central.\nUne fois termine le placement de tous les pions, chaque joueur pioche deux cartes speciales de la couleur correspondante.\nLe rouge a le pouvoir de decider a qui revient de jouer le premier coup, et la partie peut alors commencer.\n "); 
+        printf("Bienvenu sur seawars.\nLe but du jeu est de couler tous les bateaux de l'adversaire,\n ou pour le joueur rouge de sortir le cuirasse de la zone de defense ou\n pour le joueur bleu de couler le cuirasse adverse.\n\nAu debut de la partie, le premier joueur dispose le cuirasse dans la case centrale marquee d'un rond,\npuis il place ses douze contre-torpilleurs a sa convenance, a l'interieur du carre central de vingt-cinq cases.\nLorsque le premier joueur a fini de placer ses pions, c'est au tour du deuxieme joueur\nde disposer ses vingt contretorpilleurs comme il en a envie, mais a l'exterieur du carre central.\nUne fois termine le placement de tous les pions, chaque joueur pioche deux cartes speciales de la couleur correspondante.\nLe rouge a le pouvoir de decider a qui revient de jouer le premier coup, et la partie peut alors commencer.\n "); 
         do{
             printf("Pour voir les deplacement/attaques des pions tapez 1\nPour voir la nature des pionstapez 2\nPour voir les capacitees des cartes speciales bleues tapez 3\nPour voir les capacitees des cartes speciales rouges tapez 4\nPour passer directement au debut de la partie tapez 5\n");
             scanf("%d",&c);
         }while(c<1 || c>5);
         system("CLS");
-        switch(c){//EMILES Faire une while, il faut pouvoir afficher plusieurs fois les règles
+        switch(c){//EMILES Faire une while, il faut pouvoir afficher plusieurs fois les regles
             case 1:
                 printf("Deplacments:\nToutes les pieces se deplacent en ligne orthogonale et peuvent parcourir des rangees entieres de cases vides\nen s'arrêtant où bon leur semble,mais elles ne peuvent pas sauter par-dessus une case occupee.\n Elles ne peuvent pas eliminer un pion (de leur camp ou du camp adverse) qui bloque leur avancee,\n mais elles doivent s'arrêter sur une case attenante \n\nAttaques:\nLes pieces s’attaquent mutuellement entre cases voisines directe,\nen se deplaçant en diagonale dans n'importe quelle direction.\nLorsqu'un un navire detruit un autre navire, il enleve du damier le pion elimine et prend sa place.\nAttaquer un pion menace n'est pas une obligation.");
             break;
@@ -652,10 +652,10 @@ void placerpions(joueur *joueurR, joueur *joueurB){
     printf("Au joueur rouge de placer ses pions\n");
     for(int i=1;i<joueurR->nb_pions;i++){
         if(joueurR->pions[i].pv==2){
-            printf("cous déplacez votre contre torpilleur blindé numéro %d\n", i);
+            printf("cous deplacez votre contre torpilleur blinde numero %d\n", i);
 
         }else{
-            printf("cous déplacez votre contre torpilleur numéro %d\n", i-2);
+            printf("cous deplacez votre contre torpilleur numero %d\n", i-2);
         }
         sleep(1);
         selectionner_case(joueurR,joueurB , &(joueurR->pions[i].coord_x), &(joueurR->pions[i].coord_y), DEFENSE, 1);
@@ -664,9 +664,9 @@ void placerpions(joueur *joueurR, joueur *joueurB){
     printf("Au joueur bleu de placer ses pions\n");
     for(int i=0;i<joueurB->nb_pions;i++){
         if(joueurB->pions[i].pv==2){
-            printf("cous déplacez votre contre torpilleur blindé numéro %d\n", i+1);
+            printf("cous deplacez votre contre torpilleur blinde numero %d\n", i+1);
         }else{
-            printf("cous déplacez votre contre torpilleur numéro %d\n", i-1);
+            printf("cous deplacez votre contre torpilleur numero %d\n", i-1);
         }
         sleep(1);
         selectionner_case(joueurB,joueurR , &(joueurB->pions[i].coord_x), &(joueurB->pions[i].coord_y), DEFENSE, 1);
