@@ -779,11 +779,38 @@ void rouge_piege(pion *pion){//carte spéciale rouge piège
         printf("vous placez le piege numero %d\n", i);
         pion->invisible=-1;
 }
-void bleu_renfort(pion *pion){// carte spéciale bleue renfort
+void bleu_renfort(joueur *joueur){// carte spéciale bleue renfort
     int choix=0;
-    printf("Tapez 2 si vous voulez rappeler deux contre torpilleur, tapez 1 si vous preferez rappeler un contre torpilleur blinde\n");
-    scanf("%d", &choix);
-    if(choix==1){
-        
-    }
+    int vivant=0;
+    int choix 2;
+    do{
+        printf("Tapez 2 si vous voulez rappeler deux contre torpilleur, tapez 1 si vous preferez rappeler un contre torpilleur blinde\n");
+        scanf("%d", &choix);
+        if(choix==1){
+            while( ){
+                if((joueur->pion[i]).pv==0){
+                    vivant=vivant+1;
+                }else{
+                    (joueur->pion[i]).pv
+                }
+            }
+            if(vivant==0){
+                printf("Vous ne pouvez pas utiliser cette carte car vous n'avez aucun contre torpilleur blindé detruit\n");
+            }
+            printf("Voulez vous rapeller deux contre torpilleur ?\nSi oui,tapez 2");
+            scanf("%d", &choix2);
+            if(choix2==2){
+                for(int i=2;i<19){
+                    if((joueur.pion[i]).pv==0){
+                        vivant=vivant+1;
+                    }
+                }
+                if(vivant==0){
+                    printf("Vous ne pouvez pas utiliser cette carte car vous n'avez aucun contre torpilleur detruit\n");
+                }
+            }
+        }else{
+
+        }
+    }while(choix!=1 || choix!=2)
 }
