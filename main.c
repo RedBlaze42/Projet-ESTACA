@@ -529,7 +529,7 @@ void afficherplateau_sel(joueur *joueurAff,joueur *joueur2, int sel_x, int sel_y
                 printf(" ");
                 color(15,0);
             }else{
-                if(plateau[x][y]!=NULL){
+                if(plateau[x][y]!=NULL && (plateau[x][y]->invisible==0 || plateau[x][y]->player==joueurAff->num) ){
                     afficher_pion(plateau[x][y]);
                 }else{
                     if(is_in_zone(DEFENSE,x,y)==1){
