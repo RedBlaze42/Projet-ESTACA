@@ -696,6 +696,16 @@ void placerpions(joueur *joueurR, joueur *joueurB){
     }
     for(i=0;i<13;i++){
         selectionner_case(joueurR,joueurB , &(joueurR->pions[i].coord_x), &(joueurR->pions[i].coord_y), DEFENSE, 1);
+    if(joueurR->pions[i].type==2){
+            printf("vous deplacez votre cuirassé");
+        }else{
+            if(joueurR->pions[i].pv==2){
+                printf("cous déplacez votre contre torpilleur blindé numéro %d", i);
+
+            }else{
+                printf("cous déplacez votre contre torpilleur blindé %d", i-2);
+            }
+        }
     }
     printf("Au joueur bleu de placer ses pions\n");
     for(i=0;i<2;i++){
@@ -712,7 +722,12 @@ void placerpions(joueur *joueurR, joueur *joueurB){
     }
     for(i=0;i<19;i++){
         selectionner_case(joueurR,joueurB , &(joueurR->pions[i].coord_x), &(joueurR->pions[i].coord_y), DEFENSE, 1);
-    }
+
+        if(joueurR->pions[i].pv==2){
+            printf("cous déplacez votre contre torpilleur blindé numéro %d", i+1);
+        }else{
+            printf("cous déplacez votre contre torpilleur blindé %d", i-1);
+        }
 }
 
 void rougeCA(pion *pionattaque, pion *pionattaquant){
