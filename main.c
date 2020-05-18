@@ -752,8 +752,15 @@ pion->pv=pion->pv+1;
 void rouge_furtif(pion *pion){//carte spéciale rouge déplacement furtif
     pion->invisible=1;
 }
-void rouge_piege(pion *pion){//carte spéciale rouge piége
-        printf("vous placez le piege numero %d", i);
-
+void rouge_piege(pion *pion){//carte spéciale rouge piège
+        printf("vous placez le piege numero %d\n", i);
+        pion->invisible=-1;
+}
+void bleu_renfort(pion *pion){// carte spéciale bleue renfort
+    int choix=0;
+    printf("Tapez 2 si vous voulez rappeler deux contre torpilleur, tapez 1 si vous preferez rappeler un contre torpilleur blinde\n");
+    scanf("%d", &choix);
+    if(choix==1){
+        
     }
 }
