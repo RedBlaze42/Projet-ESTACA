@@ -4,7 +4,7 @@
 #include <conio.h>
 
 #define DIM_PLATEAU 25
-#define max_pions 20
+#define max_pions 19
 
 //Couleurs
 #define JOUEUR1 1
@@ -74,10 +74,10 @@ void rougeCA(pion *pionattaque, pion *poinattaquant);
 int main(){
     joueur joueurB;//Attaquant
     joueurB.num=2;
-    joueurB.nb_pions=20;
+    joueurB.nb_pions=19;
     joueur joueurR;//Defenseur
     joueurR.num=1;
-    joueurR.nb_pions=15;
+    joueurR.nb_pions=13;
     int gagnant;
 
     /*for(int i=0; i<20;i++){
@@ -98,7 +98,6 @@ int main(){
     }*/
 
     lectureRegles();
-    afficherplateau(&joueurB, &joueurR);
     placerpions( &joueurR, &joueurB);
     int vR,vB;//Victoire Bleue ou Rouge
     while(vR==0 && vB==0){
@@ -428,7 +427,6 @@ void remplirTab(pion *tab[DIM_PLATEAU][DIM_PLATEAU], joueur *joueur1, joueur *jo
             tab[i][j]=NULL;
         }
     }
-    
     for(int i=0;i<joueur1->nb_pions;i++){
         if(joueur1->pions[i].pv>0){
             if(tab[joueur1->pions[i].coord_x][joueur1->pions[i].coord_y]!=NULL){//TODO Plus joli en utilisant un pointeur vers tab[...][...]
@@ -440,8 +438,7 @@ void remplirTab(pion *tab[DIM_PLATEAU][DIM_PLATEAU], joueur *joueur1, joueur *jo
             }
         }
     }
-
-     for(int i=0;i<joueur2->nb_pions;i++){
+    for(int i=0;i<joueur2->nb_pions;i++){
         if(joueur2->pions[i].pv>0){
             if(tab[joueur2->pions[i].coord_x][joueur2->pions[i].coord_y]!=NULL){
                 if(tab[joueur2->pions[i].coord_x][joueur2->pions[i].coord_y]->type=PIEGE){
@@ -507,6 +504,7 @@ int is_in_zone(int zone, int x, int y){
 
 void afficherplateau_sel(joueur *joueurAff,joueur *joueur2, int sel_x, int sel_y){//on affiche le plateau avec une case en surbrillance
     pion *plateau[DIM_PLATEAU][DIM_PLATEAU];//TODO Changer l'apparence en fonction des pv du joueur
+    
     remplirTab(plateau, joueurAff, joueur2);
     system("cls");
     printf("Yeh ");
@@ -590,37 +588,38 @@ void placerpions(joueur *joueurR, joueur *joueurB){
     joueurR->pions[0].type=2;
     joueurR->pions[0].coord_x=0;
     joueurR->pions[0].coord_y=0;
-    int i;
-    for(i=1;i<3;i++){
+    
+    for(int i=1;i<3;i++){
         joueurR->pions[i].type=1;
         joueurR->pions[i].pv=2;
         joueurR->pions[i].coord_x=0;
         joueurR->pions[i].coord_y=0;
     }
-    for(i=3;i<13;i++){
+    for(int i=3;i<13;i++){
         joueurR->pions[i].type=1;
         joueurR->pions[i].pv=1;
         joueurR->pions[i].coord_x=0;
         joueurR->pions[i].coord_y=0;
     }
-    for(i=0;i<joueurR->nb_pions;i++){
+    for(int i=0;i<2;i++){//EMILES Mettre des print pour comprendre quel pion on est en train de poser
+        joueurB->pions[i].type=1;
+        joueurB->pions[i].pv=2;
+        joueurB->pions[i].coord_x=0;
+        joueurB->pions[i].coord_y=0;
+    }
+    for(int i=2;i<19;i++){
+        joueurB->pions[i].type=1;
+        joueurB->pions[i].pv=1;
+        joueurB->pions[i].coord_x=0;
+        joueurB->pions[i].coord_y=0;
+    }
+    
+    for(int i=0;i<13;i++){
         selectionner_case(joueurR,joueurB , &(joueurR->pions[i].coord_x), &(joueurR->pions[i].coord_y), DEFENSE, 1);
     }
     printf("Au joueur bleu de placer ses pions\n");
-    for(i=0;i<2;i++){//EMILES Mettre des print pour comprendre quel pion on est en train de poser
-        joueurR->pions[i].type=1;
-        joueurR->pions[i].pv=2;
-        joueurR->pions[i].coord_x=0;
-        joueurR->pions[i].coord_y=0;
-    }
-    for(i=2;i<19;i++){
-        joueurR->pions[i].type=1;
-        joueurR->pions[i].pv=1;
-        joueurR->pions[i].coord_x=0;
-        joueurR->pions[i].coord_y=0;
-    }
-    for(i=0;i<joueurR->nb_pions;i++){
-        selectionner_case(joueurR,joueurB , &(joueurR->pions[i].coord_x), &(joueurR->pions[i].coord_y), DEFENSE, 1);
+    for(int i=0;i<19;i++){
+        selectionner_case(joueurB,joueurR , &(joueurR->pions[i].coord_x), &(joueurR->pions[i].coord_y), ATTAQUE, 1);
     }
 }
 
