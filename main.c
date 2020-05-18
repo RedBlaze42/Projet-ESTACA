@@ -89,10 +89,10 @@ int main(){
         int vR=reste_pions_joueur(&joueurR, -1);
         int vB=reste_pions_joueur(&joueurB, -1);
         if(is_in_zone(ATTAQUE, joueurR.pions[1].coord_x, joueurR.pions[1].coord_y)==1){
-           vR=1;
+           vR=0;
         }
         if(joueurR.pions[1].pv==0){
-           vB=1;
+           vB=0;
         }
     }
     if(vR==1){
@@ -648,17 +648,27 @@ void placerpions(joueur *joueurR, joueur *joueurB){
         joueurB->pions[i].anti_blindage=0;
         joueurB->pions[i].player=ATTAQUE;
     }
-    /*
+    
     printf("Au joueur rouge de placer ses pions\n");
     for(int i=0;i<joueurR->nb_pions;i++){
+        if(joueurR->pions[i].pv==2){
+            printf("cous déplacez votre contre torpilleur blindé numéro %d", i);
+
+        }else{
+            printf("cous déplacez votre contre torpilleur blindé %d", i-2);
+        }
         selectionner_case(joueurR,joueurB , &(joueurR->pions[i].coord_x), &(joueurR->pions[i].coord_y), DEFENSE, 1);
-        joueurR->pions[i].invisible=0;
     }
+    
     printf("Au joueur bleu de placer ses pions\n");
-    for(int i=0;i<joueurB->nb_pions;i++){
-        selectionner_case(joueurB,joueurR , &(joueurB->pions[i].coord_x), &(joueurB->pions[i].coord_y), ATTAQUE, 1);
-        joueurB->pions[i].invisible=0;
-    }*/
+    for(i=0;i<joueurR->nb_pions;i++){
+        if(joueurR->pions[i].pv==2){
+            printf("cous déplacez votre contre torpilleur blindé numéro %d", i+1);
+        }else{
+            printf("cous déplacez votre contre torpilleur blindé %d", i-1);
+        }
+        selectionner_case(joueurR,joueurB , &(joueurR->pions[i].coord_x), &(joueurR->pions[i].coord_y), DEFENSE, 1);
+    }
     
     for(int i=1; i<=5;i++){
         joueurR->pions[i].coord_x=i+3;
