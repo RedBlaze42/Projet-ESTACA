@@ -393,6 +393,16 @@ void selectionner_case(joueur *joueurSel, joueur *joueur2, int *sel_x, int *sel_
     }
 }
 
+int selectionner_pion(joueur *joueurSel, joueur *joueur2){
+    int en_selection=1;
+    int id_pion=0;
+    do{
+        afficherplateau_sel(joueurSel, joueur2, joueurSel->pions[id_pion].coord_x, joueurSel->pions[id_pion].coord_y);
+        if(id_pion>joueurSel->nb_pions) id_pion=0;
+    }while(getch()!=enter);
+    return id_pion;
+}
+
 int is_pionSurCase(joueur *joueurAff, joueur *joueur2, int x, int y){
     for(int i=0;i<20;i++){
         if(joueurAff->pions[i].coord_x==x && joueurAff->pions[i].coord_y==y && joueurAff->pions[i].pv>0){
