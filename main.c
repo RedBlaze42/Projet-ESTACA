@@ -33,6 +33,7 @@
 #define PLATEAU 0
 #define DEFENSE 1//Defini aussi numero du joueur defenseur
 #define ATTAQUE 2//Defini aussi numero du joueur attaquant
+#define PERIPHERIE 3
 
 typedef struct pion{
 	int coord_x;
@@ -561,7 +562,9 @@ void afficher_pion(pion* pionAff){//pour afficher une case
 }
 
 int is_in_zone(int zone, int x, int y){
-    if(zone==PLATEAU){
+    if(zone==PERIPHERIE){
+        return (x==0 || y==0 || x==DIM_PLATEAU-1 || y==DIM_PLATEAU-1) && x>=0 && y>=0 && x<DIM_PLATEAU && y<DIM_PLATEAU;
+    }else if(zone==PLATEAU){
         return x>=0 && y>=0 && x<DIM_PLATEAU && y<DIM_PLATEAU;
     }else if(zone==DEFENSE){
         return x>2 && x<8 && y>2 && y<8 && x>=0 && y>=0 && x<DIM_PLATEAU && y<DIM_PLATEAU;
