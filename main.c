@@ -201,7 +201,8 @@ void tour(joueur *joueur1,joueur *joueur2){
                 char c=0;
                 while(c!='o' && c!='n') scanf("%c",&c);
                 if(c=='o'){
-                    //TODO Sous programme utiliser carte
+                    utiliser_carte_bleu(joueur1,joueur2);
+                    system("pause");
                 }
             }
             int choix_effectue=0;
