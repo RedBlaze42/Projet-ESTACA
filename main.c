@@ -611,9 +611,9 @@ void afficherplateau(joueur *joueurAff,joueur *joueur2){//on affiche le plateau
     pion *plateau[DIM_PLATEAU][DIM_PLATEAU];
 
     remplirTab(plateau, joueurAff, joueur2);
-    for(int y=0;y<DIM_PLATEAU;y++){
-        for(int x=0;x<DIM_PLATEAU;x++){
-            if(plateau[x][y]!=NULL && (plateau[x][y]->invisible==0 || plateau[x][y]->player==joueurAff->num) ){
+    for(int y=0;y<DIM_PLATEAU;y++){//on affiche le plateau dans la hauteur
+        for(int x=0;x<DIM_PLATEAU;x++){//on affiche chaque case d'un ligne
+            if(plateau[x][y]!=NULL && (plateau[x][y]->invisible==0 || plateau[x][y]->player==joueurAff->num) ){//on regarde s'il y a un pion sur la case
                 afficher_pion(plateau[x][y]);
             }else{
                 if(is_in_zone(DEFENSE,x,y)==1){
@@ -633,14 +633,14 @@ void afficherplateau(joueur *joueurAff,joueur *joueur2){//on affiche le plateau
 void lectureRegles(){
     int c;
     system("CLS");
-    while(c!=5){
+    while(c!=5){//Le while permet au joueur de voir chaque sectioon des règles autant de fois qu'il veut.
         printf("Bienvenu sur seawars.\nLe but du jeu est de couler tous les bateaux de l'adversaire,\n ou pour le joueur rouge de sortir le cuirasse de la zone de defense ou\n pour le joueur bleu de couler le cuirasse adverse.\n\nAu debut de la partie, le premier joueur dispose le cuirasse dans la case centrale marquee d'un rond,\npuis il place ses douze contre-torpilleurs a sa convenance, a l'interieur du carre central de vingt-cinq cases.\nLorsque le premier joueur a fini de placer ses pions, c'est au tour du deuxieme joueur\nde disposer ses vingt contretorpilleurs comme il en a envie, mais a l'exterieur du carre central.\nUne fois termine le placement de tous les pions, chaque joueur pioche deux cartes speciales de la couleur correspondante.\nLe rouge a le pouvoir de decider a qui revient de jouer le premier coup, et la partie peut alors commencer.\n ");
         do{
-            printf("Pour voir les deplacement/attaques des pions tapez 1\nPour voir la nature des pionstapez 2\nPour voir les capacitees des cartes speciales bleues tapez 3\nPour voir les capacitees des cartes speciales rouges tapez 4\nPour passer directement au debut de la partie tapez 5\n");
+            printf("Pour voir les deplacement/attaques des pions tapez 1\nPour voir la nature des pions tapez 2\nPour voir les capacitees des cartes speciales bleues tapez 3\nPour voir les capacitees des cartes speciales rouges tapez 4\nPour passer directement au debut de la partie tapez 5\n");
             scanf("%d",&c);
         }while(c<1 || c>5);
         system("CLS");
-        switch(c){//EMILES Faire une while, il faut pouvoir afficher plusieurs fois les regles
+        switch(c){
             case 1:
                 printf("Deplacments:\nToutes les pieces se deplacent en ligne orthogonale et peuvent parcourir des rangees entieres de cases vides\nen s'arrêtant où bon leur semble,mais elles ne peuvent pas sauter par-dessus une case occupee.\n Elles ne peuvent pas eliminer un pion (de leur camp ou du camp adverse) qui bloque leur avancee,\n mais elles doivent s'arrêter sur une case attenante \n\nAttaques:\nLes pieces s’attaquent mutuellement entre cases voisines directe,\nen se deplaçant en diagonale dans n'importe quelle direction.\nLorsqu'un un navire detruit un autre navire, il enleve du damier le pion elimine et prend sa place.\nAttaquer un pion menace n'est pas une obligation.");
             break;
