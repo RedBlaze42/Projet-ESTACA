@@ -35,8 +35,6 @@
 #define ATTAQUE 2//Defini aussi numero du joueur attaquant
 #define PERIPHERIE 3
 
-//cartes
-
 
 typedef struct pion{
 	int coord_x;
