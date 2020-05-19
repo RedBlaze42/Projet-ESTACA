@@ -109,7 +109,7 @@ int main(){
     do{
         joueurR.cartes[1]=(rand() % 4)+1;
     }while(joueurR.cartes[1]==joueurR.cartes[0]);
-    
+
     joueurB.cartes[0]=(rand() % 4)+2;
     do{
         joueurB.cartes[1]=(rand() % 4)+2;
@@ -124,7 +124,7 @@ int main(){
     while(commence!='b' && commence!='r') scanf("%c",&commence);
     int x=0;
     int y=0;
-    
+
     int vR=0;//Victoire Bleue ou Rouge
     int vB=0;
     while(vR==0 && vB==0){
@@ -244,9 +244,9 @@ void utiliser_carte_rouge(joueur *joueurR, joueur *joueurB){
     }
 }
 
-void tour(joueur *joueur1,joueur *joueur2){//structure du jeux permet aux tour de bien se dérouler. Et aux joueurs de jouer a tour de role
+void tour(joueur *joueur1,joueur *joueur2){//structure du jeux permet aux tour de bien se derouler. Et aux joueurs de jouer a tour de role
     system("cls");
-    
+
     for(int i=0;i<2;i++){
         if(joueur1->num==DEFENSE){
             for(int i=0;i<joueur1->nb_pions;i++){
@@ -339,7 +339,7 @@ void tour(joueur *joueur1,joueur *joueur2){//structure du jeux permet aux tour d
             printf("Fin du tour attaquant\n");
             system("pause");
         }
-        joueur *temporaire=joueur2;//Interverti les 2 joueurs pour la deuxième partie du tour
+        joueur *temporaire=joueur2;//Interverti les 2 joueurs pour la deuxieme partie du tour
         joueur2=joueur1;
         joueur1=temporaire;
         system("cls");
@@ -356,7 +356,7 @@ int reste_pions_joueur(joueur *joueurSel,int type){//Si type=-1, on verifie just
     }
 }
 
-void deplacer_pions(joueur *joueurSel, joueur *joueur2, int id_pion_sel){//permet de déplacer un pion grace aux fleches du clavier
+void deplacer_pions(joueur *joueurSel, joueur *joueur2, int id_pion_sel){//permet de deplacer un pion grace aux fleches du clavier
     int en_mouvement=1;
     int x=joueurSel->pions[id_pion_sel].coord_x;
     int y=joueurSel->pions[id_pion_sel].coord_y;
@@ -453,7 +453,7 @@ int pion_peut_attaquer(joueur *joueurSel, joueur *joueur2, pion *pionSel){//Reto
     }
 }
 
-int get_fleche(){//Attends que l'utilisateur presse une flèche ou la touche entrée, du clavier
+int get_fleche(){//Attends que l'utilisateur presse une fleche ou la touche entree, du clavier
     char c = getch();
     char init_c=c;
     if(c!=enter && c!=gauche && c!=droite && c!=haut && c!=bas)
@@ -520,9 +520,9 @@ void selectionner_attaque(joueur *joueurSel, joueur *joueur2){//Permet au joueur
                     }else if(plateau[x_attaque][y_attaque]->type==PIEGE){
                         pionSel->pv--;
                     }
-                    
+
                     fin_boucle=1;
-                    
+
                     system("cls");
                     printf("Touche !\n");
                     afficherplateau(joueurSel, joueur2);
@@ -593,12 +593,12 @@ int selectionner_pion(joueur *joueurSel, joueur *joueur2){
             if(joueurSel->pions[id_pion].type==CUIRASSE || joueurSel->pions[id_pion].type==PIEGE) id_pion++;
             if(id_pion>=joueurSel->nb_pions) id_pion=0;
         }
-        
+
     }
     return id_pion;
 }
 
-int is_pionSurCase(joueur *joueurAff, joueur *joueur2, int x, int y){// on controle si une case est occupée par un pion
+int is_pionSurCase(joueur *joueurAff, joueur *joueur2, int x, int y){// on controle si une case est occupee par un pion
     pion *plateau[DIM_PLATEAU][DIM_PLATEAU];
     remplirTab(plateau, joueurAff, joueur2);
     if(plateau[x][y]!=NULL && plateau[x][y]->type==PIEGE) return 0;
@@ -641,7 +641,7 @@ void remplirTab(pion *tab[DIM_PLATEAU][DIM_PLATEAU], joueur *joueur1, joueur *jo
 void afficher_pion(pion* pionAff){//pour afficher une case
     int couleur_pion=0;
     int couleur_fond=0;
-    if((*pionAff).player==ATTAQUE){//On verifie l'appartenance des pions 
+    if((*pionAff).player==ATTAQUE){//On verifie l'appartenance des pions
         couleur_fond=COULEUR_JOUEURATT;
     }else{
         couleur_fond=COULEUR_JOUEURDEF;
@@ -655,7 +655,7 @@ void afficher_pion(pion* pionAff){//pour afficher une case
         couleur_pion=15;
     }
     color(couleur_pion,couleur_fond);
-    switch(pionAff->type){// on affiche différement chaque type de pion
+    switch(pionAff->type){// on affiche differement chaque type de pion
         case CTORP :
             if(pionAff->pv==2){
                 printf("%c",147);
@@ -676,7 +676,7 @@ void afficher_pion(pion* pionAff){//pour afficher une case
     color(15,0);
 }
 
-int is_in_zone(int zone, int x, int y){// Permet de savoir dans quelle zone préscise se trouve un pion
+int is_in_zone(int zone, int x, int y){// Permet de savoir dans quelle zone prescise se trouve un pion
     if(zone==PERIPHERIE){
         return (x==0 || y==0 || x==DIM_PLATEAU-1 || y==DIM_PLATEAU-1) && x>=0 && y>=0 && x<DIM_PLATEAU && y<DIM_PLATEAU;
     }else if(zone==PLATEAU){
@@ -695,7 +695,7 @@ void afficherplateau_sel(joueur *joueurAff,joueur *joueur2, int sel_x, int sel_y
     //printf("t%d\n",)
     for(int y=0;y<DIM_PLATEAU;y++){
         for(int x=0;x<DIM_PLATEAU;x++){
-            if(x==sel_x && y==sel_y){//détection et affichage du curseur
+            if(x==sel_x && y==sel_y){//detection et affichage du curseur
                 color(0,10);
                 printf(" ");
                 color(15,0);
@@ -744,12 +744,12 @@ void afficherplateau(joueur *joueurAff,joueur *joueur2){//On affiche le plateau.
 void lectureRegles(){
     int c;
     system("CLS");
-    while(c!=5){//Le while permet au joueur de voir chaque sectioon des règles autant de fois qu'il veut.
+    while(c!=5){//Le while permet au joueur de voir chaque sectioon des regles autant de fois qu'il veut.
         printf("Bienvenu sur seawars.\nLe but du jeu est de couler tous les bateaux de l'adversaire,\n ou pour le joueur rouge de sortir le cuirasse de la zone de defense ou\n pour le joueur bleu de couler le cuirasse adverse.\n\nAu debut de la partie, le premier joueur dispose le cuirasse dans la case centrale marquee d'un rond,\npuis il place ses douze contre-torpilleurs a sa convenance, a l'interieur du carre central de vingt-cinq cases.\nLorsque le premier joueur a fini de placer ses pions, c'est au tour du deuxieme joueur\nde disposer ses vingt contretorpilleurs comme il en a envie, mais a l'exterieur du carre central.\nUne fois termine le placement de tous les pions, chaque joueur pioche deux cartes speciales de la couleur correspondante.\nLe rouge a le pouvoir de decider a qui revient de jouer le premier coup, et la partie peut alors commencer.\n ");
         do{
-            printf("Pour voir les deplacement/attaques des pions tapez 1\nPour voir la nature des pions tapez 2\nPour voir les capacitees des cartes speciales bleues tapez 3\nPour voir les capacitees des cartes speciales rouges tapez 4\nPour passer directement au debut de la partie tapez 5\nEt pour voir la légende tapez 6.");
+            printf("Pour voir les deplacement/attaques des pions tapez 1\nPour voir la nature des pions tapez 2\nPour voir les capacitees des cartes speciales bleues tapez 3\nPour voir les capacitees des cartes speciales rouges tapez 4\nPour passer directement au debut de la partie tapez 5\nEt pour voir la legende tapez 6.");
             scanf("%d",&c);
-        }while(c<1 || c>5);
+        }while(c<1 || c>6);
         system("CLS");
         switch(c){
             case 1:
@@ -765,7 +765,7 @@ void lectureRegles(){
                 printf("1. Carte piege : Cette carte peut etre activee au debut ou a la fin d’un tour et\nelle permet de placer deux pieges sur la carte. Ces piges sont invisibles pour l’adversaire.\nSi lors d’un deplacement un pion adverse passe par un piege,\nle pion sera detruit et le piege desactive. Si c’est un blinde qui passe par le piege, il perdra son blindage.\n\n2. Carte bouclier : Cette carte peut etre activee au debut ou a la fin d’un tour et\nelle permet de rajouter un blindage supplementaire a n’importe quel navire.\n\n3. Carte contre-attaque : Cette carte peut etre activee lors qu’on un pion rouge est attaque.\nLe pion attaque ne subit pas de degâts et c’est l’attaquant qui subit les degâts a sa place.\n\n4. Carte permutation : Cette carte peut etre activee au debut ou a la fin d’un tour et\nelle permet a deux pions (rouges ou bleus) d’echanger leurs positons sur le plateau.\n\n 5. Carte deplacement furtif : Cette carte peut etre activee juste avant un deplacement.\nLe pion deplace devient invisible pour l’adversaire durant le tour suivant.\nSi lors d’un deplacement d’un pion bleu, il croise sur son chemin le navire invisible,\ncelui-ci sera decouvert et le pion bleu devra, bien sûr, s’arreter.\n");
                 break;
             case 6:
-                printf("P=piege\nO=cuirassé\n%c=contre torpilleur blindé\no=contre tropilleur\nUn des signes precedent en vert signifie que le pion est anti blindage\nUn des signes precedent en vilet signifie que le pion est invisible\n");
+                printf("P=piege\nO=cuirasse\n%c=contre torpilleur blinde\no=contre tropilleur\nUn des signes precedent en vert signifie que le pion est anti blindage\nUn des signes precedent en violet signifie que le pion est invisible\n\n",147);
                 break;
             case 5:
                 printf("Ok let's go\n");
@@ -787,7 +787,7 @@ void placerpions(joueur *joueurR, joueur *joueurB){
     joueurR->pions[0].invisible=0;
     joueurR->pions[0].anti_blindage=0;
     joueurR->pions[0].player=DEFENSE;
-    for(int i=1;i<13;i++){//initialistion contre torpilleurs(blindé ou pas)
+    for(int i=1;i<13;i++){//initialistion contre torpilleurs(blinde ou pas)
         joueurR->pions[i].type=CTORP;
         joueurR->pions[i].coord_x=5;
         joueurR->pions[i].coord_y=6;
@@ -796,7 +796,7 @@ void placerpions(joueur *joueurR, joueur *joueurB){
         joueurR->pions[i].anti_blindage=0;
         joueurR->pions[i].player=DEFENSE;
     }
-    for(int i=13; i<15; i++){//initialistion piège
+    for(int i=13; i<15; i++){//initialistion piege
         joueurR->pions[i].type=PIEGE;
         joueurR->pions[i].coord_x=5;
         joueurR->pions[i].coord_y=4;
@@ -815,7 +815,7 @@ void placerpions(joueur *joueurR, joueur *joueurB){
         joueurB->pions[i].player=ATTAQUE;
     }
 /*
-    
+
     for(int i=1; i<=5;i++){
         joueurR->pions[i].coord_x=i+3;
         joueurR->pions[i].coord_y=3;
@@ -855,13 +855,13 @@ void placerpions(joueur *joueurR, joueur *joueurB){
     joueurR->pions[1].type=PIEGE;
 */
 
-    
+
     printf("Au joueur rouge de placer ses pions\n");
     for(int i=1;i<joueurR->nb_pions-2;i++){// le joueur rouge place ses pions chacun leur tour et les pv s'initialisent en meme temps
         if(i<3){
-            printf("Vous déplacez votre contre torpilleur blinde numero %d\n", i);
+            printf("Vous deplacez votre contre torpilleur blinde numero %d\n", i);
         }else{
-            printf("Vous déplacez votre contre torpilleur numero %d\n", i-2);
+            printf("Vous deplacez votre contre torpilleur numero %d\n", i-2);
         }
         selectionner_case(joueurR, joueurB, &(joueurR->pions[i].coord_x), &(joueurR->pions[i].coord_y), DEFENSE, 1);//On a pas le droit de bouger le cuirasse au debut
         if(i<3){
@@ -870,7 +870,7 @@ void placerpions(joueur *joueurR, joueur *joueurB){
             joueurR->pions[i].pv=1;
         }
     }
-    printf("Vous avez placé tout vos pions\n");
+    printf("Vous avez place tout vos pions\n");
     system("pause");
     system("cls");
     printf("Au joueur bleu de placer ses pions\n");
@@ -890,12 +890,12 @@ void placerpions(joueur *joueurR, joueur *joueurB){
     afficherplateau(joueurR,joueurB);
 }
 
-void rouge_CA(pion *pionattaque, pion *pionattaquant){//carte spéciale rouge contre attaque
+void rouge_CA(pion *pionattaque, pion *pionattaquant){//carte speciale rouge contre attaque
     printf("Vous utilisez votre carte contre attaque joueur rouge\n");
     pionattaque->pv=pionattaque->pv+1;
     pionattaquant->pv=pionattaquant->pv-1;
 }
-void rouge_permut(joueur *joueur1, joueur *joueur2){//carte spéciale rouge de permutation
+void rouge_permut(joueur *joueur1, joueur *joueur2){//carte speciale rouge de permutation
     printf("Joueur rouge vous utilisez votre carte permutation\n");
     pion *plateau[DIM_PLATEAU][DIM_PLATEAU];
     remplirTab(plateau, joueur1, joueur2);
@@ -911,30 +911,30 @@ void rouge_permut(joueur *joueur1, joueur *joueur2){//carte spéciale rouge de p
     int x2=0;
     int y2=0;
     do{
-        printf("Selectionnez le deuxième pion à permuter:\n");
+        printf("Selectionnez le deuxieme pion à permuter:\n");
         selectionner_case(joueur1,joueur2,&x2,&y2,PLATEAU,0);
     }while(plateau[x2][y2]==NULL || plateau[x2][y2]->type==CUIRASSE);
     plateau[x1][y1]->coord_x=x2;
     plateau[x1][y1]->coord_y=y2;
     plateau[x2][y2]->coord_x=x1;
-    plateau[x2][y2]->coord_y=y1;//Pas besoin de tampon car le plateau n'est pas actualisé
+    plateau[x2][y2]->coord_y=y1;//Pas besoin de tampon car le plateau n'est pas actualise
 
-    printf("Les 2 pions ont bien été permutés !\n");
+    printf("Les 2 pions ont bien ete permutes !\n");
     afficherplateau(joueur1, joueur2);
     system("pause");
 }
 
-void rouge_bouclier(joueur *joueurSel, joueur *joueur2){//carte spéciale rouge bouclier
+void rouge_bouclier(joueur *joueurSel, joueur *joueur2){//carte speciale rouge bouclier
     int id_pion=selectionner_pion(joueurSel, joueur2);//EMILE MESSAGE
     joueurSel->pions[id_pion].pv++;
 }
 
-void rouge_furtif(joueur *joueurSel, joueur *joueur2){//carte spéciale rouge déplacement furtif
-    int id_pion=selectionner_pion(joueurSel, joueur2);//sélection du pion a cacher
+void rouge_furtif(joueur *joueurSel, joueur *joueur2){//carte speciale rouge deplacement furtif
+    int id_pion=selectionner_pion(joueurSel, joueur2);//selection du pion a cacher
     joueurSel->pions[id_pion].invisible=1;
 }
-void rouge_piege(joueur *joueurSel, joueur *joueur2){//carte spéciale rouge piège
-    for(int i=0;i<2;i++){//placement des deux piège
+void rouge_piege(joueur *joueurSel, joueur *joueur2){//carte speciale rouge piege
+    for(int i=0;i<2;i++){//placement des deux piege
         printf("vous placez le piege numero %d\n", i+1);
         joueurSel->pions[13+i].pv=1;
         joueurSel->pions[13+i].invisible=-1;
@@ -943,20 +943,20 @@ void rouge_piege(joueur *joueurSel, joueur *joueur2){//carte spéciale rouge pi�
     system("pause");
 }
 
-void bleu_renfort(joueur *joueur1, joueur *joueur2){// carte spéciale bleue renfort
+void bleu_renfort(joueur *joueur1, joueur *joueur2){// carte speciale bleue renfort
     int choix=0;
-    
+
     do{
         printf("Tapez 1 si vous voulez rappeler deux contre torpilleur, tapez 2 si vous preferez rappeler un contre torpilleur blinde\n");
         while(choix!=1 && choix!=2) scanf("%d",&choix);
-        if(choix==2){//Torpilleur blindé
+        if(choix==2){//Torpilleur blinde
             int id_pion_ressucite=0;
             if((joueur1->pions[0]).pv==0){
                 id_pion_ressucite=0;
             }else if((joueur1->pions[1]).pv==0){
                 id_pion_ressucite=1;
             }else{
-                printf("Vous ne pouvez pas utiliser cette carte car vous n'avez aucun contre torpilleur blindé en réserve\n");
+                printf("Vous ne pouvez pas utiliser cette carte car vous n'avez aucun contre torpilleur blinde en reserve\n");
             }
             (joueur1->pions[id_pion_ressucite]).pv=2;
             selectionner_case(joueur1, joueur2, &(joueur1->pions[id_pion_ressucite].coord_x), &(joueur1->pions[id_pion_ressucite].coord_y),PERIPHERIE,1);
@@ -993,20 +993,20 @@ void bleu_mort(joueur *joueurSel, joueur *joueur2){//carte mort subite bleue
     remplirTab(plateau, joueurSel, joueur2);
     int x=0;
     int y=0;
-    do{//Sélection du bateau a couler
+    do{//Selection du bateau a couler
         printf("Selectionnez le bateau à couler:\n");
         selectionner_case(joueurSel,joueur2,&x,&y,PLATEAU,0);
         system("pause");
     }while(plateau[x][y]==NULL || plateau[x][y]->type==CUIRASSE || plateau[x][y]->player==ATTAQUE);
 
     plateau[x][y]->pv=0;
-    printf("Vous avez coulé le bateau adverse\n");
+    printf("Vous avez coule le bateau adverse\n");
     afficherplateau(joueurSel, joueur2);
     system("pause");
     system("cls");
 }
 
-void bleu_anti_blindage(joueur *joueurSel, joueur *joueur2){//Carte spéciale bleu anti_blindage
+void bleu_anti_blindage(joueur *joueurSel, joueur *joueur2){//Carte speciale bleu anti_blindage
     printf("Joueur bleu vous utilisez votre carte anti blindage\n");
     int id_pion=selectionner_pion(joueurSel, joueur2);
     joueurSel->pions[id_pion].anti_blindage=1;
@@ -1016,8 +1016,8 @@ void bleu_anti_blindage(joueur *joueurSel, joueur *joueur2){//Carte spéciale bl
     system("cls");
 }
 
-void bleu_deplacement_multiple(joueur *joueurSel, joueur *joueur2){//carte déplacement multiple bleu
-    printf("joueur bleu vous utilisez votre carte déplacements multiples\n");
+void bleu_deplacement_multiple(joueur *joueurSel, joueur *joueur2){//carte deplacement multiple bleu
+    printf("joueur bleu vous utilisez votre carte deplacements multiples\n");
     int id_pion=selectionner_pion(joueurSel, joueur2);
     deplacer_pions(joueurSel, joueur2, id_pion);
 }
