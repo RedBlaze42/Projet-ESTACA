@@ -35,6 +35,9 @@
 #define ATTAQUE 2//Defini aussi numero du joueur attaquant
 #define PERIPHERIE 3
 
+//cartes
+
+
 typedef struct pion{
 	int coord_x;
 	int coord_y;
@@ -81,22 +84,6 @@ int main(){
     joueurR.nb_pions=13;
     int gagnant;
     int d=0;
-    /*for(int i=0; i<20;i++){
-        (joueurR.pions[i]).coord_x=12;
-        (joueurR.pions[i]).coord_y=12;
-        (joueurR.pions[i]).type=CUIRASSE;
-        (joueurR.pions[i]).pv=2;
-        (joueurR.pions[i]).player=1;
-        (joueurR.pions[i]).invisible=0;
-        (joueurR.pions[i]).anti_blindage=0;
-        (joueurB.pions[i]).coord_x=12;
-        (joueurB.pions[i]).coord_y=12;
-        (joueurB.pions[i]).type=CUIRASSE;
-        (joueurB.pions[i]).pv=2;
-        (joueurB.pions[i]).player=1;
-        (joueurB.pions[i]).invisible=0;
-        (joueurB.pions[i]).anti_blindage=0;
-    }*/
 
     lectureRegles();
 
@@ -107,7 +94,7 @@ int main(){
     joueurB.cartes[1]=(rand() % (5+1));
 
     placerpions( &joueurR, &joueurB);
-    printf("joueur Rouge tapez r si vouq souhaitez commencer sinon tapez b");
+    printf("Joueur Rouge tapez r si vouq souhaitez commencer sinon tapez b\n");
     char commence;
     while(commence!='b' && commence!='r') scanf("%c",&commence);
     int x=0;
@@ -138,10 +125,24 @@ int main(){
         printf("Bravo pour cette belle victoire, j'ai toujours su que le bleu etait la couleur des vainqueurs.");
     }
 }
-/*
-void utiliser_carte(joueur *joueurSel, joueur *joueur2){
 
-}*/
+void utiliser_carte_bleu(joueur *joueurB, joueur *joueurR){
+    printf("Quel carte voulez vous utiliser:\n");
+    for(int i=0; i<2;i++){
+        switch(joueurB->cartes[i]){
+            case 1:
+                printf("1. Carte deplacement libre: Cette carte peut etre activeejuste avant un deplacement\n   et permettra a un pion de se deplacer en diagonale durant un tour.\n");
+            case 2:
+                printf("2. Carte mort subite : Cette carte peut être utilisee au debut ou a la fin d’un tout,\n  elle permet d’attaquer n’importe quel navire ennemi (excepte le cuirasse).\n");
+            case 3:
+                printf("4. Carte Anti-blindage : Cette carte peut être activee au debut d’un tour, elle permet de rendre,\n    durant toute la partie, un contre-torpilleur capable de detruire un blinde en un seul coup.\n");
+            case 4:
+                printf("3. Carte renfort : Cette carte peut être utilisee au debut ou a la fin d’un tout,\n elle permet de rappeler deux contre-torpilleurs detruits ou un blinde sur le plateau. Les navires rappeles doivent être deposer forcement sur la peripherie du plateau. \n");
+            case 5:
+                printf("5. Carte deplacement multiple : Cette carte peut être activee au debut d’un tour,\n     elle permet d’effectuer trois deplacements au lieu de deux.\n");
+        }
+    }
+}
 
 void tour(joueur *joueur1,joueur *joueur2){
     system("cls");
@@ -406,7 +407,7 @@ void selectionner_attaque(joueur *joueurSel, joueur *joueur2){//Permet au joueur
                     printf("Victime avant pv%d",victime->pv);
                     victime->pv--;
                     remplirTab(plateau, joueurSel, joueur2);//actualise le plateau 
-                    if(victime->pv==0 && pionSel->anti_blindage==0 && plateau[x][y]->type=PIEGE){
+                    if(victime->pv==0 && pionSel->anti_blindage==0 && plateau[x][y]->type==PIEGE){
                         pionSel->coord_x=x_attaque;
                         pionSel->coord_y=y_attaque;
                     }else if(plateau[x][y]->type=PIEGE){
@@ -661,14 +662,14 @@ void color (int couleurDuTexte, int couleurDuFond){// permet de gerer les couleu
 }
 
 void placerpions(joueur *joueurR, joueur *joueurB){
-    joueurR->pions[0].type=2;// on initialise les pions rouges et on initialise leurs pv a 0 pour faciliter le placement
+    joueurR->pions[0].type=CUIRASSE;// on initialise les pions rouges et on initialise leurs pv a 0 pour faciliter le placement
     joueurR->pions[0].coord_x=5;
     joueurR->pions[0].coord_y=5;
     joueurR->pions[0].pv=1;
     joueurR->pions[0].invisible=0;
     joueurR->pions[0].anti_blindage=0;
     for(int i=1;i<13;i++){//initialistion contre torpilleurs(blindé ou pas)
-        joueurR->pions[i].type=1;
+        joueurR->pions[i].type=CTORP;
         joueurR->pions[i].coord_x=5;
         joueurR->pions[i].coord_y=6;
         joueurR->pions[i].pv=0;
@@ -677,16 +678,16 @@ void placerpions(joueur *joueurR, joueur *joueurB){
         joueurR->pions[i].player=DEFENSE;
     }
     for(int i=13; i<15; i++){//initialistion piège
-        joueurR->pions[i].type=1;
+        joueurR->pions[i].type=PIEGE;
         joueurR->pions[i].coord_x=5;
         joueurR->pions[i].coord_y=4;
         joueurR->pions[i].pv=0;
         joueurR->pions[i].invisible=-1;
         joueurR->pions[i].anti_blindage=0;
-        joueurR->pions[i].player=DEFENSE
+        joueurR->pions[i].player=DEFENSE;
     }
     for(int i=0;i<19;i++){// on initialise les pions rouges et on initialise leurs pv a 0 pour faciliter le placement
-        joueurB->pions[i].type=PIEGE;
+        joueurB->pions[i].type=CTORP;
         joueurB->pions[i].pv=0;
         joueurB->pions[i].coord_x=0;
         joueurB->pions[i].coord_y=0;
@@ -730,7 +731,7 @@ void placerpions(joueur *joueurR, joueur *joueurB){
     }
 
 
-    /*
+    /*DEBUG
     printf("Au joueur rouge de placer ses pions\n");
     for(int i=1;i<joueurR->nb_pions;i++){// le joueur rouge place ses pions chacun leur tour et les pv s'initialisent en même temps
         if(i<3){
@@ -769,15 +770,15 @@ void rouge_CA(pion *pionattaque, pion *pionattaquant){//carte spéciale rouge co
     pionattaque->pv=pionattaque->pv+1;
     pionattaquant->pv=pionattaquant->pv-1;
 }
-void rouge_permut(joueur joueur1, joueur joueur2){//carte spéciale rouge de permutation
+void rouge_permut(joueur *joueur1, joueur *joueur2){//carte spéciale rouge de permutation
     pion *plateau[DIM_PLATEAU][DIM_PLATEAU];//EMILE MESSAGE
-    remplirTab(plateau, joueurAff, joueur2);
+    remplirTab(plateau, joueur1, joueur2);
     system("cls");
     int x1=0;
     int y1=0;
     while(plateau[x1][y1]==NULL || plateau[x1][y1]->type==CUIRASSE){
         printf("Selectionnez le premier pion à permuter:");
-        selectionner_case(joueur1,joueur2,&x1,&y1,PLATEAU);
+        selectionner_case(joueur1,joueur2,&x1,&y1,PLATEAU,0);
     }
 
     system("cls");
@@ -785,14 +786,14 @@ void rouge_permut(joueur joueur1, joueur joueur2){//carte spéciale rouge de per
     int y2=0;
     while(plateau[x2][y2]==NULL || plateau[x2][y2]->type==CUIRASSE){
         printf("Selectionnez le deuxième pion à permuter:");
-        selectionner_case(joueur1,joueur2,&x2,&y2,PLATEAU);
+        selectionner_case(joueur1,joueur2,&x2,&y2,PLATEAU,0);
     }
     plateau[x1][y1]->coord_x=x2;
     plateau[x1][y1]->coord_y=y2;
     plateau[x2][y2]->coord_x=x1;
     plateau[x2][y2]->coord_y=y1;//Pas besoin de tampon car le plateau n'est pas actualisé
 
-    prinf("Les 2 pions ont bien été permutés !");
+    printf("Les 2 pions ont bien été permutés !");
     afficherplateau(joueur1, joueur2);
     system("pause");
 }
@@ -815,27 +816,27 @@ void rouge_piege(joueur *joueurSel, joueur *joueur2){//carte spéciale rouge pi�
     }
 }
 
-void bleu_renfort(*joueur1, *joueur2){// carte spéciale bleue renfort
+void bleu_renfort(joueur *joueur1, joueur *joueur2){// carte spéciale bleue renfort
     int choix=0;
     
     do{
         printf("Tapez 1 si vous voulez rappeler deux contre torpilleur, tapez 2 si vous preferez rappeler un contre torpilleur blinde\n");
-        while(c!=1 && c!=2) scanf("%d",&choix);
+        while(choix!=1 && choix!=2) scanf("%d",&choix);
         if(choix==2){//Torpilleur blindé
             int id_pion_ressucite=0;
-            if((joueur1->pion[0]).pv>0){
+            if((joueur1->pions[0]).pv>0){
                 id_pion_ressucite=0;
-            }else if((joueur1->pion[1]).pv>0){
+            }else if((joueur1->pions[1]).pv>0){
                 id_pion_ressucite=1;
             }else{
                 printf("Vous ne pouvez pas utiliser cette carte car vous n'avez aucun contre torpilleur blindé en réserve\n");
             }
-            (joueur1.pion[id_pion_ressucite]).pv=2;
-            selectionner_case(joueur1, joueur2, &(joueur1->pion[id_pion_ressucite].coord_x), &(joueur1->pion[id_pion_ressucite].coord_y),PERIPHERIE,1);
+            (joueur1->pions[id_pion_ressucite]).pv=2;
+            selectionner_case(joueur1, joueur2, &(joueur1->pions[id_pion_ressucite].coord_x), &(joueur1->pions[id_pion_ressucite].coord_y),PERIPHERIE,1);
         }else if(choix==2){
             int vivant=0;
-            for(int i=2;i<19){
-                if((joueur1.pion[i]).pv>0){
+            for(int i=2;i<19;i++){
+                if((joueur1->pions[i]).pv>0){
                     vivant++;
                 }
             }
@@ -843,10 +844,10 @@ void bleu_renfort(*joueur1, *joueur2){// carte spéciale bleue renfort
                 printf("Vous ne pouvez pas utiliser cette carte car vous n'avez aucun contre torpilleur detruit\n");
             }else{
                 int pions_ressusciter=0;
-                for(int i=2;i<19){
-                    if((joueur1.pion[i]).pv>0){
-                        (joueur1.pion[i]).pv=1;
-                        selectionner_case(joueur1, joueur2, &(joueur1->pion[i].coord_x), &(joueur1->pion[i].coord_y),PERIPHERIE,1);
+                for(int i=2;i<19;i++){
+                    if((joueur1->pions[i]).pv>0){
+                        (joueur1->pions[i]).pv=1;
+                        selectionner_case(joueur1, joueur2, &(joueur1->pions[i].coord_x), &(joueur1->pions[i].coord_y),PERIPHERIE,1);
                     }
                     if(pions_ressusciter>=2) break;
                 }
@@ -857,13 +858,13 @@ void bleu_renfort(*joueur1, *joueur2){// carte spéciale bleue renfort
 
 void bleu_mort(joueur *joueurSel, joueur *joueur2){//EMILE MESSAGE
     pion *plateau[DIM_PLATEAU][DIM_PLATEAU];
-    remplirTab(plateau, joueurAff, joueur2);
+    remplirTab(plateau, joueurSel, joueur2);
     system("cls");
     int x=0;
     int y=0;
     while(plateau[x][y]==NULL || plateau[x][y]->type==CUIRASSE || plateau[x][y]->player==DEFENSE){
         printf("Selectionnez le bateau à couler:");
-        selectionner_case(joueurSel,joueur2,&x,&y,PLATEAU);
+        selectionner_case(joueurSel,joueur2,&x,&y,PLATEAU,1);
     }
 
     plateau[x][y]->pv=0;
@@ -874,3 +875,7 @@ void bleu_anti_blindage(joueur *joueurSel, joueur *joueur2){//carte spéciale bl
     joueurSel->pions[id_pion].anti_blindage=1;
 }
 
+void bleu_deplacement_multiple(joueur *joueurSel, joueur *joueur2){
+    int id_pion=selectionner_pion(joueurSel, joueur2);//EMILE MESSAGE
+    deplacer_pions(joueurSel, joueur2, id_pion);
+}
