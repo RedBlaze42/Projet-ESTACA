@@ -132,21 +132,49 @@ int main(){
     }
 }
 
-void utiliser_carte_bleu(joueur *joueurB, joueur *joueurR){
-    printf("Quel carte voulez vous utiliser:\n");
+void utiliser_carte_bleu(joueur *joueurB, joueur *joueurR, int fin_tour){
+    printf("Quel carte voulez vous utiliser: %d %d \n",joueurB->cartes[0],joueurB->cartes[1]);
     for(int i=0; i<2;i++){
         switch(joueurB->cartes[i]){
             case 1:
-                printf("1. Carte deplacement libre: Cette carte peut etre activeejuste avant un deplacement\n   et permettra a un pion de se deplacer en diagonale durant un tour.\n");
+                printf("1. Carte deplacement libre: Cette carte peut etre activeejuste avant un deplacement\n    et permettra a un pion de se deplacer en diagonale durant un tour.\n");
+                break;
             case 2:
-                printf("2. Carte mort subite : Cette carte peut etre utilisee au debut ou a la fin d’un tout,\n  elle permet d’attaquer n’importe quel navire ennemi (excepte le cuirasse).\n");
+                printf("2. Carte mort subite : Cette carte peut etre utilisee au debut ou a la fin d’un tout,\n    elle permet d’attaquer n’importe quel navire ennemi (excepte le cuirasse).\n");
+                break;
             case 3:
-                printf("4. Carte Anti-blindage : Cette carte peut etre activee au debut d’un tour, elle permet de rendre,\n    durant toute la partie, un contre-torpilleur capable de detruire un blinde en un seul coup.\n");
+                printf("3. Carte renfort : Cette carte peut etre utilisee au debut ou a la fin d’un tout,\n    elle permet de rappeler deux contre-torpilleurs detruits ou un blinde sur le plateau. Les navires rappeles doivent etre deposer forcement sur la peripherie du plateau. \n");
+                break;
             case 4:
-                printf("3. Carte renfort : Cette carte peut etre utilisee au debut ou a la fin d’un tout,\n elle permet de rappeler deux contre-torpilleurs detruits ou un blinde sur le plateau. Les navires rappeles doivent etre deposer forcement sur la peripherie du plateau. \n");
+                printf("4. Carte Anti-blindage : Cette carte peut etre activee au debut d’un tour, elle permet de rendre,\n    durant toute la partie, un contre-torpilleur capable de detruire un blinde en un seul coup.\n");
+                break;
             case 5:
-                printf("5. Carte deplacement multiple : Cette carte peut etre activee au debut d’un tour,\n     elle permet d’effectuer trois deplacements au lieu de deux.\n");
+                printf("5. Carte deplacement multiple : Cette carte peut etre activee au debut d’un tour,\n    elle permet d’effectuer trois deplacements au lieu de deux.\n");
+                break;
         }
+    }
+    int carte=0;
+    while(carte!=joueurB->cartes[0] && carte!=joueurB->cartes[1]) scanf("%d",&carte);
+        switch(carte){
+            case 1:
+                break;
+            case 2:
+                bleu_mort(joueurB,joueurR);
+                break;
+            case 3:
+                bleu_renfort(joueurB,joueurR);
+                break;
+            case 4:
+                bleu_anti_blindage(joueurB,joueurR);
+                break;
+            case 5:
+                bleu_deplacement_multiple(joueurB,joueurR);
+                break;
+        }
+    if(joueurB->cartes[0]==carte){
+        joueurB->cartes[0]=0;
+    }else{
+        joueurB->cartes[1]=0;
     }
 }
 
