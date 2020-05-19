@@ -584,7 +584,7 @@ void afficherplateau_sel(joueur *joueurAff,joueur *joueur2, int sel_x, int sel_y
     remplirTab(plateau, joueurAff, joueur2);
     for(int y=0;y<DIM_PLATEAU;y++){
         for(int x=0;x<DIM_PLATEAU;x++){
-            if(x==sel_x && y==sel_y){
+            if(x==sel_x && y==sel_y){//détection et affichage du curseur
                 color(0,10);
                 printf(" ");
                 color(15,0);
