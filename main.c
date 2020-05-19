@@ -578,7 +578,7 @@ int is_in_zone(int zone, int x, int y){
     }
 }
 
-void afficherplateau_sel(joueur *joueurAff,joueur *joueur2, int sel_x, int sel_y){//on affiche le plateau avec une case en surbrillance
+void afficherplateau_sel(joueur *joueurAff,joueur *joueur2, int sel_x, int sel_y){//On affiche le plateau avec une case en surbrillance.
     pion *plateau[DIM_PLATEAU][DIM_PLATEAU];
 
     remplirTab(plateau, joueurAff, joueur2);
@@ -607,13 +607,13 @@ void afficherplateau_sel(joueur *joueurAff,joueur *joueur2, int sel_x, int sel_y
     printf("\n");
 }
 
-void afficherplateau(joueur *joueurAff,joueur *joueur2){//on affiche le plateau
+void afficherplateau(joueur *joueurAff,joueur *joueur2){//On affiche le plateau.
     pion *plateau[DIM_PLATEAU][DIM_PLATEAU];
 
     remplirTab(plateau, joueurAff, joueur2);
-    for(int y=0;y<DIM_PLATEAU;y++){//on affiche le plateau dans la hauteur
-        for(int x=0;x<DIM_PLATEAU;x++){//on affiche chaque case d'un ligne
-            if(plateau[x][y]!=NULL && (plateau[x][y]->invisible==0 || plateau[x][y]->player==joueurAff->num) ){//on regarde s'il y a un pion sur la case
+    for(int y=0;y<DIM_PLATEAU;y++){//On affiche le plateau dans la hauteur.
+        for(int x=0;x<DIM_PLATEAU;x++){//On affiche chaque case d'un ligne.
+            if(plateau[x][y]!=NULL && (plateau[x][y]->invisible==0 || plateau[x][y]->player==joueurAff->num) ){//On regarde s'il y a un pion sur la case a afficher.
                 afficher_pion(plateau[x][y]);
             }else{
                 if(is_in_zone(DEFENSE,x,y)==1){
@@ -672,7 +672,7 @@ void placerpions(joueur *joueurR, joueur *joueurB){
     joueurR->pions[0].pv=1;
     joueurR->pions[0].invisible=0;
     joueurR->pions[0].anti_blindage=0;
-    for(int i=1;i<13;i++){
+    for(int i=1;i<13;i++){//initialistion contre torpilleurs(blindé ou pas)
         joueurR->pions[i].type=1;
         joueurR->pions[i].coord_x=5;
         joueurR->pions[i].coord_y=6;
@@ -681,8 +681,17 @@ void placerpions(joueur *joueurR, joueur *joueurB){
         joueurR->pions[i].anti_blindage=0;
         joueurR->pions[i].player=DEFENSE;
     }
+    for(int i=13; i<15; i++){//initialistion piège
+        joueurR->pions[i].type=1;
+        joueurR->pions[i].coord_x=5;
+        joueurR->pions[i].coord_y=4;
+        joueurR->pions[i].pv=0;
+        joueurR->pions[i].invisible=-1;
+        joueurR->pions[i].anti_blindage=0;
+        joueurR->pions[i].player=DEFENSE
+    }
     for(int i=0;i<19;i++){// on initialise les pions rouges et on initialise leurs pv a 0 pour faciliter le placement
-        joueurB->pions[i].type=1;
+        joueurB->pions[i].type=PIEGE;
         joueurB->pions[i].pv=0;
         joueurB->pions[i].coord_x=0;
         joueurB->pions[i].coord_y=0;
@@ -690,8 +699,6 @@ void placerpions(joueur *joueurR, joueur *joueurB){
         joueurB->pions[i].invisible=0;
         joueurB->pions[i].player=ATTAQUE;
     }
-
-
     for(int i=1; i<=5;i++){
         joueurR->pions[i].coord_x=i+3;
         joueurR->pions[i].coord_y=3;
