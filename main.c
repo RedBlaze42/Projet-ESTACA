@@ -88,13 +88,19 @@ int main(){
     lectureRegles();
 
     srand(time(0));//Distributiond des cartes
-    joueurR.cartes[0]=(rand() % (5+1));
-    joueurR.cartes[1]=(rand() % (5+1));
-    joueurB.cartes[0]=(rand() % (5+1));
-    joueurB.cartes[1]=(rand() % (5+1));
+    joueurR.cartes[0]=(rand() % 5)+1;
+    do{
+        joueurR.cartes[1]=(rand() % 5)+1;
+    }while(joueurR.cartes[1]==joueurR.cartes[0]);
+
+    joueurB.cartes[0]=(rand() % 5)+1;
+    do{
+        joueurB.cartes[1]=(rand() % 5)+1;
+    }while(joueurB.cartes[1]==joueurB.cartes[0]);
+
 
     placerpions( &joueurR, &joueurB);
-    printf("Joueur Rouge tapez r si vouq souhaitez commencer sinon tapez b\n");
+    printf("Joueur Rouge tapez r si vous souhaitez commencer sinon tapez b\n");
     char commence;
     while(commence!='b' && commence!='r') scanf("%c",&commence);
     int x=0;
