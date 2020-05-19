@@ -767,31 +767,55 @@ void rouge_CA(pion *pionattaque, pion *pionattaquant){//carte spéciale rouge co
     pionattaque->pv=pionattaque->pv+1;
     pionattaquant->pv=pionattaquant->pv-1;
 }
-void rouge_permut(pion *pion1, pion *pion2){//carte spéciale rouge de permutation
-    int x1=pion1->coord_x;
-    int y1=pion1->coord_y;
-    int x2=pion2->coord_x;
-    int y2=pion2->coord_y;
-    pion1->coord_x=x2;
-    pion1->coord_y=y2;
-    pion2->coord_x=x1;
-    pion2->coord_y=y1;
+void rouge_permut(joueur joueur1, joueur joueur2){//carte spéciale rouge de permutation
+    pion *plateau[DIM_PLATEAU][DIM_PLATEAU];//EMILE MESSAGE
+    remplirTab(plateau, joueurAff, joueur2);
+    system("cls");
+    int x1=0;
+    int y1=0;
+    while(plateau[x1][y1]==NULL || plateau[x1][y1]->type==CUIRASSE){
+        printf("Selectionnez le premier pion à permuter:");
+        selectionner_case(joueur1,joueur2,&x1,&y1,PLATEAU);
+    }
+
+    system("cls");
+    int x2=0;
+    int y2=0;
+    while(plateau[x2][y2]==NULL || plateau[x2][y2]->type==CUIRASSE){
+        printf("Selectionnez le deuxième pion à permuter:");
+        selectionner_case(joueur1,joueur2,&x2,&y2,PLATEAU);
+    }
+    plateau[x1][y1]->coord_x=x2;
+    plateau[x1][y1]->coord_y=y2;
+    plateau[x2][y2]->coord_x=x1;
+    plateau[x2][y2]->coord_y=y1;//Pas besoin de tampon car le plateau n'est pas actualisé
+
+    prinf("Les 2 pions ont bien été permutés !");
+    afficherplateau(joueur1, joueur2);
+    system("pause");
 }
-void rouge_bouclier(pion *pion){//carte spéciale rouge bouclier
-pion->pv=pion->pv+1;
+
+void rouge_bouclier(joueur *joueurSel, joueur *joueur2){//carte spéciale rouge bouclier
+    int id_pion=selectionner_pion(joueurSel, joueur2);//EMILE MESSAGE
+    joueurSel->pions[id_pion].pv++;
 }
-void rouge_furtif(pion *pion){//carte spéciale rouge déplacement furtif
-    pion->invisible=1;
+
+void rouge_furtif(joueur *joueurSel, joueur *joueur2){//carte spéciale rouge déplacement furtif
+    int id_pion=selectionner_pion(joueurSel, joueur2);//EMILE MESSAGE
+    joueurSel->pions[id_pion].invisible=1;
 }
-void rouge_piege(pion *pion){//carte spéciale rouge piège
-        printf("vous placez le piege numero %d\n", i);
-        pion->invisible=-1;
+void rouge_piege(joueur *joueurSel, joueur *joueur2){//carte spéciale rouge piège
+    for(int i=0;i<2;i++){//EMILE MESSAGE
+        printf("vous placez le piege numero %d\n", i+1);
+        joueurSel->pions[13+i].pv=1;
+        joueurSel->pions[13+i].invisible=-1;
+        selectionner_case(joueurSel, joueur2,&(joueurSel->pions[13+i].coord_x),&(joueurSel->pions[13+i].coord_y),PLATEAU,1);
+    }
 }
 
 void bleu_renfort(*joueur1, *joueur2){// carte spéciale bleue renfort
     int choix=0;
     
-    int choix 2;
     do{
         printf("Tapez 1 si vous voulez rappeler deux contre torpilleur, tapez 2 si vous preferez rappeler un contre torpilleur blinde\n");
         while(c!=1 && c!=2) scanf("%d",&choix);
@@ -828,3 +852,23 @@ void bleu_renfort(*joueur1, *joueur2){// carte spéciale bleue renfort
         }
     } while(choix!=1 && choix!=2);
 }
+
+void bleu_mort(joueur *joueurSel, joueur *joueur2){//EMILE MESSAGE
+    pion *plateau[DIM_PLATEAU][DIM_PLATEAU];
+    remplirTab(plateau, joueurAff, joueur2);
+    system("cls");
+    int x=0;
+    int y=0;
+    while(plateau[x][y]==NULL || plateau[x][y]->type==CUIRASSE || plateau[x][y]->player==DEFENSE){
+        printf("Selectionnez le bateau à couler:");
+        selectionner_case(joueurSel,joueur2,&x,&y,PLATEAU);
+    }
+
+    plateau[x][y]->pv=0;
+}
+
+void bleu_anti_blindage(joueur *joueurSel, joueur *joueur2){//carte spéciale bleu anti_blindage
+    int id_pion=selectionner_pion(joueurSel, joueur2);//EMILE MESSAGE
+    joueurSel->pions[id_pion].anti_blindage=1;
+}
+
