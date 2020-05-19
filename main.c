@@ -71,11 +71,6 @@ void tour(joueur *joueur1,joueur *joueur2);
 int reste_pions_joueur(joueur *joueurSel,int type);
 int joueur_peut_attaquer(joueur *joueurSel, joueur *joueur2);
 
-//cartes rouge :
-void rouge_CA(pion *pionattaque, pion *poinattaquant);
-void rouge_bouclier(pion *pion);
-void rouge_permut(pion *pion1, pion *pion2);
-void rouge_furtif(pion *pion);
 
 int main(){
     joueur joueurB;//Attaquant
