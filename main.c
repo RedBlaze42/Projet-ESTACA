@@ -133,13 +133,13 @@ void utiliser_carte_bleu(joueur *joueurB, joueur *joueurR){
             case 1:
                 printf("1. Carte deplacement libre: Cette carte peut etre activeejuste avant un deplacement\n   et permettra a un pion de se deplacer en diagonale durant un tour.\n");
             case 2:
-                printf("2. Carte mort subite : Cette carte peut être utilisee au debut ou a la fin d’un tout,\n  elle permet d’attaquer n’importe quel navire ennemi (excepte le cuirasse).\n");
+                printf("2. Carte mort subite : Cette carte peut etre utilisee au debut ou a la fin d’un tout,\n  elle permet d’attaquer n’importe quel navire ennemi (excepte le cuirasse).\n");
             case 3:
-                printf("4. Carte Anti-blindage : Cette carte peut être activee au debut d’un tour, elle permet de rendre,\n    durant toute la partie, un contre-torpilleur capable de detruire un blinde en un seul coup.\n");
+                printf("4. Carte Anti-blindage : Cette carte peut etre activee au debut d’un tour, elle permet de rendre,\n    durant toute la partie, un contre-torpilleur capable de detruire un blinde en un seul coup.\n");
             case 4:
-                printf("3. Carte renfort : Cette carte peut être utilisee au debut ou a la fin d’un tout,\n elle permet de rappeler deux contre-torpilleurs detruits ou un blinde sur le plateau. Les navires rappeles doivent être deposer forcement sur la peripherie du plateau. \n");
+                printf("3. Carte renfort : Cette carte peut etre utilisee au debut ou a la fin d’un tout,\n elle permet de rappeler deux contre-torpilleurs detruits ou un blinde sur le plateau. Les navires rappeles doivent etre deposer forcement sur la peripherie du plateau. \n");
             case 5:
-                printf("5. Carte deplacement multiple : Cette carte peut être activee au debut d’un tour,\n     elle permet d’effectuer trois deplacements au lieu de deux.\n");
+                printf("5. Carte deplacement multiple : Cette carte peut etre activee au debut d’un tour,\n     elle permet d’effectuer trois deplacements au lieu de deux.\n");
         }
     }
 }
@@ -219,7 +219,7 @@ void tour(joueur *joueur1,joueur *joueur2){
                 if(joueur_peut_attaquer(joueur1,joueur2)==1){
                     selectionner_attaque(joueur1,joueur2);
                 }else{
-                    printf("Vous n'êtes à porte d'aucun ennemi");
+                    printf("Vous n'etes à porte d'aucun ennemi");
                 }
             }else if(d==2){
                 int deplacements_restants=2;
@@ -466,7 +466,7 @@ void selectionner_case(joueur *joueurSel, joueur *joueur2, int *sel_x, int *sel_
     }
 }
 
-int selectionner_pion(joueur *joueurSel, joueur *joueur2){//TODO Empêcher déplacement cuirasse et autoriser selection pion adverse
+int selectionner_pion(joueur *joueurSel, joueur *joueur2){//TODO Empecher déplacement cuirasse et autoriser selection pion adverse
     int en_selection=1;
     int id_pion=0;
     while(en_selection==1){
@@ -639,16 +639,16 @@ void lectureRegles(){
         system("CLS");
         switch(c){
             case 1:
-                printf("Deplacments:\nToutes les pieces se deplacent en ligne orthogonale et peuvent parcourir des rangees entieres de cases vides\nen s'arrêtant où bon leur semble,mais elles ne peuvent pas sauter par-dessus une case occupee.\n Elles ne peuvent pas eliminer un pion (de leur camp ou du camp adverse) qui bloque leur avancee,\n mais elles doivent s'arrêter sur une case attenante \n\nAttaques:\nLes pieces s’attaquent mutuellement entre cases voisines directe,\nen se deplaçant en diagonale dans n'importe quelle direction.\nLorsqu'un un navire detruit un autre navire, il enleve du damier le pion elimine et prend sa place.\nAttaquer un pion menace n'est pas une obligation.");
+                printf("Deplacments:\nToutes les pieces se deplacent en ligne orthogonale et peuvent parcourir des rangees entieres de cases vides\nen s'arretant où bon leur semble,mais elles ne peuvent pas sauter par-dessus une case occupee.\n Elles ne peuvent pas eliminer un pion (de leur camp ou du camp adverse) qui bloque leur avancee,\n mais elles doivent s'arreter sur une case attenante \n\nAttaques:\nLes pieces s’attaquent mutuellement entre cases voisines directe,\nen se deplaçant en diagonale dans n'importe quelle direction.\nLorsqu'un un navire detruit un autre navire, il enleve du damier le pion elimine et prend sa place.\nAttaquer un pion menace n'est pas une obligation.");
             break;
             case 2:
-                printf("Il existe 4 types de pions:\n- Les cuirasses\n- Les contretorpilleurs blindes(pions moyens, doivent être attaque deux fois pour être detruits,\nattaques une fois, ils perdent leurs blindages et deviennent des contre-torpilleurs normaux.)\n- Les contre torpilleurs\n- Les cartes pieges(voir cartes piege rouges et bleues)\n\n\nLe joueur rouge:\n- Un cuirasse(le grand pion),\n- Deux contretorpilleurs blindes\n- Dix contre-torpilleurs(pions normaux).\n\nSon adversaire, le joueur bleu:\n- Deux contretorpilleurs blindes\n- Dix-huit contre-torpilleurs\n");
+                printf("Il existe 4 types de pions:\n- Les cuirasses\n- Les contretorpilleurs blindes(pions moyens, doivent etre attaque deux fois pour etre detruits,\nattaques une fois, ils perdent leurs blindages et deviennent des contre-torpilleurs normaux.)\n- Les contre torpilleurs\n- Les cartes pieges(voir cartes piege rouges et bleues)\n\n\nLe joueur rouge:\n- Un cuirasse(le grand pion),\n- Deux contretorpilleurs blindes\n- Dix contre-torpilleurs(pions normaux).\n\nSon adversaire, le joueur bleu:\n- Deux contretorpilleurs blindes\n- Dix-huit contre-torpilleurs\n");
             break;
             case 3:
-                printf("1. Carte deplacement libre: Cette carte peut etre activee juste avant un deplacement\net permettra a un pion de se deplacer en diagonale durant un tour.\n\n2. Carte mort subite : Cette carte peut être utilisee au debut ou a la fin d’un tout,\nelle permet d’attaquer n’importe quel navire ennemi (excepte le cuirasse).\n\n3. Carte renfort : Cette carte peut être utilisee au debut ou a la fin d’un tout,\nelle permet de rappeler deux contre-torpilleurs detruits ou un blinde sur le plateau.\nLes navires rappeles doivent être deposer forcement sur la peripherie du plateau. \n\n4. Carte Anti-blindage : Cette carte peut être activee au debut d’un tour, elle permet de rendre,\ndurant toute la partie, un contre-torpilleur capable de detruire un blinde en un seul coup.\n\n5. Carte deplacement multiple : Cette carte peut être activee au debut d’un tour,\nelle permet d’effectuer trois deplacements au lieu de deux.\n");
+                printf("1. Carte deplacement libre: Cette carte peut etre activee juste avant un deplacement\net permettra a un pion de se deplacer en diagonale durant un tour.\n\n2. Carte mort subite : Cette carte peut etre utilisee au debut ou a la fin d’un tout,\nelle permet d’attaquer n’importe quel navire ennemi (excepte le cuirasse).\n\n3. Carte renfort : Cette carte peut etre utilisee au debut ou a la fin d’un tout,\nelle permet de rappeler deux contre-torpilleurs detruits ou un blinde sur le plateau.\nLes navires rappeles doivent etre deposer forcement sur la peripherie du plateau. \n\n4. Carte Anti-blindage : Cette carte peut etre activee au debut d’un tour, elle permet de rendre,\ndurant toute la partie, un contre-torpilleur capable de detruire un blinde en un seul coup.\n\n5. Carte deplacement multiple : Cette carte peut etre activee au debut d’un tour,\nelle permet d’effectuer trois deplacements au lieu de deux.\n");
             break;
             case 4:
-                printf("1. Carte piege : Cette carte peut etre activee au debut ou a la fin d’un tour et\nelle permet de placer deux pieges sur la carte. Ces piges sont invisibles pour l’adversaire.\nSi lors d’un deplacement un pion adverse passe par un piege,\nle pion sera detruit et le piege desactive. Si c’est un blinde qui passe par le piege, il perdra son blindage.\n\n2. Carte bouclier : Cette carte peut être activee au debut ou a la fin d’un tour et\nelle permet de rajouter un blindage supplementaire a n’importe quel navire.\n\n3. Carte contre-attaque : Cette carte peut être activee lors qu’on un pion rouge est attaque.\nLe pion attaque ne subit pas de degâts et c’est l’attaquant qui subit les degâts a sa place.\n\n4. Carte permutation : Cette carte peut être activee au debut ou a la fin d’un tour et\nelle permet a deux pions (rouges ou bleus) d’echanger leurs positons sur le plateau.\n\n 5. Carte deplacement furtif : Cette carte peut être activee juste avant un deplacement.\nLe pion deplace devient invisible pour l’adversaire durant le tour suivant.\nSi lors d’un deplacement d’un pion bleu, il croise sur son chemin le navire invisible,\ncelui-ci sera decouvert et le pion bleu devra, bien sûr, s’arrêter.\n");
+                printf("1. Carte piege : Cette carte peut etre activee au debut ou a la fin d’un tour et\nelle permet de placer deux pieges sur la carte. Ces piges sont invisibles pour l’adversaire.\nSi lors d’un deplacement un pion adverse passe par un piege,\nle pion sera detruit et le piege desactive. Si c’est un blinde qui passe par le piege, il perdra son blindage.\n\n2. Carte bouclier : Cette carte peut etre activee au debut ou a la fin d’un tour et\nelle permet de rajouter un blindage supplementaire a n’importe quel navire.\n\n3. Carte contre-attaque : Cette carte peut etre activee lors qu’on un pion rouge est attaque.\nLe pion attaque ne subit pas de degâts et c’est l’attaquant qui subit les degâts a sa place.\n\n4. Carte permutation : Cette carte peut etre activee au debut ou a la fin d’un tour et\nelle permet a deux pions (rouges ou bleus) d’echanger leurs positons sur le plateau.\n\n 5. Carte deplacement furtif : Cette carte peut etre activee juste avant un deplacement.\nLe pion deplace devient invisible pour l’adversaire durant le tour suivant.\nSi lors d’un deplacement d’un pion bleu, il croise sur son chemin le navire invisible,\ncelui-ci sera decouvert et le pion bleu devra, bien sûr, s’arreter.\n");
                 break;
             case 5:
                 printf("Ok let's go\n");
@@ -734,7 +734,7 @@ void placerpions(joueur *joueurR, joueur *joueurB){
 
     /*DEBUG
     printf("Au joueur rouge de placer ses pions\n");
-    for(int i=1;i<joueurR->nb_pions;i++){// le joueur rouge place ses pions chacun leur tour et les pv s'initialisent en même temps
+    for(int i=1;i<joueurR->nb_pions;i++){// le joueur rouge place ses pions chacun leur tour et les pv s'initialisent en meme temps
         if(i<3){
             printf("Vous déplacez votre contre torpilleur blinde numero %d\n", i);
         }else{
@@ -751,7 +751,7 @@ void placerpions(joueur *joueurR, joueur *joueurB){
     system("pause");
     system("cls");
     printf("Au joueur bleu de placer ses pions\n");
-    for(int i=0;i<joueurB->nb_pions;i++){// le joueur rouge place ses pions chacun leur tour et les pv s'initialisent en même temps
+    for(int i=0;i<joueurB->nb_pions;i++){// le joueur rouge place ses pions chacun leur tour et les pv s'initialisent en meme temps
         if(i<2){
             printf("Vous deplacez votre contre torpilleur blinde numero %d\n", i+1);
         }else{
