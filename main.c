@@ -667,9 +667,7 @@ void lectureRegles(){
                 break;
             case 6:
                 printf("P=piege\nO=cuirassé\n%c=contre torpilleur blindé\no=contre tropilleur\nUn des signes precedent en vert signifie que le pion est anti blindage\nUn des signes precedent en vilet signifie que le pion est invisible\n");
-")
-
-            
+                break;
             case 5:
                 printf("Ok let's go\n");
                 sleep(1);
