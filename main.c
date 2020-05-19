@@ -787,38 +787,44 @@ void rouge_piege(pion *pion){//carte spéciale rouge piège
         printf("vous placez le piege numero %d\n", i);
         pion->invisible=-1;
 }
-void bleu_renfort(joueur *joueur){// carte spéciale bleue renfort
+
+void bleu_renfort(*joueur1, *joueur2){// carte spéciale bleue renfort
     int choix=0;
-    int vivant=0;
+    
     int choix 2;
     do{
-        printf("Tapez 2 si vous voulez rappeler deux contre torpilleur, tapez 1 si vous preferez rappeler un contre torpilleur blinde\n");
-        scanf("%d", &choix);
-        if(choix==1){
-            while( ){
-                if((joueur->pion[i]).pv==0){
-                    vivant=vivant+1;
-                }else{
-                    (joueur->pion[i]).pv
+        printf("Tapez 1 si vous voulez rappeler deux contre torpilleur, tapez 2 si vous preferez rappeler un contre torpilleur blinde\n");
+        while(c!=1 && c!=2) scanf("%d",&choix);
+        if(choix==2){//Torpilleur blindé
+            int id_pion_ressucite=0;
+            if((joueur1->pion[0]).pv>0){
+                id_pion_ressucite=0;
+            }else if((joueur1->pion[1]).pv>0){
+                id_pion_ressucite=1;
+            }else{
+                printf("Vous ne pouvez pas utiliser cette carte car vous n'avez aucun contre torpilleur blindé en réserve\n");
+            }
+            (joueur1.pion[id_pion_ressucite]).pv=2;
+            selectionner_case(joueur1, joueur2, &(joueur1->pion[id_pion_ressucite].coord_x), &(joueur1->pion[id_pion_ressucite].coord_y),PERIPHERIE,1);
+        }else if(choix==2){
+            int vivant=0;
+            for(int i=2;i<19){
+                if((joueur1.pion[i]).pv>0){
+                    vivant++;
                 }
             }
-            if(vivant==0){
-                printf("Vous ne pouvez pas utiliser cette carte car vous n'avez aucun contre torpilleur blindé detruit\n");
-            }
-            printf("Voulez vous rapeller deux contre torpilleur ?\nSi oui,tapez 2");
-            scanf("%d", &choix2);
-            if(choix2==2){
+            if(vivant<2){
+                printf("Vous ne pouvez pas utiliser cette carte car vous n'avez aucun contre torpilleur detruit\n");
+            }else{
+                int pions_ressusciter=0;
                 for(int i=2;i<19){
-                    if((joueur.pion[i]).pv==0){
-                        vivant=vivant+1;
+                    if((joueur1.pion[i]).pv>0){
+                        (joueur1.pion[i]).pv=1;
+                        selectionner_case(joueur1, joueur2, &(joueur1->pion[i].coord_x), &(joueur1->pion[i].coord_y),PERIPHERIE,1);
                     }
-                }
-                if(vivant==0){
-                    printf("Vous ne pouvez pas utiliser cette carte car vous n'avez aucun contre torpilleur detruit\n");
+                    if(pions_ressusciter>=2) break;
                 }
             }
-        }else{
-
         }
-    }while(choix!=1 || choix!=2)
+    } while(choix!=1 && choix!=2);
 }
