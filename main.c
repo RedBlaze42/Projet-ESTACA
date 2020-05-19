@@ -578,7 +578,7 @@ int is_in_zone(int zone, int x, int y){
     }
 }
 
-void afficherplateau_sel(joueur *joueurAff,joueur *joueur2, int sel_x, int sel_y){//on affiche le plateau avec une case en surbrillance
+void afficherplateau_sel(joueur *joueurAff,joueur *joueur2, int sel_x, int sel_y){//On affiche le plateau avec une case en surbrillance.
     pion *plateau[DIM_PLATEAU][DIM_PLATEAU];
 
     remplirTab(plateau, joueurAff, joueur2);
@@ -607,13 +607,13 @@ void afficherplateau_sel(joueur *joueurAff,joueur *joueur2, int sel_x, int sel_y
     printf("\n");
 }
 
-void afficherplateau(joueur *joueurAff,joueur *joueur2){//on affiche le plateau
+void afficherplateau(joueur *joueurAff,joueur *joueur2){//On affiche le plateau.
     pion *plateau[DIM_PLATEAU][DIM_PLATEAU];
 
     remplirTab(plateau, joueurAff, joueur2);
-    for(int y=0;y<DIM_PLATEAU;y++){
-        for(int x=0;x<DIM_PLATEAU;x++){
-            if(plateau[x][y]!=NULL && (plateau[x][y]->invisible==0 || plateau[x][y]->player==joueurAff->num) ){
+    for(int y=0;y<DIM_PLATEAU;y++){//On affiche le plateau dans la hauteur.
+        for(int x=0;x<DIM_PLATEAU;x++){//On affiche chaque case d'un ligne.
+            if(plateau[x][y]!=NULL && (plateau[x][y]->invisible==0 || plateau[x][y]->player==joueurAff->num) ){//On regarde s'il y a un pion sur la case a afficher.
                 afficher_pion(plateau[x][y]);
             }else{
                 if(is_in_zone(DEFENSE,x,y)==1){
@@ -633,14 +633,14 @@ void afficherplateau(joueur *joueurAff,joueur *joueur2){//on affiche le plateau
 void lectureRegles(){
     int c;
     system("CLS");
-    while(c!=5){
+    while(c!=5){//Le while permet au joueur de voir chaque sectioon des règles autant de fois qu'il veut.
         printf("Bienvenu sur seawars.\nLe but du jeu est de couler tous les bateaux de l'adversaire,\n ou pour le joueur rouge de sortir le cuirasse de la zone de defense ou\n pour le joueur bleu de couler le cuirasse adverse.\n\nAu debut de la partie, le premier joueur dispose le cuirasse dans la case centrale marquee d'un rond,\npuis il place ses douze contre-torpilleurs a sa convenance, a l'interieur du carre central de vingt-cinq cases.\nLorsque le premier joueur a fini de placer ses pions, c'est au tour du deuxieme joueur\nde disposer ses vingt contretorpilleurs comme il en a envie, mais a l'exterieur du carre central.\nUne fois termine le placement de tous les pions, chaque joueur pioche deux cartes speciales de la couleur correspondante.\nLe rouge a le pouvoir de decider a qui revient de jouer le premier coup, et la partie peut alors commencer.\n ");
         do{
-            printf("Pour voir les deplacement/attaques des pions tapez 1\nPour voir la nature des pionstapez 2\nPour voir les capacitees des cartes speciales bleues tapez 3\nPour voir les capacitees des cartes speciales rouges tapez 4\nPour passer directement au debut de la partie tapez 5\n");
+            printf("Pour voir les deplacement/attaques des pions tapez 1\nPour voir la nature des pions tapez 2\nPour voir les capacitees des cartes speciales bleues tapez 3\nPour voir les capacitees des cartes speciales rouges tapez 4\nPour passer directement au debut de la partie tapez 5\n");
             scanf("%d",&c);
         }while(c<1 || c>5);
         system("CLS");
-        switch(c){//EMILES Faire une while, il faut pouvoir afficher plusieurs fois les regles
+        switch(c){
             case 1:
                 printf("Deplacments:\nToutes les pieces se deplacent en ligne orthogonale et peuvent parcourir des rangees entieres de cases vides\nen s'arrêtant où bon leur semble,mais elles ne peuvent pas sauter par-dessus une case occupee.\n Elles ne peuvent pas eliminer un pion (de leur camp ou du camp adverse) qui bloque leur avancee,\n mais elles doivent s'arrêter sur une case attenante \n\nAttaques:\nLes pieces s’attaquent mutuellement entre cases voisines directe,\nen se deplaçant en diagonale dans n'importe quelle direction.\nLorsqu'un un navire detruit un autre navire, il enleve du damier le pion elimine et prend sa place.\nAttaquer un pion menace n'est pas une obligation.");
             break;
@@ -672,7 +672,7 @@ void placerpions(joueur *joueurR, joueur *joueurB){
     joueurR->pions[0].pv=1;
     joueurR->pions[0].invisible=0;
     joueurR->pions[0].anti_blindage=0;
-    for(int i=1;i<13;i++){
+    for(int i=1;i<13;i++){//initialistion contre torpilleurs(blindé ou pas)
         joueurR->pions[i].type=1;
         joueurR->pions[i].coord_x=5;
         joueurR->pions[i].coord_y=6;
@@ -681,8 +681,17 @@ void placerpions(joueur *joueurR, joueur *joueurB){
         joueurR->pions[i].anti_blindage=0;
         joueurR->pions[i].player=DEFENSE;
     }
+    for(int i=13; i<15; i++){//initialistion piège
+        joueurR->pions[i].type=1;
+        joueurR->pions[i].coord_x=5;
+        joueurR->pions[i].coord_y=4;
+        joueurR->pions[i].pv=0;
+        joueurR->pions[i].invisible=-1;
+        joueurR->pions[i].anti_blindage=0;
+        joueurR->pions[i].player=DEFENSE
+    }
     for(int i=0;i<19;i++){// on initialise les pions rouges et on initialise leurs pv a 0 pour faciliter le placement
-        joueurB->pions[i].type=1;
+        joueurB->pions[i].type=PIEGE;
         joueurB->pions[i].pv=0;
         joueurB->pions[i].coord_x=0;
         joueurB->pions[i].coord_y=0;
@@ -690,8 +699,6 @@ void placerpions(joueur *joueurR, joueur *joueurB){
         joueurB->pions[i].invisible=0;
         joueurB->pions[i].player=ATTAQUE;
     }
-
-
     for(int i=1; i<=5;i++){
         joueurR->pions[i].coord_x=i+3;
         joueurR->pions[i].coord_y=3;
