@@ -812,46 +812,6 @@ void placerpions(joueur *joueurR, joueur *joueurB){
         joueurB->pions[i].invisible=0;
         joueurB->pions[i].player=ATTAQUE;
     }
-/*
-
-    for(int i=1; i<=5;i++){
-        joueurR->pions[i].coord_x=i+3;
-        joueurR->pions[i].coord_y=3;
-        joueurR->pions[i].invisible=0;
-        joueurR->pions[i].pv=2;
-    }
-    for(int i=0; i<=5;i++){
-        joueurR->pions[i+5].coord_x=i+3;
-        joueurR->pions[i+5].coord_y=6;
-        joueurR->pions[i+5].invisible=0;
-        joueurR->pions[i+5].pv=1;
-    }
-
-    for(int i=0; i<3;i++){
-        joueurR->pions[i+10].coord_x=i+3;
-        joueurR->pions[i+10].coord_y=4;
-        joueurR->pions[i+10].invisible=0;
-        joueurR->pions[i+10].pv=1;
-    }
-
-    for(int i=0; i<=10;i++){
-        joueurB->pions[i].coord_x=i;
-        joueurB->pions[i].coord_y=0;
-        joueurB->pions[i].invisible=0;
-        joueurB->pions[i].anti_blindage=0;
-        joueurB->pions[i].pv=2;
-    }
-    for(int i=1; i<9;i++){
-        joueurB->pions[i+10].coord_x=i-1;
-        joueurB->pions[i+10].coord_y=2;
-        joueurB->pions[i+10].invisible=0;
-        joueurB->pions[i+10].anti_blindage=0;
-        joueurB->pions[i+10].pv=1;
-    }
-    joueurR->pions[2].invisible=-1;
-    joueurR->pions[1].invisible=-1;
-    joueurR->pions[1].type=PIEGE;
-*/
 
 
     printf("Au joueur rouge de placer ses pions\n");
